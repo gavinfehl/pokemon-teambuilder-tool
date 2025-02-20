@@ -108,24 +108,10 @@ class PokemonAnalyzer:
 
 # Example usage
 if __name__ == "__main__":
-    # Example of how usage data CSV should look:
-    """
-    name,usage_percent,viability_ceiling
-    Landorus-Therian,45.2,4
-    Heatran,20.1,4
-    Ferrothorn,18.5,4
-    Toxapex,16.8,4
-    Greninja,15.9,4
-    Tapu Koko,15.5,4
-    Medicham-Mega,15.2,4
-    Zapdos,14.8,4
-    Kartana,14.5,4
-    Tapu Lele,14.2,4
-    """
     
     analyzer = PokemonAnalyzer(
         'pokemon_data.csv',
-        'gen7_ou_usage.csv'  # You'll need to create this file with usage stats
+        'gen7ou-1500.csv'  # You'll need to create this file with usage stats
     )
     
     # Print meta information

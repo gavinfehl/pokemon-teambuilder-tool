@@ -1,0 +1,188 @@
+[
+  {
+    "name": "",
+    "species": "Magearna",
+    "item": "Fightinium Z",
+    "ability": "Soul-Heart",
+    "gender": "",
+    "nature": "Timid",
+    "evs": {
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spa": 252,
+      "spd": 4,
+      "spe": 252
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 0,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "level": 100,
+    "moves": [
+      "Shift Gear",
+      "Focus Blast",
+      "Fleur Cannon",
+      "Calm Mind"
+    ]
+  },
+  {
+    "name": "",
+    "species": "Tapu Bulu",
+    "item": "Leftovers",
+    "ability": "Grassy Surge",
+    "gender": "",
+    "nature": "Careful",
+    "evs": {
+      "hp": 248,
+      "atk": 0,
+      "def": 8,
+      "spa": 0,
+      "spd": 252,
+      "spe": 0
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "level": 100,
+    "moves": [
+      "Swords Dance",
+      "Horn Leech",
+      "Superpower",
+      "Leech Seed"
+    ]
+  },
+  {
+    "name": "",
+    "species": "Caterpie",
+    "item": "Grassy Seed",
+    "ability": "Unburden",
+    "gender": "",
+    "nature": "Adamant",
+    "evs": {
+      "hp": 96,
+      "atk": 252,
+      "def": 0,
+      "spa": 0,
+      "spd": 36,
+      "spe": 124
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "level": 100,
+    "moves": [
+      "Acrobatics",
+      "Swords Dance",
+      "High Jump Kick",
+      "Roost"
+    ]
+  },
+  {
+    "name": "",
+    "species": "Kartana",
+    "item": "Choice Scarf",
+    "ability": "Beast Boost",
+    "gender": "",
+    "nature": "Jolly",
+    "evs": {
+      "hp": 0,
+      "atk": 252,
+      "def": 0,
+      "spa": 0,
+      "spd": 4,
+      "spe": 252
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "level": 100,
+    "moves": [
+      "Leaf Blade",
+      "Sacred Sword",
+      "Smart Strike",
+      "Knock Off"
+    ]
+  },
+  {
+    "name": "",
+    "species": "Tyranitar-Mega",
+    "item": "Tyranitarite",
+    "ability": "Sand Stream",
+    "gender": "",
+    "nature": "Jolly",
+    "evs": {
+      "hp": 0,
+      "atk": 252,
+      "def": 0,
+      "spa": 0,
+      "spd": 4,
+      "spe": 252
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "level": 100,
+    "moves": [
+      "Dragon Dance",
+      "Stone Edge",
+      "Ice Punch",
+      "Fire Punch"
+    ]
+  },
+  {
+    "name": "",
+    "species": "Excadrill",
+    "item": "Focus Sash",
+    "ability": "Sand Rush",
+    "gender": "",
+    "nature": "Jolly",
+    "evs": {
+      "hp": 4,
+      "atk": 252,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 252
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "level": 100,
+    "moves": [
+      "Swords Dance",
+      "Earthquake",
+      "Iron Head",
+      "Rapid Spin"
+    ]
+  }
+]

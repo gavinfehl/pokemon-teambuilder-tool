@@ -1,0 +1,23 @@
+{
+  "name": "pokemon-teambuilder-tool",
+  "version": "1.0.0",
+  "description": "",
+  "main": "teamparser.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gavinfehl/pokemon-teambuilder-tool.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gavinfehl/pokemon-teambuilder-tool/issues"
+  },
+  "homepage": "https://github.com/gavinfehl/pokemon-teambuilder-tool#readme",
+  "dependencies": {
+    "pokemon-showdown": "^0.11.9"
+  }
+}

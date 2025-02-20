@@ -50,7 +50,16 @@ def parse_usage_stats(file_path: str) -> List[Dict[str, str]]:
             'name': pokemon,
             'usage_percent': usage_percent,
             # Set a default viability ceiling based on usage rank
-            'viability_ceiling': 'Extremely Common' if usage_percent >= 20 else 'Very Common' if usage_percent >= 15 else 'Common' if usage_percent >= 10 else 'Viable' if usage_percent >= 5 else 'Potentially Suboptimal' if usage_percent >= 2 else 'Suboptimal'
+            'viability_ceiling': (
+                'Centralizing' if usage_percent >= 25 else
+                'Very Popular' if usage_percent >= 15 else
+                'Popular' if usage_percent >= 8 else
+                'Common' if usage_percent >= 4 else
+                'Notable' if usage_percent >= 2 else
+                'Uncommon' if usage_percent >= 1 else
+                'Rare' if usage_percent >= 0.2 else
+                'Very Rare'
+            )  
         })
     
     return pokemon_data
@@ -79,9 +88,9 @@ def save_to_csv(data: List[Dict[str, str]], output_file: str):
             }
             writer.writerow(row)
 
-def main():
-    input_file = 'gen7ou-1500.txt'  # Your input text file
-    output_file = 'gen7_ou_usage.csv'  # The output CSV file
+def main(filename):
+    input_file = filename+'.txt'  # Your input text file
+    output_file = filename+'.csv'  # The output CSV file
     
     try:
         # Parse the data
@@ -101,4 +110,5 @@ def main():
         print(f"Error: {str(e)}")
 
 if __name__ == "__main__":
-    main()
+    #no extension
+    main("gen7ou-1500")
