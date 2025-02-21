@@ -1,11 +1,75 @@
 [
   {
     "name": "",
-    "species": "Magearna",
-    "item": "Fightinium Z",
-    "ability": "Soul-Heart",
+    "species": "Pelipper",
+    "item": "Damp Rock",
+    "ability": "Drizzle",
     "gender": "",
-    "nature": "Timid",
+    "nature": "Relaxed",
+    "evs": {
+      "hp": 248,
+      "atk": 0,
+      "def": 224,
+      "spa": 0,
+      "spd": 36,
+      "spe": 0
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 0
+    },
+    "level": 100,
+    "moves": [
+      "Hurricane",
+      "U-turn",
+      "Roost",
+      "Knock Off"
+    ],
+    "teraType": "Ground"
+  },
+  {
+    "name": "",
+    "species": "Palafin",
+    "item": "Choice Band",
+    "ability": "Zero to Hero",
+    "gender": "F",
+    "nature": "Adamant",
+    "evs": {
+      "hp": 0,
+      "atk": 252,
+      "def": 0,
+      "spa": 0,
+      "spd": 4,
+      "spe": 252
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "level": 100,
+    "moves": [
+      "Wave Crash",
+      "Flip Turn",
+      "Taunt",
+      "Jet Punch"
+    ],
+    "teraType": "Water"
+  },
+  {
+    "name": "",
+    "species": "Kingdra",
+    "item": "Choice Specs",
+    "ability": "Swift Swim",
+    "gender": "",
+    "nature": "Modest",
     "evs": {
       "hp": 0,
       "atk": 0,
@@ -16,7 +80,7 @@
     },
     "ivs": {
       "hp": 31,
-      "atk": 0,
+      "atk": 31,
       "def": 31,
       "spa": 31,
       "spd": 31,
@@ -24,26 +88,27 @@
     },
     "level": 100,
     "moves": [
-      "Shift Gear",
-      "Focus Blast",
-      "Fleur Cannon",
-      "Calm Mind"
-    ]
+      "Weather Ball",
+      "Draco Meteor",
+      "Flip Turn",
+      "Hydro Pump"
+    ],
+    "teraType": "Water"
   },
   {
     "name": "",
-    "species": "Tapu Bulu",
-    "item": "Leftovers",
-    "ability": "Grassy Surge",
+    "species": "Iron Treads",
+    "item": "Booster Energy",
+    "ability": "Quark Drive",
     "gender": "",
-    "nature": "Careful",
+    "nature": "Jolly",
     "evs": {
-      "hp": 248,
-      "atk": 0,
-      "def": 8,
+      "hp": 0,
+      "atk": 252,
+      "def": 0,
       "spa": 0,
-      "spd": 252,
-      "spe": 0
+      "spd": 4,
+      "spe": 252
     },
     "ivs": {
       "hp": 31,
@@ -55,116 +120,24 @@
     },
     "level": 100,
     "moves": [
-      "Swords Dance",
-      "Horn Leech",
-      "Superpower",
-      "Leech Seed"
-    ]
+      "Stealth Rock",
+      "Earthquake",
+      "Ice Spinner",
+      "Rapid Spin"
+    ],
+    "teraType": "Ghost"
   },
   {
     "name": "",
-    "species": "Caterpie",
-    "item": "Grassy Seed",
-    "ability": "Unburden",
+    "species": "Rillaboom",
+    "item": "Choice Band",
+    "ability": "Grassy Surge",
     "gender": "",
     "nature": "Adamant",
     "evs": {
-      "hp": 96,
-      "atk": 252,
-      "def": 0,
-      "spa": 0,
-      "spd": 36,
-      "spe": 124
-    },
-    "ivs": {
-      "hp": 31,
-      "atk": 31,
-      "def": 31,
-      "spa": 31,
-      "spd": 31,
-      "spe": 31
-    },
-    "level": 100,
-    "moves": [
-      "Acrobatics",
-      "Swords Dance",
-      "High Jump Kick",
-      "Roost"
-    ]
-  },
-  {
-    "name": "",
-    "species": "Kartana",
-    "item": "Choice Scarf",
-    "ability": "Beast Boost",
-    "gender": "",
-    "nature": "Jolly",
-    "evs": {
       "hp": 0,
       "atk": 252,
-      "def": 0,
-      "spa": 0,
-      "spd": 4,
-      "spe": 252
-    },
-    "ivs": {
-      "hp": 31,
-      "atk": 31,
-      "def": 31,
-      "spa": 31,
-      "spd": 31,
-      "spe": 31
-    },
-    "level": 100,
-    "moves": [
-      "Leaf Blade",
-      "Sacred Sword",
-      "Smart Strike",
-      "Knock Off"
-    ]
-  },
-  {
-    "name": "",
-    "species": "Tyranitar-Mega",
-    "item": "Tyranitarite",
-    "ability": "Sand Stream",
-    "gender": "",
-    "nature": "Jolly",
-    "evs": {
-      "hp": 0,
-      "atk": 252,
-      "def": 0,
-      "spa": 0,
-      "spd": 4,
-      "spe": 252
-    },
-    "ivs": {
-      "hp": 31,
-      "atk": 31,
-      "def": 31,
-      "spa": 31,
-      "spd": 31,
-      "spe": 31
-    },
-    "level": 100,
-    "moves": [
-      "Dragon Dance",
-      "Stone Edge",
-      "Ice Punch",
-      "Fire Punch"
-    ]
-  },
-  {
-    "name": "",
-    "species": "Excadrill",
-    "item": "Focus Sash",
-    "ability": "Sand Rush",
-    "gender": "",
-    "nature": "Jolly",
-    "evs": {
-      "hp": 4,
-      "atk": 252,
-      "def": 0,
+      "def": 4,
       "spa": 0,
       "spd": 0,
       "spe": 252
@@ -179,10 +152,43 @@
     },
     "level": 100,
     "moves": [
-      "Swords Dance",
-      "Earthquake",
-      "Iron Head",
-      "Rapid Spin"
-    ]
+      "Grassy Glide",
+      "Wood Hammer",
+      "U-turn",
+      "Knock Off"
+    ],
+    "teraType": "Grass"
+  },
+  {
+    "name": "",
+    "species": "Latios",
+    "item": "Soul Dew",
+    "ability": "Levitate",
+    "gender": "M",
+    "nature": "Modest",
+    "evs": {
+      "hp": 252,
+      "atk": 0,
+      "def": 0,
+      "spa": 252,
+      "spd": 4,
+      "spe": 0
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 0,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "level": 100,
+    "moves": [
+      "Draco Meteor",
+      "Future Sight",
+      "Luster Purge",
+      "Recover"
+    ],
+    "teraType": "Steel"
   }
 ]
