@@ -7,7 +7,7 @@ const path = require('path');
 // DEFINITIONS
 
 // Define the format and create the GenDex object
-const format = 'gen9ou';
+const format = 'gen7ou';
 
 // Define the file path for the input JSON team
 const inputJsonFilePath = path.join(__dirname, 'data/team.json');

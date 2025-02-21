@@ -32,8 +32,8 @@ const modifiers = {
         Careful:    { spd: 1.1, spa: 0.9 },
         Quirky:     {},
 };
-const format = "gen9";
-const GenDex = Dex.mod(format);
+const generation = 7;
+const GenDex = Dex.mod("gen"+generation);
 
 // calculates the effective Atk, Def, SpA, SpD, or Spe stat as a result of a pokemon's attributes
 function calculateStat(base, iv, ev, level, natureModifier) {
