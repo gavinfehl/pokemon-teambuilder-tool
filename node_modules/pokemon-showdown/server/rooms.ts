@@ -28,20 +28,19 @@ const LAST_BATTLE_WRITE_THROTTLE = 10;
 
 const RETRY_AFTER_LOGIN = null;
 
-import {FS, Utils, Streams, PostgresDatabase} from '../lib';
+import {FS, Utils, Streams} from '../lib';
 import {RoomSection, RoomSections} from './chat-commands/room-settings';
+import {GTSGiveaway, LotteryGiveaway, QuestionGiveaway} from './chat-plugins/wifi';
 import {QueuedHunt} from './chat-plugins/scavengers';
 import {ScavengerGameTemplate} from './chat-plugins/scavenger-games';
 import {RepeatedPhrase} from './chat-plugins/repeats';
-import {
-	PM as RoomBattlePM, RoomBattle, RoomBattlePlayer, RoomBattleTimer, RoomBattleOptions, PlayerIndex,
-} from "./room-battle";
-import {RoomGame, SimpleRoomGame, RoomGamePlayer} from './room-game';
+import {PM as RoomBattlePM, RoomBattle, RoomBattlePlayer, RoomBattleTimer, RoomBattleOptions} from "./room-battle";
+import {RoomGame, RoomGamePlayer} from './room-game';
 import {MinorActivity, MinorActivityData} from './room-minor-activity';
 import {Roomlogs} from './roomlogs';
 import * as crypto from 'crypto';
 import {RoomAuth} from './user-groups';
-import {PartialModlogEntry, mainModlog} from './modlog';
+import {MODLOG_PATH, MODLOG_DB_PATH, mainModlog, PartialModlogEntry} from './modlog';
 
 /*********************************************************
  * the Room object.
@@ -61,7 +60,6 @@ interface ChatRoomTable {
 	section?: string;
 	subRooms?: string[];
 	spotlight?: string;
-	privacy: RoomSettings['isPrivate'];
 }
 
 interface ShowRequest {
@@ -90,7 +88,7 @@ export interface RoomSettings {
 	readonly autojoin?: boolean;
 	aliases?: string[];
 	banwords?: string[];
-	isPrivate?: PrivacySetting;
+	isPrivate?: boolean | 'hidden' | 'voice';
 	modjoin?: AuthLevel | true | null;
 	modchat?: AuthLevel | null;
 	staffRoom?: boolean;
@@ -100,7 +98,6 @@ export interface RoomSettings {
 	filterStretching?: boolean;
 	filterEmojis?: boolean;
 	filterCaps?: boolean;
-	filterLinks?: boolean;
 	jeopardyDisabled?: boolean;
 	mafiaDisabled?: boolean;
 	unoDisabled?: boolean;
@@ -114,18 +111,13 @@ export interface RoomSettings {
 	introMessage?: string | null;
 	staffMessage?: string | null;
 	rulesLink?: string | null;
-	dataCommandTierDisplay?: 'tiers' | 'doubles tiers' | 'National Dex tiers' | 'numbers';
+	dataCommandTierDisplay?: 'tiers' | 'doubles tiers' | 'numbers';
 	requestShowEnabled?: boolean | null;
 	permissions?: {[k: string]: GroupSymbol};
 	minorActivity?: PollData | AnnouncementData;
 	minorActivityQueue?: MinorActivityData[];
 	repeats?: RepeatedPhrase[];
-	autoModchat?: {
-		rank: GroupSymbol,
-		time: number,
-		// stores previous modchat setting. if true, modchat was fully off
-		active: boolean | AuthLevel,
-	};
+	autoModchat?: {rank: GroupSymbol, time: number, active: boolean};
 	tournaments?: TournamentRoomSettings;
 	defaultFormat?: string;
 
@@ -143,7 +135,6 @@ export interface RoomSettings {
 
 export type MessageHandler = (room: BasicRoom, message: string) => void;
 export type Room = GameRoom | ChatRoom;
-export type PrivacySetting = boolean | 'hidden' | 'voice' | 'unlisted';
 
 import type {AnnouncementData} from './chat-plugins/announcements';
 import type {PollData} from './chat-plugins/poll';
@@ -204,6 +195,8 @@ export abstract class BasicRoom {
 
 	scavgame: ScavengerGameTemplate | null;
 	scavLeaderboard: AnyObject;
+	giveaway?: QuestionGiveaway | LotteryGiveaway | null;
+	gtsga?: GTSGiveaway | null;
 	responder?: AutoResponder | null;
 	privacySetter?: Set<ID> | null;
 	hideReplay: boolean;
@@ -333,7 +326,7 @@ export abstract class BasicRoom {
 		if (this.userCount) Sockets.roomBroadcast(this.roomid, message);
 	}
 	sendMods(data: string) {
-		this.sendRankedUsers(data, '*');
+		this.sendRankedUsers(data, '%');
 	}
 	sendRankedUsers(data: string, minRank: GroupSymbol = '+') {
 		if (this.settings.staffRoom) {
@@ -402,19 +395,19 @@ export abstract class BasicRoom {
 	 * highlight the user.
 	 */
 	addByUser(user: User, text: string): this {
-		return this.add('|c|' + user.getIdentity(this) + '|/log ' + text);
+		return this.add('|c|' + user.getIdentity(this.roomid) + '|/log ' + text);
 	}
 	/**
 	 * Like addByUser, but without logging
 	 */
 	sendByUser(user: User | null, text: string) {
-		this.send('|c|' + (user ? user.getIdentity(this) : '&') + '|/log ' + text);
+		this.send('|c|' + (user ? user.getIdentity(this.roomid) : '&') + '|/log ' + text);
 	}
 	/**
 	 * Like addByUser, but sends to mods only.
 	 */
 	sendModsByUser(user: User, text: string) {
-		this.sendMods('|c|' + user.getIdentity(this) + '|/log ' + text);
+		this.sendMods('|c|' + user.getIdentity(this.roomid) + '|/log ' + text);
 	}
 	update() {
 		if (!this.log.broadcastBuffer.length) return;
@@ -438,7 +431,7 @@ export abstract class BasicRoom {
 				continue;
 			}
 			counter++;
-			buffer += ',' + this.users[i].getIdentityWithStatus(this);
+			buffer += ',' + this.users[i].getIdentityWithStatus(this.roomid);
 		}
 		const msg = `|users|${counter}${buffer}`;
 		return msg;
@@ -447,7 +440,6 @@ export abstract class BasicRoom {
 	nextGameNumber() {
 		const gameNumber = (this.settings.gameNumber || 0) + 1;
 		this.settings.gameNumber = gameNumber;
-		this.saveSettings();
 		return gameNumber;
 	}
 
@@ -501,9 +493,8 @@ export abstract class BasicRoom {
 	}
 	// I think putting the `new` before the signature is confusing the linter
 	// eslint-disable-next-line @typescript-eslint/type-annotation-spacing
-	getGame<T extends RoomGame>(constructor: new (...args: any[]) => T, subGame = false): T | null {
+	getGame<T extends RoomGame>(constructor: new (...args: any[]) => T): T | null {
 		// TODO: switch to `static readonly gameid` when all game files are TypeScripted
-		if (subGame && this.subGame && this.subGame.constructor.name === constructor.name) return this.subGame as T;
 		if (this.game && this.game.constructor.name === constructor.name) return this.game as T;
 		return null;
 	}
@@ -563,9 +554,7 @@ export abstract class BasicRoom {
 		if (!Users.Auth.isAuthLevel(modjoinSetting)) {
 			Monitor.error(`Invalid modjoin setting in ${this.roomid}: ${modjoinSetting}`);
 		}
-		return (
-			this.auth.atLeast(user, modjoinSetting) || Users.globalAuth.atLeast(user, modjoinSetting)
-		);
+		return Users.globalAuth.atLeast(user, modjoinSetting);
 	}
 	mute(user: User, setTime?: number) {
 		const userid = user.id;
@@ -805,7 +794,7 @@ export abstract class BasicRoom {
 		// this doesn't update parentid or subroom user symbols because it's
 		// intended to be used for cleanup only
 	}
-	setPrivate(privacy: PrivacySetting) {
+	setPrivate(privacy: boolean | 'voice' | 'hidden') {
 		this.settings.isPrivate = privacy;
 		this.saveSettings();
 
@@ -894,14 +883,6 @@ export abstract class BasicRoom {
 		this.title = newTitle;
 		Rooms.rooms.delete(oldID);
 		Rooms.rooms.set(newID, this as Room);
-		if (this.battle && oldID) {
-			for (const player of this.battle.players) {
-				if (player.invite) {
-					const chall = Ladders.challenges.searchByRoom(player.invite, oldID);
-					if (chall) chall.roomid = this.roomid;
-				}
-			}
-		}
 
 		if (oldID === 'lobby') {
 			Rooms.lobby = null;
@@ -954,8 +935,6 @@ export abstract class BasicRoom {
 		this.settings.title = newTitle;
 		this.saveSettings();
 
-		Punishments.renameRoom(oldID, newID);
-
 		void this.log.rename(newID);
 	}
 
@@ -973,7 +952,7 @@ export abstract class BasicRoom {
 		if (this.users[user.id]) return false;
 
 		if (user.named) {
-			this.reportJoin('j', user.getIdentityWithStatus(this), user);
+			this.reportJoin('j', user.getIdentityWithStatus(this.roomid), user);
 		}
 
 		const staffIntro = this.getStaffIntroMessage(user);
@@ -985,7 +964,6 @@ export abstract class BasicRoom {
 
 		this.minorActivity?.onConnect?.(user, connection);
 		this.game?.onJoin?.(user, connection);
-		Chat.runHandlers('onRoomJoin', this, user, connection);
 		return true;
 	}
 	onRename(user: User, oldid: ID, joining: boolean) {
@@ -1001,13 +979,13 @@ export abstract class BasicRoom {
 		delete this.users[oldid];
 		this.users[user.id] = user;
 		if (joining) {
-			this.reportJoin('j', user.getIdentityWithStatus(this), user);
+			this.reportJoin('j', user.getIdentityWithStatus(this.roomid), user);
 			const staffIntro = this.getStaffIntroMessage(user);
 			if (staffIntro) this.sendUser(user, staffIntro);
 		} else if (!user.named) {
 			this.reportJoin('l', oldid, user);
 		} else {
-			this.reportJoin('n', user.getIdentityWithStatus(this) + '|' + oldid, user);
+			this.reportJoin('n', user.getIdentityWithStatus(this.roomid) + '|' + oldid, user);
 		}
 		this.minorActivity?.onRename?.(user, oldid, joining);
 		this.checkAutoModchat(user);
@@ -1020,7 +998,7 @@ export abstract class BasicRoom {
 		if (user?.connected) {
 			if (!this.users[user.id]) return false;
 			if (user.named) {
-				this.reportJoin('n', user.getIdentityWithStatus(this) + '|' + user.id, user);
+				this.reportJoin('n', user.getIdentityWithStatus(this.roomid) + '|' + user.id, user);
 			}
 		}
 		return true;
@@ -1036,7 +1014,7 @@ export abstract class BasicRoom {
 		this.userCount--;
 
 		if (user.named) {
-			this.reportJoin('l', user.getIdentity(this), user);
+			this.reportJoin('l', user.getIdentity(this.roomid), user);
 		}
 		if (this.game && this.game.onLeave) this.game.onLeave(user);
 		this.runAutoModchat();
@@ -1057,19 +1035,16 @@ export abstract class BasicRoom {
 			this.modchatTimer = setTimeout(() => {
 				if (!this.settings.autoModchat) return;
 				const {rank} = this.settings.autoModchat;
-				const oldSetting = this.settings.modchat;
 				this.settings.modchat = rank;
 				this.add(
-					// always gonna be minutes so we can just use the number directly lol
-					`|raw|<div class="broadcast-blue"><strong>This room has had no active staff for ${time} minutes,` +
+					`|raw|<div class="broadcast-blue"><strong>This room has had no active staff for ${Chat.toDurationString(time)},` +
 					` and has had modchat set to ${rank}.</strong></div>`
 				).update();
 				this.modlog({
 					action: 'AUTOMODCHAT ACTIVATE',
 				});
 				// automodchat will always exist
-				this.settings.autoModchat.active = oldSetting || true;
-				this.saveSettings();
+				this.settings.autoModchat.active = true;
 			}, time * 60 * 1000);
 		}
 	}
@@ -1080,14 +1055,8 @@ export abstract class BasicRoom {
 				clearTimeout(this.modchatTimer);
 			}
 			if (this.settings.autoModchat?.active) {
-				const oldSetting = this.settings.autoModchat.active;
-				if (typeof oldSetting === 'string') {
-					this.settings.modchat = oldSetting;
-				} else {
-					delete this.settings.modchat;
-				}
+				delete this.settings.modchat;
 				this.settings.autoModchat.active = false;
-				this.saveSettings();
 			}
 		}
 	}
@@ -1109,8 +1078,6 @@ export abstract class BasicRoom {
 
 		this.setParent(null);
 		this.clearSubRooms();
-
-		Chat.runHandlers('onRoomDestroy', this.roomid);
 
 		Rooms.global.deregisterChatRoom(this.roomid);
 		Rooms.global.delistChatRoom(this.roomid);
@@ -1149,7 +1116,7 @@ export abstract class BasicRoom {
 		}
 		this.logUserStatsInterval = null;
 
-		void this.log.destroy();
+		void this.log.destroy(true);
 
 		Rooms.rooms.delete(this.roomid);
 		if (this.roomid === 'lobby') Rooms.lobby = null;
@@ -1184,9 +1151,9 @@ export class GlobalRoomState {
 	constructor() {
 		this.settingsList = [];
 		try {
-			this.settingsList = require(FS('config/chatrooms.json').path);
+			this.settingsList = require('../config/chatrooms.json');
 			if (!Array.isArray(this.settingsList)) this.settingsList = [];
-		} catch {} // file doesn't exist [yet]
+		} catch (e) {} // file doesn't exist [yet]
 
 		if (!this.settingsList.length) {
 			this.settingsList = [{
@@ -1200,7 +1167,7 @@ export class GlobalRoomState {
 				auth: {},
 				creationTime: Date.now(),
 				isPrivate: 'hidden',
-				modjoin: Users.SECTIONLEADER_SYMBOL,
+				modjoin: '%',
 				autojoin: true,
 			}];
 		}
@@ -1254,6 +1221,8 @@ export class GlobalRoomState {
 			// of GlobalRoom can have.
 			this.ladderIpLog = new Streams.WriteStream({write() { return undefined; }});
 		}
+		// Create writestream for modlog
+		Rooms.Modlog.initialize('global');
 
 		this.reportUserStatsInterval = setInterval(
 			() => this.reportUserStats(),
@@ -1273,140 +1242,9 @@ export class GlobalRoomState {
 		let lastBattle;
 		try {
 			lastBattle = FS('logs/lastbattle.txt').readSync('utf8');
-		} catch {}
+		} catch (e) {}
 		this.lastBattle = Number(lastBattle) || 0;
 		this.lastWrittenBattle = this.lastBattle;
-		void this.loadBattles();
-	}
-
-	async saveBattles() {
-		let count = 0;
-		if (!Config.usepostgres) return 0;
-		const logDatabase = new PostgresDatabase();
-		await logDatabase.ensureMigrated({
-			table: 'stored_battles',
-			migrationsFolder: 'databases/migrations/storedbattles',
-			baseSchemaFile: 'databases/schemas/stored-battles.sql',
-		});
-		for (const room of Rooms.rooms.values()) {
-			if (!room.battle || room.battle.ended) continue;
-			room.battle.frozen = true;
-			const log = await room.battle.getLog();
-			const players: ID[] = room.battle.options.players || [];
-			if (!players.length) {
-				for (const num of ['p1', 'p2', 'p3', 'p4'] as const) {
-					if (room.battle[num]?.id) {
-						players.push(room.battle[num].id);
-					}
-				}
-			}
-			if (!players.length || !log?.length) continue; // shouldn't happen???
-			const timerData = {
-				...room.battle.timer.settings,
-				active: !!room.battle.timer.timer || false,
-			};
-			await logDatabase.query(
-				`INSERT INTO stored_battles (roomid, input_log, players, title, rated, timer) VALUES ($1, $2, $3, $4, $5, $6)` +
-				` ON CONFLICT (roomid) DO UPDATE ` +
-				`SET input_log = EXCLUDED.input_log, players = EXCLUDED.players, title = EXCLUDED.title, rated = EXCLUDED.rated`,
-				[room.roomid, log.join('\n'), players, room.title, room.battle.rated, timerData]
-			);
-			room.battle.timer.stop();
-			count++;
-		}
-		return count;
-	}
-
-	battlesLoading?: boolean;
-	async loadBattles() {
-		if (!Config.usepostgres) return;
-		this.battlesLoading = true;
-		for (const u of Users.users.values()) {
-			u.send(
-				`|pm|&|${u.getIdentity()}|/uhtml restartmsg,` +
-				`<div class="broadcast-red"><b>Your battles are currently being restored.<br />Please be patient as they load.</div>`
-			);
-		}
-		const logDatabase = new PostgresDatabase();
-		const query = `DELETE FROM stored_battles WHERE roomid IN (SELECT roomid FROM stored_battles LIMIT 1) RETURNING *`;
-		for await (const battle of logDatabase.stream(query)) {
-			const {input_log, players, roomid, title, rated, timer} = battle;
-			const [, formatid] = roomid.split('-');
-			const room = Rooms.createBattle({
-				format: formatid,
-				inputLog: input_log,
-				roomid,
-				title,
-				rated: Number(rated),
-				players,
-				delayedStart: true,
-				delayedTimer: timer.active,
-				restored: true,
-			});
-			if (!room || !room.battle) continue; // shouldn't happen???
-			room.battle.started = true; // so that timer works
-			room.battle.start();
-			if (timer) { // json blob of settings
-				Object.assign(room.battle.timer.settings, timer);
-			}
-			for (const [i, p] of players.entries()) {
-				room.auth.set(p, Users.PLAYER_SYMBOL);
-				const player = room.battle.players[i];
-				player.id = p;
-				player.name = p; // temp for if they get timed out before they connect
-				const u = Users.getExact(p);
-				if (u) {
-					this.rejoinBattle(room, u, i);
-				}
-			}
-		}
-		for (const u of Users.users.values()) {
-			u.send(`|pm|&|${u.getIdentity()}|/uhtmlchange restartmsg,`);
-		}
-		delete this.battlesLoading;
-	}
-
-	rejoinBattle(room: GameRoom, user: User, idx: number) {
-		if (!room.battle) return;
-		// we reuse these player objects explicitly so if
-		// someone has already started the timer, their settings carry over (should reduce bugs)
-		// and it's safe to do this first because we know these users were already in the battle
-		let player = room.battle.players[idx];
-		if (!player) {
-			// this can happen sometimes
-			player = room.battle.players[idx] = new Rooms.RoomBattlePlayer(
-				user, room.battle, (idx + 1) as PlayerIndex
-			);
-		}
-		player.id = user.id;
-		player.name = user.name;
-		room.battle.playerTable[user.id] = player;
-		user.joinRoom(room.roomid);
-		// force update panel
-		room.battle.onConnect(user);
-		if (room.battle.options.delayedTimer && !room.battle.timer.timer) {
-			room.battle.timer.start();
-		}
-		user.send(`|pm|&|${user.getIdentity()}|/uhtmlchange restartmsg,`);
-	}
-
-	joinOldBattles(user: User) {
-		for (const room of Rooms.rooms.values()) {
-			const battle = room.battle;
-			if (!battle) continue;
-			const idx = battle.options.players?.indexOf(user.id);
-			if (battle.ended) {
-				// TODO: Do we want to rejoin the battle room here?
-				// We might need to cache the join so it only happens once -
-				// just running joinRoom would mean they join the room every refresh until the battle expires
-
-				// user.joinRoom(room);
-				continue;
-			}
-			if (typeof idx === 'number' && idx > -1) {
-				this.rejoinBattle(room, user, idx);
-			}
-		}
 	}
 
 	modlog(entry: PartialModlogEntry, overrideID?: string) {
@@ -1495,9 +1333,8 @@ export class GlobalRoomState {
 			if (!Config.groups[rank] || !rank) continue;
 
 			const tarGroup = Config.groups[rank];
-			let groupType = tarGroup.id === 'bot' || (!tarGroup.mute && !tarGroup.root) ?
+			const groupType = tarGroup.id === 'bot' || (!tarGroup.mute && !tarGroup.root) ?
 				'normal' : (tarGroup.root || tarGroup.declare) ? 'leadership' : 'staff';
-			if (tarGroup.id === 'sectionleader') groupType = 'staff';
 
 			rankList.push({
 				symbol: rank,
@@ -1566,18 +1403,13 @@ export class GlobalRoomState {
 		for (const room of this.chatRooms) {
 			if (!room) continue;
 			if (room.parent) continue;
-			if (
-				room.settings.modjoin ||
-				(room.settings.isPrivate && !(['hidden', 'voice'] as any).includes(room.settings.isPrivate)) ||
-				(room.settings.isPrivate === 'voice' && user.tempGroup === ' ')
-			) continue;
+			if (room.settings.isPrivate && !(room.settings.isPrivate === 'voice' && user.tempGroup !== ' ')) continue;
 			const roomData: ChatRoomTable = {
 				title: room.title,
 				desc: room.settings.desc || '',
 				userCount: room.userCount,
 				section: room.settings.section ?
 					(RoomSections.sectionNames[room.settings.section] || room.settings.section) : undefined,
-				privacy: !room.settings.isPrivate ? undefined : room.settings.isPrivate,
 			};
 			const subrooms = room.getSubRooms().map(r => r.title);
 			if (subrooms.length) roomData.subRooms = subrooms;
@@ -1642,9 +1474,6 @@ export class GlobalRoomState {
 		if (Config.logladderip && options.rated) {
 			const ladderIpLogString = players.map(p => `${p.id}: ${p.latestIp}\n`).join('');
 			void this.ladderIpLog.write(ladderIpLogString);
-		}
-		for (const player of players) {
-			Chat.runHandlers('onBattleStart', player, room);
 		}
 	}
 
@@ -1722,12 +1551,6 @@ export class GlobalRoomState {
 		if (Users.users.size > this.maxUsers) {
 			this.maxUsers = Users.users.size;
 			this.maxUsersDate = Date.now();
-		}
-		if (this.battlesLoading) {
-			connection.send(
-				`|pm|&|${user.getIdentity()}|/uhtml restartmsg,` +
-				`<div class="broadcast-red"><b>Your battles are currently being restored.<br />Please be patient as they load.</div>`
-			);
 		}
 	}
 	startLockdown(err: Error | null = null, slow = false) {
@@ -1808,14 +1631,14 @@ export class GlobalRoomState {
 			if (curRoom) curRoom.add(message).update();
 		}
 	}
-	reportCrash(err: Error | string, crasher = "The server") {
+	reportCrash(err: Error, crasher = "The server") {
 		const time = Date.now();
 		if (time - this.lastReportedCrash < CRASH_REPORT_THROTTLE) {
 			return;
 		}
 		this.lastReportedCrash = time;
 
-		const stack = typeof err === 'string' ? err : err?.stack || err?.message || err?.name || '';
+		const stack = (err && (err.stack || err.message || err.name)) || '';
 		const [stackFirst, stackRest] = Utils.splitFirst(Utils.escapeHTML(stack), `<br />`);
 		let fullStack = `<b>${crasher} crashed:</b> ` + stackFirst;
 		if (stackRest) fullStack = `<details class="readmore"><summary>${fullStack}</summary>${stackRest}</details>`;
@@ -1881,8 +1704,8 @@ export class ChatRoom extends BasicRoom {
 	// This is not actually used, this is just a fake class to keep
 	// TypeScript happy
 	battle = null;
-	active: false = false as const;
-	type: 'chat' = 'chat' as const;
+	active: false = false;
+	type: 'chat' = 'chat';
 }
 
 export class GameRoom extends BasicRoom {
@@ -1987,67 +1810,7 @@ export class GameRoom extends BasicRoom {
 		this.sendUser(connection, '|init|battle\n|title|' + this.title + '\n' + this.getLogForUser(user));
 		if (this.game && this.game.onConnect) this.game.onConnect(user, connection);
 	}
-	onJoin(user: User, connection: Connection) {
-		if (!user) return false; // ???
-		if (this.users[user.id]) return false;
-
-		if (user.named) {
-			this.reportJoin('j', user.getIdentityWithStatus(this), user);
-		}
-
-		// This is only here because of an issue with private logs not getting resent
-		// when a user reloads on a battle and autojoins. This should be removed when that gets fixed.
-		void (async () => {
-			if (this.battle) {
-				const player = this.battle.playerTable[user.id];
-				if (player && this.battle.players.every(curPlayer => curPlayer.wantsOpenTeamSheets)) {
-					let buf = '|uhtml|ots|';
-					for (const curPlayer of this.battle.players) {
-						const team = await this.battle.getTeam(curPlayer.id);
-						if (!team) continue;
-						buf += Utils.html`<div class="infobox" style="margin-top:5px"><details><summary>Open Team Sheet for ${curPlayer.name}</summary>${Teams.export(team, {hideStats: true})}</details></div>`;
-					}
-					player.sendRoom(buf);
-				}
-			}
-		})();
-
-		this.users[user.id] = user;
-		this.userCount++;
-		this.checkAutoModchat(user);
-
-		this.minorActivity?.onConnect?.(user, connection);
-		this.game?.onJoin?.(user, connection);
-		Chat.runHandlers('onRoomJoin', this, user, connection);
-		return true;
-	}
-	/**
-	 * Sends this room's replay to the connection to be uploaded to the replay
-	 * server. To be clear, the replay goes:
-	 *
-	 * PS server -> user -> loginserver
-	 *
-	 * NOT: PS server -> loginserver
-	 *
-	 * That's why this function requires a connection. For details, see the top
-	 * comment inside this function.
-	 */
 	async uploadReplay(user: User, connection: Connection, options?: 'forpunishment' | 'silent') {
-		// The reason we don't upload directly to the loginserver, unlike every
-		// other interaction with the loginserver, is because it takes so much
-		// bandwidth that it can get identified as a DoS attack by PHP, Apache, or
-		// Cloudflare, and blocked.
-
-		// While I'm sure this is configurable, it's a huge pain, and getting it
-		// wrong, especially while migrating infrastructure, leads to everything
-		// being unusable and panic while we figure out how to unblock our servers
-		// from each other. It's just easier to "spread out" the bandwidth.
-
-		// TODO: My ideal long-term fix would be to just have a database (probably
-		// Postgres) shared between client and server, acting as both the server's
-		// battle logs as well as the client's replay database, which both client
-		// and server have write access to.
-
 		const battle = this.battle;
 		if (!battle) return;
 
@@ -2065,12 +1828,6 @@ export class GameRoom extends BasicRoom {
 		let rating = 0;
 		if (battle.ended && this.rated) rating = this.rated;
 		const {id, password} = this.getReplayData();
-
-		// STEP 1: Directly tell the login server that a replay is coming
-		// (also include all the data, including a hash of the replay itself,
-		// so it can't be spoofed.)
-
-		battle.replaySaved = true;
 		const [success] = await LoginServer.request('prepreplay', {
 			id: id,
 			loghash: datahash,
@@ -2082,13 +1839,11 @@ export class GameRoom extends BasicRoom {
 				'2' : this.settings.isPrivate || this.hideReplay ? '1' : '',
 			inputlog: battle.inputLog?.join('\n') || null,
 		});
+		if (success) battle.replaySaved = true;
 		if (success?.errorip) {
 			connection.popup(`This server's request IP ${success.errorip} is not a registered server.`);
 			return;
 		}
-
-		// STEP 2: Tell the user to upload the replay to the login server
-
 		connection.send('|queryresponse|savereplay|' + JSON.stringify({
 			log: data,
 			id: id,
@@ -2111,6 +1866,8 @@ function getRoom(roomid?: string | BasicRoom) {
 }
 
 export const Rooms = {
+	MODLOG_PATH,
+	MODLOG_DB_PATH,
 	Modlog: mainModlog,
 	/**
 	 * The main roomid:Room table. Please do not hold a reference to a
@@ -2180,7 +1937,7 @@ export const Rooms = {
 			options.ratedMessage = p1Special;
 		}
 
-		const roomid = options.roomid || Rooms.global.prepBattleRoom(options.format);
+		const roomid = Rooms.global.prepBattleRoom(options.format);
 		// options.rated is a number representing the lowest player rating, for searching purposes
 		// options.rated < 0 or falsy means "unrated", and will be converted to 0 here
 		// options.rated === true is converted to 1 (used in tests sometimes)
@@ -2195,8 +1952,6 @@ export const Rooms = {
 		} else if (gameType === 'freeforall') {
 			// p1 vs. p2 vs. p3 vs. p4 is too long of a title
 			roomTitle = `${p1name} and friends`;
-		} else if (options.title) {
-			roomTitle = options.title;
 		} else {
 			roomTitle = `${p1name} vs. ${p2name}`;
 		}
@@ -2225,7 +1980,6 @@ export const Rooms = {
 	ChatRoom: BasicRoom as typeof ChatRoom,
 
 	RoomGame,
-	SimpleRoomGame,
 	RoomGamePlayer,
 
 	MinorActivity,

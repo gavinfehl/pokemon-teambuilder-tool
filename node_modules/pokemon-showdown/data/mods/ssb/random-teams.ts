@@ -1,4 +1,4 @@
-import RandomGen8Teams from '../gen8/random-teams';
+import RandomTeams from '../../random-teams';
 
 export interface SSBSet {
 	species: string;
@@ -861,25 +861,13 @@ export const ssbSets: SSBSets = {
 	},
 };
 
-const afdSSBSets: SSBSets = {
-	'Fox': {
-		species: 'Delphox', ability: 'No Ability', item: '', gender: '',
-		moves: [],
-		signatureMove: 'Super Metronome',
-	},
-};
-
-export class RandomStaffBrosTeams extends RandomGen8Teams {
+export class RandomStaffBrosTeams extends RandomTeams {
 	randomStaffBrosTeam(options: {inBattle?: boolean} = {}) {
-		this.enforceNoDirectCustomBanlistChanges();
-
 		const team: PokemonSet[] = [];
 		const debug: string[] = []; // Set this to a list of SSB sets to override the normal pool for debugging.
 		const ruleTable = this.dex.formats.getRuleTable(this.format);
-		const wiiulegacy = !ruleTable.has('dynamaxclause');
 		const monotype = ruleTable.has('sametypeclause') ? this.sample([...this.dex.types.names()]) : false;
-
-		let pool = debug.length ? debug : wiiulegacy ? Object.keys(afdSSBSets) : Object.keys(ssbSets);
+		let pool = debug.length ? debug : Object.keys(ssbSets);
 		if (monotype && !debug.length) {
 			pool = pool.filter(x => this.dex.species.get(ssbSets[x].species).types.includes(monotype));
 		}
@@ -888,12 +876,12 @@ export class RandomStaffBrosTeams extends RandomGen8Teams {
 		while (pool.length && team.length < this.maxTeamSize) {
 			if (depth >= 200) throw new Error(`Infinite loop in Super Staff Bros team generation.`);
 			depth++;
-			const name = wiiulegacy ? this.sample(pool) : this.sampleNoReplace(pool);
-			const ssbSet: SSBSet = wiiulegacy ? this.dex.deepClone(afdSSBSets[name]) : this.dex.deepClone(ssbSets[name]);
+			const name = this.sampleNoReplace(pool);
+			const ssbSet: SSBSet = this.dex.deepClone(ssbSets[name]);
 			if (ssbSet.skip) continue;
 
 			// Enforce typing limits
-			if (!(debug.length || monotype || wiiulegacy)) { // Type limits are ignored for debugging, monotype, or memes.
+			if (!(debug.length || monotype)) { // Type limits are ignored when debugging or for monotype variations.
 				const species = this.dex.species.get(ssbSet.species);
 				if (this.forceMonotype && !species.types.includes(this.forceMonotype)) continue;
 
@@ -936,7 +924,7 @@ export class RandomStaffBrosTeams extends RandomGen8Teams {
 				evs: ssbSet.evs ? {...{hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0}, ...ssbSet.evs} :
 				{hp: 84, atk: 84, def: 84, spa: 84, spd: 84, spe: 84},
 				ivs: {...{hp: 31, atk: 31, def: 31, spa: 31, spd: 31, spe: 31}, ...ssbSet.ivs},
-				level: this.adjustLevel || ssbSet.level || 100,
+				level: ssbSet.level || 100,
 				happiness: typeof ssbSet.happiness === 'number' ? ssbSet.happiness : 255,
 				shiny: typeof ssbSet.shiny === 'number' ? this.randomChance(1, ssbSet.shiny) : !!ssbSet.shiny,
 			};
@@ -949,20 +937,6 @@ export class RandomStaffBrosTeams extends RandomGen8Teams {
 
 			// Any set specific tweaks occur here.
 			if (set.name === 'Marshmallon' && !set.moves.includes('Head Charge')) set.moves[this.random(3)] = 'Head Charge';
-
-			if (wiiulegacy) {
-				const egg = this.random(100);
-				if (egg === 69) {
-					set.name = 'Falco';
-					set.species = 'Swellow';
-				} else if (egg === 96) {
-					set.name = 'Captain Falcon';
-					set.species = 'Talonflame';
-				}
-				if (this.randomChance(1, 100)) {
-					set.item = 'Mail';
-				}
-			}
 
 			team.push(set);
 

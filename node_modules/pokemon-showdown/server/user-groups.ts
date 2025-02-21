@@ -1,11 +1,11 @@
 import {FS} from '../lib/fs';
 import type {RoomSection} from './chat-commands/room-settings';
 
-export type GroupSymbol = '~' | '&' | '#' | '★' | '*' | '@' | '%' | '☆' | '§' | '+' | '^' | ' ' | '‽' | '!';
+export type GroupSymbol = '~' | '&' | '#' | '★' | '*' | '@' | '%' | '☆' | '▸' | '+' | '^' | ' ' | '‽' | '!';
 export type EffectiveGroupSymbol = GroupSymbol | 'whitelist';
 export type AuthLevel = EffectiveGroupSymbol | 'unlocked' | 'trusted' | 'autoconfirmed';
 
-export const SECTIONLEADER_SYMBOL: GroupSymbol = '\u00a7';
+export const SECTIONLEADER_SYMBOL: GroupSymbol = '\u25B8';
 export const PLAYER_SYMBOL: GroupSymbol = '\u2606';
 export const HOST_SYMBOL: GroupSymbol = '\u2605';
 
@@ -63,7 +63,7 @@ export abstract class Auth extends Map<ID, GroupSymbol | ''> {
 			// At one point bots used to be ranked above drivers, so this checks
 			// driver rank to make sure this function works on servers that
 			// did not reorder the ranks.
-			return Auth.atLeast(rank, '*') || Auth.atLeast(rank, SECTIONLEADER_SYMBOL) || Auth.atLeast(rank, '%');
+			return Auth.atLeast(rank, '*') || Auth.atLeast(rank, '%');
 		} else {
 			return false;
 		}
@@ -72,7 +72,7 @@ export abstract class Auth extends Map<ID, GroupSymbol | ''> {
 		if (user.hasSysopAccess()) return true;
 		if (group === 'trusted' || group === 'autoconfirmed') {
 			if (user.trusted && group === 'trusted') return true;
-			if (user.autoconfirmed && !user.locked && group === 'autoconfirmed') return true;
+			if (user.autoconfirmed && group === 'autoconfirmed') return true;
 			group = Config.groupsranking[1];
 		}
 		if (user.locked || user.semilocked) return false;
@@ -135,18 +135,8 @@ export abstract class Auth extends Map<ID, GroupSymbol | ''> {
 			targetSymbol = Auth.defaultSymbol();
 		}
 
-		let group = Auth.getGroup(symbol);
+		const group = Auth.getGroup(symbol);
 		if (group['root']) return true;
-		if (
-			room?.settings.section &&
-			room.settings.section === Users.globalAuth.sectionLeaders.get(user.id) &&
-			// Global drivers who are SLs should get room mod powers too
-			Users.globalAuth.atLeast(user, SECTIONLEADER_SYMBOL) &&
-			// But dont override ranks above moderator such as room owner
-			(Auth.getGroup('@').rank > group.rank)
-		) {
-			group = Auth.getGroup('@');
-		}
 
 		let jurisdiction = group[permission as GlobalPermission | RoomPermission];
 		if (jurisdiction === true && permission !== 'jurisdiction') {
@@ -276,15 +266,6 @@ export class RoomAuth extends Auth {
 			const replaceGroup = Auth.getGroup(symbol).globalGroupInPersonalRoom;
 			if (replaceGroup) return replaceGroup;
 		}
-		// this is a bit of a hardcode, yeah, but admins need to have admin commands in prooms w/o the symbol
-		// and we want that to include sysops.
-		// Plus, using user.can is cleaner than Users.globalAuth.get(user) === admin and it accounts for more things.
-		// (and no this won't recurse or anything since user.can() with no room doesn't call this)
-		if (this.room.settings.isPrivate === true && user.can('makeroom')) {
-			// not hardcoding & here since globalAuth.get should return & in basically all cases
-			// except sysops, and there's an override for them anyways so it doesn't matter
-			return Users.globalAuth.get(user);
-		}
 		return symbol;
 	}
 	/** gets the room group without inheriting */
@@ -348,22 +329,12 @@ export class GlobalAuth extends Auth {
 			if (!row) continue;
 			const [name, symbol, sectionid] = row.split(",");
 			const id = toID(name);
-			if (!id) {
-				Monitor.warn('Dropping malformed usergroups line (missing ID):');
-				Monitor.warn(row);
-				continue;
-			}
 			this.usernames.set(id, name);
 			if (sectionid) this.sectionLeaders.set(id, sectionid as RoomSection);
 
 			// handle glitched entries where a user has two entries in usergroups.csv due to bugs
 			const newSymbol = symbol.charAt(0) as GroupSymbol;
-			// Yes, we HAVE to ensure that it exists in the super. super.get here returns either the group symbol,
-			// or the default symbol if it cannot find a symbol in the map.
-			// the default symbol is truthy, and the symbol for trusted user is ` `
-			// meaning that the preexisting && atLeast would return true, which would skip the row and nuke all trusted users
-			// on a fresh load (aka, a restart).
-			const preexistingSymbol = super.has(id) ? super.get(id) : null;
+			const preexistingSymbol = super.get(id);
 			// take a user's highest rank in usergroups.csv
 			if (preexistingSymbol && Auth.atLeast(preexistingSymbol, newSymbol)) continue;
 			super.set(id, newSymbol);
@@ -371,7 +342,7 @@ export class GlobalAuth extends Auth {
 	}
 	set(id: ID, group: GroupSymbol, username?: string) {
 		if (!username) username = id;
-		const user = Users.get(id, true);
+		const user = Users.get(id);
 		if (user) {
 			user.tempGroup = group;
 			user.updateIdentity();

@@ -38,9 +38,9 @@ import {Species, DexSpecies} from './dex-species';
 import {Format, DexFormats} from './dex-formats';
 import {Utils} from '../lib';
 
-const BASE_MOD = 'gen9' as ID;
-const DATA_DIR = path.resolve(__dirname, '../data');
-const MODS_DIR = path.resolve(DATA_DIR, './mods');
+const BASE_MOD = 'gen8' as ID;
+const DATA_DIR = path.resolve(__dirname, '../.data-dist');
+const MODS_DIR = path.resolve(__dirname, '../.data-dist/mods');
 
 const dexes: {[mod: string]: ModdedDex} = Object.create(null);
 
@@ -281,8 +281,8 @@ export class ModdedDex {
 			shortDesc: '',
 		};
 		for (let i = this.gen; i < dexes['base'].gen; i++) {
-			const curDesc = entry[`gen${i}` as keyof typeof entry]?.desc;
-			const curShortDesc = entry[`gen${i}` as keyof typeof entry]?.shortDesc;
+			const curDesc = entry[`gen${i}`]?.desc;
+			const curShortDesc = entry[`gen${i}`]?.shortDesc;
 			if (!descs.desc && curDesc) {
 				descs.desc = curDesc;
 			}
@@ -403,7 +403,7 @@ export class ModdedDex {
 			for (const j in searchObj) {
 				const ld = Utils.levenshtein(cmpTarget, j, maxLd);
 				if (ld <= maxLd) {
-					const word = (searchObj[j] as DexTable<any>).name || (searchObj[j] as DexTable<any>).species || j;
+					const word = searchObj[j].name || searchObj[j].species || j;
 					const results = this.dataSearch(word, searchIn, word);
 					if (results) {
 						searchResults = results;
@@ -427,7 +427,7 @@ export class ModdedDex {
 				throw new TypeError(`${filePath}, if it exists, must export an object whose '${dataType}' property is an Object`);
 			}
 			return dataObject[dataType];
-		} catch (e: any) {
+		} catch (e) {
 			if (e.code !== 'MODULE_NOT_FOUND' && e.code !== 'ENOENT') {
 				throw e;
 			}
@@ -562,7 +562,7 @@ export class ModdedDex {
 
 dexes['base'] = new ModdedDex();
 
-// "gen9" is an alias for the current base data
+// "gen8" is an alias for the current base data
 dexes[BASE_MOD] = dexes['base'];
 
 export const Dex = dexes['base'];

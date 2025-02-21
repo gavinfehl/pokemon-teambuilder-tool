@@ -41,17 +41,17 @@ export class RandomPlayerAI extends BattlePlayer {
 			// switch request
 			const pokemon = request.side.pokemon;
 			const chosen: number[] = [];
-			const choices = request.forceSwitch.map((mustSwitch: AnyObject, i: number) => {
+			const choices = request.forceSwitch.map((mustSwitch: AnyObject) => {
 				if (!mustSwitch) return `pass`;
 
-				const canSwitch = range(1, 6).filter(j => (
-					pokemon[j - 1] &&
+				const canSwitch = range(1, 6).filter(i => (
+					pokemon[i - 1] &&
 					// not active
-					j > request.forceSwitch.length &&
+					i > request.forceSwitch.length &&
 					// not chosen for a simultaneous switch
-					!chosen.includes(j) &&
-					// not fainted or fainted and using Revival Blessing
-					!!(+!!pokemon[i].reviving ^ +!pokemon[j - 1].condition.endsWith(` fnt`))
+					!chosen.includes(i) &&
+					// not fainted
+					!pokemon[i - 1].condition.endsWith(` fnt`)
 				));
 
 				if (!canSwitch.length) return `pass`;
@@ -66,17 +66,16 @@ export class RandomPlayerAI extends BattlePlayer {
 			this.choose(choices.join(`, `));
 		} else if (request.active) {
 			// move request
-			let [canMegaEvo, canUltraBurst, canZMove, canDynamax, canTerastallize] = [true, true, true, true, true];
+			let [canMegaEvo, canUltraBurst, canZMove, canDynamax] = [true, true, true, true];
 			const pokemon = request.side.pokemon;
 			const chosen: number[] = [];
 			const choices = request.active.map((active: AnyObject, i: number) => {
-				if (pokemon[i].condition.endsWith(` fnt`) || pokemon[i].commanding) return `pass`;
+				if (pokemon[i].condition.endsWith(` fnt`)) return `pass`;
 
 				canMegaEvo = canMegaEvo && active.canMegaEvo;
 				canUltraBurst = canUltraBurst && active.canUltraBurst;
 				canZMove = canZMove && !!active.canZMove;
 				canDynamax = canDynamax && !!active.canDynamax;
-				canTerastallize = canTerastallize && !!active.canTerastallize;
 
 				// Determine whether we should change form if we do end up switching
 				const change = (canMegaEvo || canUltraBurst || canDynamax) && this.prng.next() < this.mega;
@@ -161,10 +160,7 @@ export class RandomPlayerAI extends BattlePlayer {
 						canZMove = false;
 						return move;
 					} else if (change) {
-						if (canTerastallize) {
-							canTerastallize = false;
-							return `${move} terastallize`;
-						} else if (canDynamax) {
+						if (canDynamax) {
 							canDynamax = false;
 							return `${move} dynamax`;
 						} else if (canMegaEvo) {
@@ -180,7 +176,7 @@ export class RandomPlayerAI extends BattlePlayer {
 				} else {
 					throw new Error(`${this.constructor.name} unable to make choice ${i}. request='${request}',` +
 						` chosen='${chosen}', (mega=${canMegaEvo}, ultra=${canUltraBurst}, zmove=${canZMove},` +
-						` dynamax='${canDynamax}', terastallize=${canTerastallize})`);
+						` dynamax='${canDynamax}')`);
 				}
 			});
 			this.choose(choices.join(`, `));

@@ -82,7 +82,7 @@ export class LastFMInterface {
 					limit: 1, api_key: Config.lastfmkey, format: 'json',
 				},
 			});
-		} catch {
+		} catch (e) {
 			throw new Chat.ErrorMessage(`No scrobble data found.`);
 		}
 		const res = JSON.parse(raw);
@@ -108,7 +108,7 @@ export class LastFMInterface {
 			let videoIDs: string[] | undefined;
 			try {
 				videoIDs = await YouTube.searchVideo(trackName, 1);
-			} catch (e: any) {
+			} catch (e) {
 				throw new Chat.ErrorMessage(`Error while fetching video data: ${e.message}`);
 			}
 			if (!videoIDs?.length) {
@@ -158,7 +158,7 @@ export class LastFMInterface {
 		let raw;
 		try {
 			raw = await Net(API_ROOT).get({query});
-		} catch {
+		} catch (e) {
 			throw new Chat.ErrorMessage(`No track data found.`);
 		}
 		const req = JSON.parse(raw);
@@ -182,7 +182,7 @@ export class LastFMInterface {
 			let videoIDs: string[] | undefined;
 			try {
 				videoIDs = await YouTube.searchVideo(searchName, 1);
-			} catch (e: any) {
+			} catch (e) {
 				throw new Chat.ErrorMessage(`Error while fetching video data: ${e.message}`);
 			}
 			if (!videoIDs?.length) {
@@ -565,11 +565,13 @@ export const commands: Chat.ChatCommands = {
 			return this.sendReply(`|html|${await Recs.render(Recs.getRandomRecommendation())}`);
 		}
 		const matches: Recommendation[] = [];
-		target = target.slice(0, 300);
-		const args = target.split(',');
-		for (const rec of recommendations.saved) {
-			if (!args.every(x => rec.tags.map(toID).includes(toID(x)))) continue;
-			matches.push(rec);
+		if (target) {
+			target = target.slice(0, 300);
+			const args = target.split(',');
+			for (const rec of recommendations.saved) {
+				if (!args.every(x => rec.tags.map(toID).includes(toID(x)))) continue;
+				matches.push(rec);
+			}
 		}
 		if (!matches.length) {
 			throw new Chat.ErrorMessage(`No matches found.`);
@@ -580,10 +582,6 @@ export const commands: Chat.ChatCommands = {
 	recommendationhelp: [
 		`/recommendation [key1, key2, key3, ...] - Displays a random recommendation that matches all keys, if one exists.`,
 		`If no arguments are provided, a random recommendation is shown.`,
-		`/addrecommendation artist | song title | url | description | tag1 | tag2 | ... - Adds a song recommendation. Requires: + % @ * # &`,
-		`/removerecommendation artist | song title - Removes a song recommendation. Requires: % @ * # &`,
-		`If you added a recommendation, you can remove it on your own without being one of the required ranks.`,
-		`/suggestrecommendation artist | song title | url | description | tag1 | tag2 | ... - Suggest a song recommendation.`,
 	],
 
 	likerec: 'likerecommendation',

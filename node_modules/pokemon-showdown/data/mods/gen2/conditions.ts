@@ -35,10 +35,6 @@ export const Conditions: {[k: string]: ModdedConditionData} = {
 			}
 			// 1-6 turns
 			this.effectState.time = this.random(2, 8);
-
-			if (target.removeVolatile('nightmare')) {
-				this.add('-end', target, 'Nightmare', '[silent]');
-			}
 		},
 		onBeforeMovePriority: 10,
 		onBeforeMove(pokemon, target, move) {
@@ -63,7 +59,7 @@ export const Conditions: {[k: string]: ModdedConditionData} = {
 			return false;
 		},
 		onModifyMove() {},
-		onDamagingHit() {},
+		onHit() {},
 		onAfterMoveSecondary(target, source, move) {
 			if ((move.secondary && move.secondary.status === 'brn') || move.statusRoll === 'brn') {
 				target.cureStatus();

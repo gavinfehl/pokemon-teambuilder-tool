@@ -66,16 +66,20 @@ for pokemon in pokemonList:
 
         elif current_section == "Checks and Counters":
             if '(' in line and not line.startswith('('):
-                pokemon = line.split('(')[0].strip()
+                pokemon = line.split('(')[0].strip().split()[0]
                 main_value = re.search(r'([\d.]+)\s+\(', line).group(1)
                 percentage = re.search(r'\(([\d.]+)±', line).group(1)
                 if csv_item == "":
-                    csv_item += (item.strip()+": "+value)
+                    csv_item += (pokemon +"/ "+ main_value +"/ "+percentage)
                 else:
-                    csv_item += (" | "+item.strip()+": "+value)
+                    csv_item += (" | "+ pokemon +"/ "+ main_value +"/ "+percentage)
+                
             elif line.startswith('(') and 'KOed' in line:
-                # Process KOed/switched stats if needed
-                continue
+                KOed = re.findall(r'\d+\.\d%', line)[0]
+                SwitchedOut = re.findall(r'\d+\.\d%', line)[1]
+                csv_item += (" / KO'd: "+ KOed)
+                csv_item += (" / Switched Out: "+ SwitchedOut)
+            continue
                 
         # Handle all other percentage-based sections
         elif '%' in line:
@@ -85,11 +89,7 @@ for pokemon in pokemonList:
                 csv_item += (item.strip()+": "+value)
             else:
                 csv_item += (" | "+item.strip()+": "+value)
-        # Handle nature/EV spreads
-        elif current_section == "Spreads" and ":" in line and "%" in line:
-            spread, percentage = line.rsplit(' ', 1)
-            percentage = percentage.rstrip('%')
-            csv_row.append([current_section, spread.strip(), float(percentage), "-"])
+    csv_row.append(csv_item)
     csv_data.append(csv_row)
             
 

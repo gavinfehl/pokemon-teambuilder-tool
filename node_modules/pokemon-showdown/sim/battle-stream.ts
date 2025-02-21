@@ -11,7 +11,7 @@
 
 import {Streams, Utils} from '../lib';
 import {Teams} from './teams';
-import {Battle, extractChannelMessages} from './battle';
+import {Battle} from './battle';
 
 /**
  * Like string.split(delimiter), but only recognizes the first `limit`
@@ -63,7 +63,7 @@ export class BattleStream extends Streams.ObjectReadWriteStream<string> {
 		} else {
 			try {
 				this._writeLines(chunk);
-			} catch (err: any) {
+			} catch (err) {
 				this.pushError(err, true);
 				return;
 			}
@@ -84,11 +84,9 @@ export class BattleStream extends Streams.ObjectReadWriteStream<string> {
 		if (this.replay) {
 			if (type === 'update') {
 				if (this.replay === 'spectator') {
-					const channelMessages = extractChannelMessages(data, [0]);
-					this.push(channelMessages[0].join('\n'));
+					this.push(data.replace(/\n\|split\|p[1234]\n(?:[^\n]*)\n([^\n]*)/g, '\n$1'));
 				} else {
-					const channelMessages = extractChannelMessages(data, [-1]);
-					this.push(channelMessages[-1].join('\n'));
+					this.push(data.replace(/\n\|split\|p[1234]\n([^\n]*)\n(?:[^\n]*)/g, '\n$1'));
 				}
 			}
 			return;
@@ -204,15 +202,12 @@ export class BattleStream extends Streams.ObjectReadWriteStream<string> {
 					result = result.replace(/\n/g, '\n||');
 					battle.add('', '<<< ' + result);
 				}
-			} catch (e: any) {
+			} catch (e) {
 				battle.add('', '<<< error: ' + e.message);
 			}
 			break;
 		case 'requestlog':
 			this.push(`requesteddata\n${this.battle!.inputLog.join('\n')}`);
-			break;
-		case 'requestexport':
-			this.push(`requesteddata\n${this.battle!.prngSeed}\n${this.battle!.inputLog.join('\n')}`);
 			break;
 		case 'requestteam':
 			message = message.trim();
@@ -286,13 +281,12 @@ export function getPlayerStreams(stream: BattleStream) {
 			const [type, data] = splitFirst(chunk, `\n`);
 			switch (type) {
 			case 'update':
-				const channelMessages = extractChannelMessages(data, [-1, 0, 1, 2, 3, 4]);
-				streams.omniscient.push(channelMessages[-1].join('\n'));
-				streams.spectator.push(channelMessages[0].join('\n'));
-				streams.p1.push(channelMessages[1].join('\n'));
-				streams.p2.push(channelMessages[2].join('\n'));
-				streams.p3.push(channelMessages[3].join('\n'));
-				streams.p4.push(channelMessages[4].join('\n'));
+				streams.omniscient.push(Battle.extractUpdateForSide(data, 'omniscient'));
+				streams.spectator.push(Battle.extractUpdateForSide(data, 'spectator'));
+				streams.p1.push(Battle.extractUpdateForSide(data, 'p1'));
+				streams.p2.push(Battle.extractUpdateForSide(data, 'p2'));
+				streams.p3.push(Battle.extractUpdateForSide(data, 'p3'));
+				streams.p4.push(Battle.extractUpdateForSide(data, 'p4'));
 				break;
 			case 'sideupdate':
 				const [side, sideData] = splitFirst(data, `\n`);

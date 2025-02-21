@@ -51,8 +51,10 @@ Chat.plural = function (num, plural = 's', singular = '') {
 	}
 	return (num !== 1 ? plural : singular);
 };
+// Sigh. Yay globals!
+global.toID = require('../../.sim-dist/dex').Dex.getId;
 
-const importer = require('../../dist/tools/set-import/importer.js');
+const importer = require('./importer.js');
 
 const SETS = path.resolve(__dirname, 'sets');
 (async () => {
@@ -134,3 +136,4 @@ const SETS = path.resolve(__dirname, 'sets');
 	].join('\n');
 	fs.writeFileSync(path.resolve(SETS, 'index.js'), indexjs);
 })().catch(err => console.error(err));
+

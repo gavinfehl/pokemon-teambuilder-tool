@@ -3,7 +3,9 @@ import {toID, BasicEffect} from './dex-data';
 import {EventMethods} from './dex-conditions';
 import {Tags} from '../data/tags';
 
-const DEFAULT_MOD = 'gen9';
+const DEFAULT_MOD = 'gen8';
+const MAIN_FORMATS = `${__dirname}/../.config-dist/formats`;
+const CUSTOM_FORMATS = `${__dirname}/../.config-dist/custom-formats`;
 
 export interface FormatData extends Partial<Format>, EventMethods {
 	name: string;
@@ -223,7 +225,7 @@ export class RuleTable extends Map<string, string> {
 		}
 		if (this.valueRules.get('evlimit') === 'Auto') {
 			this.evLimit = dex.gen > 2 ? 510 : null;
-			if (format.mod === 'gen7letsgo') {
+			if (format.mod === 'letsgo') {
 				this.evLimit = this.has('allowavs') ? null : 0;
 			}
 			// Gen 6 hackmons also has a limit, which is currently implemented
@@ -317,10 +319,6 @@ export class RuleTable extends Map<string, string> {
 			throw new Error(`maxForcedLevel is now a rule: "Adjust Level Down = NUMBER"`);
 		}
 	}
-
-	hasComplexBans() {
-		return (this.complexBans?.length > 0) || (this.complexTeamBans?.length > 0);
-	}
 }
 
 export class Format extends BasicEffect implements Readonly<BasicEffect> {
@@ -377,6 +375,7 @@ export class Format extends BasicEffect implements Readonly<BasicEffect> {
 	declare readonly queue?: ModdedBattleQueue;
 	declare readonly field?: ModdedField;
 	declare readonly actions?: ModdedBattleActions;
+	declare readonly cannotMega?: string[];
 	declare readonly challengeShow?: boolean;
 	declare readonly searchShow?: boolean;
 	declare readonly threads?: string[];
@@ -412,10 +411,9 @@ export class Format extends BasicEffect implements Readonly<BasicEffect> {
 
 	constructor(data: AnyObject) {
 		super(data);
-		// eslint-disable-next-line @typescript-eslint/no-this-alias
 		data = this;
 
-		this.mod = Utils.getString(data.mod) || 'gen9';
+		this.mod = Utils.getString(data.mod) || 'gen8';
 		this.effectType = Utils.getString(data.effectType) as FormatEffectType || 'Format';
 		this.debug = !!data.debug;
 		this.rated = (typeof data.rated === 'string' ? data.rated : data.rated !== false);
@@ -508,16 +506,16 @@ export class DexFormats {
 		// Load formats
 		let customFormats;
 		try {
-			customFormats = require(`${__dirname}/../config/custom-formats`).Formats;
+			customFormats = require(CUSTOM_FORMATS).Formats;
 			if (!Array.isArray(customFormats)) {
 				throw new TypeError(`Exported property 'Formats' from "./config/custom-formats.ts" must be an array`);
 			}
-		} catch (e: any) {
+		} catch (e) {
 			if (e.code !== 'MODULE_NOT_FOUND' && e.code !== 'ENOENT') {
 				throw e;
 			}
 		}
-		let Formats: AnyObject[] = require(`${__dirname}/../config/formats`).Formats;
+		let Formats: AnyObject[] = require(MAIN_FORMATS).Formats;
 		if (!Array.isArray(Formats)) {
 			throw new TypeError(`Exported property 'Formats' from "./config/formats.ts" must be an array`);
 		}
@@ -541,7 +539,7 @@ export class DexFormats {
 			if (format.challengeShow === undefined) format.challengeShow = true;
 			if (format.searchShow === undefined) format.searchShow = true;
 			if (format.tournamentShow === undefined) format.tournamentShow = true;
-			if (format.mod === undefined) format.mod = 'gen9';
+			if (format.mod === undefined) format.mod = 'gen8';
 			if (!this.dex.dexes[format.mod]) throw new Error(`Format "${format.name}" requires nonexistent mod: '${format.mod}'`);
 
 			const ruleset = new Format(format);
@@ -599,7 +597,7 @@ export class DexFormats {
 				try {
 					name = this.validate(name);
 					isTrusted = true;
-				} catch {}
+				} catch (e) {}
 			}
 			const [newName, customRulesString] = name.split('@@@', 2);
 			name = newName.trim();
@@ -813,16 +811,6 @@ export class DexFormats {
 
 		ruleTable.resolveNumbers(format, this.dex);
 
-		const canMegaEvo = this.dex.gen <= 7 || ruleTable.has('+pokemontag:past');
-		if (ruleTable.has('obtainableformes') && canMegaEvo &&
-			ruleTable.isBannedSpecies(this.dex.species.get('rayquazamega')) &&
-			!ruleTable.isBannedSpecies(this.dex.species.get('rayquaza'))
-		) {
-			// Banning Rayquaza-Mega implicitly adds Mega Rayquaza Clause
-			// note that already having it explicitly in the ruleset is ok
-			ruleTable.set('megarayquazaclause', '');
-		}
-
 		for (const rule of ruleTable.keys()) {
 			if ("+*-!".includes(rule.charAt(0))) continue;
 			const subFormat = this.dex.formats.get(rule);
@@ -842,6 +830,7 @@ export class DexFormats {
 		case '-':
 		case '*':
 		case '+':
+			if (format?.team) throw new Error(`We don't currently support bans in generated teams`);
 			if (rule.slice(1).includes('>') || rule.slice(1).includes('+')) {
 				let buf = rule.slice(1);
 				const gtIndex = buf.lastIndexOf('>');
@@ -925,7 +914,7 @@ export class DexFormats {
 			if (table.hasOwnProperty(id)) {
 				if (matchType === 'pokemon') {
 					const species: Species = table[id] as Species;
-					if ((species.otherFormes || species.cosmeticFormes) && ruleid !== species.id + toID(species.baseForme)) {
+					if (species.otherFormes && ruleid !== species.id + toID(species.baseForme)) {
 						matches.push('basepokemon:' + id);
 						continue;
 					}

@@ -299,6 +299,10 @@ export const Items: {[k: string]: ModdedItemData} = {
 			type: "Dragon",
 		},
 	},
+	normalgem: {
+		inherit: true,
+		isNonstandard: null,
+	},
 	occaberry: {
 		inherit: true,
 		naturalGift: {

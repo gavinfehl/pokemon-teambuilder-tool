@@ -201,8 +201,7 @@ export const commands: Chat.ChatCommands = {
 		room.saveSettings();
 	},
 	automodchathelp: [
-		`/automodchat [number], [rank] - Sets modchat [rank] to automatically turn on after [number] minutes with no staff.`,
-		`[number] must be between 5 and 480. Requires: # &`,
+		`/automodchat [number], [rank] - Sets modchat [rank] to automatically turn on after [number] minutes. [number] must be between 5 and 480. Requires: # &`,
 		`/automodchat off - Turns off automodchat.`,
 	],
 
@@ -281,7 +280,6 @@ export const commands: Chat.ChatCommands = {
 			this.add(`|raw|<div class="broadcast-blue"><strong>This room is no longer invite only!</strong><br />Anyone may now join.</div>`);
 			this.addModAction(`${user.name} turned off modjoin.`);
 			this.modlog('MODJOIN', null, 'OFF');
-			if (room.battle) room.battle.inviteOnlySetter = null;
 			room.saveSettings();
 			return;
 		} else if (target === 'sync') {
@@ -315,15 +313,8 @@ export const commands: Chat.ChatCommands = {
 		}
 		room.saveSettings();
 		if (target === 'sync' && !room.settings.modchat) {
-			const lowestGroup = Config.groupsranking.filter(group => {
-				const groupInfo = Users.Auth.getGroup(group);
-				return (
-					groupInfo.symbol !== Users.Auth.defaultSymbol() &&
-					room!.auth.atLeast(user, group) &&
-					Users.Auth.isValidSymbol(groupInfo.symbol)
-				);
-			})[0];
-			if (lowestGroup) void this.parse(`/modchat ${lowestGroup}`);
+			const lowestStaffGroup = Config.groupsranking.filter(group => Config.groups[group]?.mute)[0];
+			if (lowestStaffGroup) void this.parse(`/modchat ${lowestStaffGroup}`);
 		}
 		if (!room.settings.isPrivate) return this.parse('/hiddenroom');
 	},
@@ -567,33 +558,6 @@ export const commands: Chat.ChatCommands = {
 	},
 	emojifilterhelp: [`/emojifilter [on/off] - Toggles filtering messages in the room for emojis. Requires # &`],
 
-	linkfilter(target, room, user) {
-		room = this.requireRoom();
-		if (!target) {
-			return this.sendReply(
-				`This room's link filter is currently: ${room.settings.filterEmojis ? "ON" : "OFF"}`
-			);
-		}
-		this.checkChat();
-		this.checkCan('editroom', null, room);
-
-		if (this.meansYes(target)) {
-			if (room.settings.filterLinks) return this.errorReply(`This room's link filter is already ON`);
-			room.settings.filterLinks = true;
-		} else if (this.meansNo(target)) {
-			if (!room.settings.filterLinks) return this.errorReply(`This room's link filter is already OFF`);
-			room.settings.filterLinks = false;
-		} else {
-			return this.parse("/help linkfilter");
-		}
-		const setting = (room.settings.filterLinks ? "ON" : "OFF");
-		this.privateModAction(`${user.name} turned the link filter ${setting}`);
-		this.modlog('LINK FILTER', null, setting);
-
-		room.saveSettings();
-	},
-	linkfilterhelp: [`/linkfilter [on/off] - Toggles filtering messages in the room for links. Requires # &`],
-
 	banwords: 'banword',
 	banword: {
 		regexadd: 'add',
@@ -662,16 +626,16 @@ export const commands: Chat.ChatCommands = {
 
 			if (!room.settings.banwords) return this.errorReply("This room has no banned phrases.");
 
-			const regexMatch = target.match(/[^,]+(,\d*}[^,]*)?/g);
-			if (!regexMatch) return this.parse('/help banword');
+			let words = target.match(/[^,]+(,\d*}[^,]*)?/g);
+			if (!words) return this.parse('/help banword');
 
-			const words = regexMatch.map(word => word.replace(/\n/g, '').trim()).filter(word => word.length > 0);
+			words = words.map(word => word.replace(/\n/g, '').trim()).filter(word => word.length > 0);
 
 			for (const word of words) {
 				if (!room.settings.banwords.includes(word)) return this.errorReply(`${word} is not a banned phrase in this room.`);
 			}
 
-			room.settings.banwords = room.settings.banwords.filter(w => !words.includes(w));
+			room.settings.banwords = room.settings.banwords.filter(w => !words!.includes(w));
 			room.banwordRegex = null;
 			if (words.length > 1) {
 				this.privateModAction(`The banwords ${words.map(w => `'${w}'`).join(', ')} were removed by ${user.name}.`);
@@ -739,10 +703,6 @@ export const commands: Chat.ChatCommands = {
 		room.saveSettings();
 		return this.modlog(`SHOWAPPROVALS`, null, `${this.meansYes(target) ? `ON` : `OFF`}`);
 	},
-	showapprovalshelp: [
-		`/showapprovals [setting] - Enable or disable the use of media approvals in the current room.`,
-		`Requires: # &`,
-	],
 
 	showmedia(target, room, user) {
 		this.errorReply(`/showmedia has been deprecated. Use /permissions instead.`);
@@ -752,7 +712,7 @@ export const commands: Chat.ChatCommands = {
 	hightraffic(target, room, user) {
 		room = this.requireRoom();
 		if (!target) {
-			return this.sendReply(`This room is: ${room.settings.highTraffic ? 'high traffic' : 'low traffic'}`);
+			return this.sendReply(`This room is: ${!room.settings.highTraffic ? 'high traffic' : 'low traffic'}`);
 		}
 		this.checkCan('makeroom');
 
@@ -1076,7 +1036,6 @@ export const commands: Chat.ChatCommands = {
 	hiddenroom: 'privateroom',
 	secretroom: 'privateroom',
 	publicroom: 'privateroom',
-	unlistroom: 'privateroom',
 	privateroom(target, room, user, connection, cmd) {
 		room = this.requireRoom();
 		if (room.battle) {
@@ -1094,7 +1053,7 @@ export const commands: Chat.ChatCommands = {
 			// higher permissions to modify privacy settings
 			this.checkCan('makeroom');
 		}
-		let setting: boolean | 'hidden' | 'unlisted';
+		let setting: boolean | 'hidden';
 		switch (cmd) {
 		case 'privateroom':
 			return this.parse('/help privateroom');
@@ -1102,12 +1061,7 @@ export const commands: Chat.ChatCommands = {
 			setting = false;
 			break;
 		case 'secretroom':
-			this.checkCan('rangeban');
 			setting = true;
-			break;
-		case 'unlistroom':
-			this.checkCan('rangeban');
-			setting = 'unlisted';
 			break;
 		default:
 			if (room.settings.isPrivate === true && target !== 'force') {
@@ -1280,7 +1234,6 @@ export const commands: Chat.ChatCommands = {
 		this.modlog('UNSUBROOM');
 		return this.addModAction(`This room was unset as a subroom by ${user.name}.`);
 	},
-	unsubroomhelp: [`/unsubroom - Unmarks the current room as a subroom. Requires: &`],
 
 	parentroom: 'subrooms',
 	subrooms(target, room, user, connection, cmd) {
@@ -1345,7 +1298,6 @@ export const commands: Chat.ChatCommands = {
 		this.modlog('ROOMDESC', null, `to "${target}"`);
 		room.saveSettings();
 	},
-	roomdeschelp: [`/roomdesc [description] - Sets the [description] of the current room. Requires: &`],
 
 	topic: 'roomintro',
 	roomintro(target, room, user, connection, cmd) {
@@ -1380,10 +1332,6 @@ export const commands: Chat.ChatCommands = {
 
 		room.saveSettings();
 	},
-	roomintrohelp: [
-		`/roomintro - Display the room introduction of the current room.`,
-		`/roomintro [content] - Set an introduction for the room. Requires: # &`,
-	],
 
 	deletetopic: 'deleteroomintro',
 	deleteroomintro(target, room, user) {
@@ -1397,7 +1345,6 @@ export const commands: Chat.ChatCommands = {
 		delete room.settings.introMessage;
 		room.saveSettings();
 	},
-	deleteroomintrohelp: [`/deleteroomintro - Deletes the current room's introduction. Requires: # &`],
 
 	stafftopic: 'staffintro',
 	staffintro(target, room, user, connection, cmd) {
@@ -1432,7 +1379,6 @@ export const commands: Chat.ChatCommands = {
 		this.roomlog(room.settings.staffMessage.replace(/\n/g, ``));
 		room.saveSettings();
 	},
-	staffintrohelp: [`/staffintro [content] - Set an introduction for staff members. Requires: @ # &`],
 
 	deletestafftopic: 'deletestaffintro',
 	deletestaffintro(target, room, user) {
@@ -1446,7 +1392,6 @@ export const commands: Chat.ChatCommands = {
 		delete room.settings.staffMessage;
 		room.saveSettings();
 	},
-	deletestaffintrohelp: [`/deletestaffintro - Deletes the current room's staff introduction. Requires: @ # &`],
 
 	roomalias(target, room, user) {
 		room = this.requireRoom();
@@ -1530,7 +1475,6 @@ export const commands: Chat.ChatCommands = {
 		const displayIDToName: {[k: string]: Room['settings']['dataCommandTierDisplay']} = {
 			tiers: 'tiers',
 			doublestiers: 'doubles tiers',
-			nationaldextiers: 'National Dex tiers',
 			numbers: 'numbers',
 		};
 
@@ -1596,8 +1540,6 @@ export const commands: Chat.ChatCommands = {
 			return;
 		}
 		if (this.meansNo(target)) {
-			delete room.settings.defaultFormat;
-			room.saveSettings();
 			this.modlog(`DEFAULTFORMAT`, null, 'off');
 			this.privateModAction(`${user.name} removed this room's default format.`);
 			return;
@@ -1678,14 +1620,6 @@ export const roomSettings: Chat.SettingsHandler[] = [
 		],
 	}),
 	room => ({
-		label: "Link filter",
-		permission: 'editroom',
-		options: [
-			[`off`, !room.settings.filterLinks || 'linkfilter off'],
-			[`on`, room.settings.filterLinks || 'linkfilter on'],
-		],
-	}),
-	room => ({
 		label: "Slowchat",
 		permission: room.userCount < SLOWCHAT_USER_REQUIREMENT ? 'bypassall' as any : 'editroom',
 		options: ['off', 5, 10, 20, 30, 60].map(
@@ -1698,10 +1632,6 @@ export const roomSettings: Chat.SettingsHandler[] = [
 		options: [
 			[`tiers`, (room.settings.dataCommandTierDisplay ?? 'tiers') === 'tiers' || `roomtierdisplay tiers`],
 			[`doubles tiers`, room.settings.dataCommandTierDisplay === 'doubles tiers' || `roomtierdisplay doubles tiers`],
-			[
-				`National Dex tiers`,
-				room.settings.dataCommandTierDisplay === 'National Dex tiers' || `roomtierdisplay National Dex tiers`,
-			],
 			[`numbers`, room.settings.dataCommandTierDisplay === 'numbers' || `roomtierdisplay numbers`],
 		],
 	}),

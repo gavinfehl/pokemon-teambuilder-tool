@@ -1,16 +1,13 @@
 import RandomGen3Teams from '../gen3/random-teams';
 import {PRNG, PRNGSeed} from '../../../sim/prng';
-import type {MoveCounter, OldRandomBattleSpecies} from '../gen8/random-teams';
+import type {MoveCounter} from '../../random-teams';
 
 export class RandomGen2Teams extends RandomGen3Teams {
-	randomData: {[species: string]: OldRandomBattleSpecies} = require('./random-data.json');
-
 	constructor(format: string | Format, prng: PRNG | PRNGSeed | null) {
 		super(format, prng);
 		this.moveEnforcementCheckers = {
 			Electric: (movePool, moves, abilities, types, counter) => !counter.get('Electric'),
 			Fire: (movePool, moves, abilities, types, counter) => !counter.get('Fire'),
-			Flying: (movePool, moves, abilities, types, counter) => !counter.get('Flying') && types.has('Ground'),
 			Ground: (movePool, moves, abilities, types, counter) => !counter.get('Ground'),
 			Ice: (movePool, moves, abilities, types, counter) => !counter.get('Ice'),
 			Normal: (movePool, moves, abilities, types, counter) => !counter.get('Normal') && counter.setupType === 'Physical',
@@ -63,22 +60,24 @@ export class RandomGen2Teams extends RandomGen3Teams {
 		// Ineffective to have both
 		case 'doubleedge':
 			return {cull: moves.has('bodyslam') || moves.has('return')};
-		case 'explosion': case 'selfdestruct':
-			return {cull: moves.has('softboiled') || restTalk};
+		case 'explosion':
+			return {cull: moves.has('softboiled')};
 		case 'extremespeed':
 			return {cull: moves.has('bodyslam') || restTalk};
 		case 'hyperbeam':
 			return {cull: moves.has('rockslide')};
+		case 'quickattack': case 'selfdestruct':
+			return {cull: moves.has('rest')};
 		case 'rapidspin':
-			return {cull: !!teamDetails.rapidSpin || !!counter.setupType || moves.has('sleeptalk')};
+			return {cull: !!teamDetails.rapidSpin || moves.has('sleeptalk')};
 		case 'return':
 			return {cull: moves.has('bodyslam')};
 		case 'surf':
 			return {cull: moves.has('hydropump')};
 		case 'thunder':
 			return {cull: moves.has('thunderbolt')};
-		case 'razorleaf':
-			return {cull: moves.has('swordsdance') && movePool.includes('sludgebomb')};
+		case 'gigadrain':
+			return {cull: moves.has('razorleaf') || moves.has('swordsdance') && movePool.includes('sludgebomb')};
 		case 'icebeam':
 			return {cull: moves.has('dragonbreath')};
 		case 'seismictoss':
@@ -93,16 +92,18 @@ export class RandomGen2Teams extends RandomGen3Teams {
 			return {cull: types.has('Ground') && movePool.includes('earthquake')};
 
 		// Status and illegal move rejections
-		case 'confuseray': case 'encore': case 'roar': case 'whirlwind':
+		case 'confuseray': case 'roar': case 'whirlwind':
 			return {cull: restTalk};
+		case 'encore':
+			return {cull: moves.has('bodyslam') || moves.has('surf') || restTalk};
 		case 'lovelykiss':
-			return {cull: ['healbell', 'moonlight', 'morningsun', 'sleeptalk'].some(m => moves.has(m))};
+			return {cull: ['healbell', 'moonlight', 'morningsun'].some(m => moves.has(m)) || restTalk};
 		case 'sleeptalk':
 			return {cull: moves.has('curse') && counter.get('stab') >= 2};
 		case 'softboiled':
 			return {cull: movePool.includes('swordsdance')};
 		case 'spikes':
-			return {cull: !!teamDetails.spikes};
+			return {cull: !!teamDetails.spikes || types.has('Ice') && moves.has('rapidspin')};
 		case 'substitute':
 			return {cull: moves.has('agility') || moves.has('rest')};
 		case 'synthesis':
@@ -122,7 +123,7 @@ export class RandomGen2Teams extends RandomGen3Teams {
 		species: Species,
 	) {
 		// First, the high-priority items
-		if (species.name === 'Ditto') return 'Metal Powder';
+		if (species.name === 'Ditto') return this.sample(['Metal Powder', 'Quick Claw']);
 		if (species.name === 'Farfetch\u2019d') return 'Stick';
 		if (species.name === 'Marowak') return 'Thick Club';
 		if (species.name === 'Pikachu') return 'Light Ball';
@@ -147,8 +148,7 @@ export class RandomGen2Teams extends RandomGen3Teams {
 	randomSet(species: string | Species, teamDetails: RandomTeamsTypes.TeamDetails = {}): RandomTeamsTypes.RandomSet {
 		species = this.dex.species.get(species);
 
-		const data = this.randomData[species.id];
-		const movePool = (data.moves || Object.keys(this.dex.species.getLearnset(species.id)!)).slice();
+		const movePool = (species.randomBattleMoves || Object.keys(this.dex.data.Learnsets[species.id]!.learnset!)).slice();
 		const rejectedPool: string[] = [];
 		const moves = new Set<string>();
 
@@ -167,7 +167,7 @@ export class RandomGen2Teams extends RandomGen3Teams {
 
 		do {
 			// Choose next 4 moves from learnset/viable moves and add them to moves list:
-			while (moves.size < this.maxMoveCount && movePool.length) {
+			while (moves.size < 4 && movePool.length) {
 				const moveid = this.sampleNoReplace(movePool);
 				if (moveid.startsWith('hiddenpower')) {
 					availableHP--;
@@ -176,7 +176,7 @@ export class RandomGen2Teams extends RandomGen3Teams {
 				}
 				moves.add(moveid);
 			}
-			while (moves.size < this.maxMoveCount && rejectedPool.length) {
+			while (moves.size < 4 && rejectedPool.length) {
 				const moveid = this.sampleNoReplace(rejectedPool);
 				if (moveid.startsWith('hiddenpower')) {
 					if (hasHiddenPower) continue;
@@ -251,7 +251,7 @@ export class RandomGen2Teams extends RandomGen3Teams {
 					break;
 				}
 			}
-		} while (moves.size < this.maxMoveCount && (movePool.length || rejectedPool.length));
+		} while (moves.size < 4 && (movePool.length || rejectedPool.length));
 
 		// Adjust IVs for Hidden Power
 		for (const setMoveid of moves) {
@@ -291,14 +291,17 @@ export class RandomGen2Teams extends RandomGen3Teams {
 			OU: 65,
 			Uber: 61,
 		};
-
-		const level = this.adjustLevel || data.level || levelScale[species.tier] || 80;
+		const customScale: {[k: string]: number} = {
+			Ditto: 83, Unown: 87, Wobbuffet: 83,
+		};
+		let level = levelScale[species.tier] || 80;
+		if (customScale[species.name]) level = customScale[species.name];
 
 		return {
 			name: species.name,
 			species: species.name,
 			moves: Array.from(moves),
-			ability: 'No Ability',
+			ability: 'None',
 			evs: {hp: 255, atk: 255, def: 255, spa: 255, spd: 255, spe: 255},
 			ivs,
 			item: this.getItem('None', types, moves, counter, species),

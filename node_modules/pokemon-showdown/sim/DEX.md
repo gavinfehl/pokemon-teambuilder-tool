@@ -30,7 +30,7 @@ const {Dex} = require('pokemon-showdown');
 
 const frobnicate = Dex.moves.get('frobnicate');
 console.log(frobnicate.exists); // prints false
-console.log(frobnicate.isNonstandard); // prints 'Custom'
+console.log(missingno.isNonstandard); // prints 'Custom'
 
 const tomohawk = Dex.species.get('tomohawk');
 console.log(tomohawk.exists); // prints true
@@ -68,8 +68,6 @@ Return values have not been stabilized yet. Use the TypeScript definitions if yo
 
 `dex: ModdedDex`
 ----------------
-
-Remember: `dex` refers to either `Dex` or `Dex.mod(modID)`.
 
 `dex.moves.get(moveName: string): Move`
 

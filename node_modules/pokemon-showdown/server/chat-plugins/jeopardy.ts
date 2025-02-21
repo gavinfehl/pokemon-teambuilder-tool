@@ -16,7 +16,8 @@ interface Question {
 
 type JeopardyState = 'signups' | 'selecting' | 'answering' | 'wagering' | 'buzzing' | 'checking' | 'round2';
 
-export class Jeopardy extends Rooms.RoomGame<JeopardyGamePlayer> {
+export class Jeopardy extends Rooms.RoomGame {
+	playerTable: {[userid: string]: JeopardyGamePlayer};
 	host: User;
 	state: JeopardyState;
 	gameid: ID;
@@ -46,6 +47,7 @@ export class Jeopardy extends Rooms.RoomGame<JeopardyGamePlayer> {
 	constructor(room: Room, user: User, categoryCount: number, questionCount: number, playerCap: number) {
 		super(room);
 		this.gameNumber = room.nextGameNumber();
+		this.playerTable = Object.create(null);
 		this.host = user;
 		this.allowRenames = true;
 		this.state = "signups";
@@ -244,7 +246,7 @@ export class Jeopardy extends Rooms.RoomGame<JeopardyGamePlayer> {
 			this.curPlayer = null!;
 		}
 		this.clearBuzzes();
-		this.room.addRaw(Utils.html`<div class="broadcast-blue">Your question is: ${this.question.question}</div>`);
+		this.room.addRaw(`<div class="broadcast-blue">Your question is: ${this.question.question}</div>`);
 		if (!this.finals) {
 			this.canBuzz = false;
 			this.update(true);
@@ -565,7 +567,7 @@ export class Jeopardy extends Rooms.RoomGame<JeopardyGamePlayer> {
 	}
 }
 
-class JeopardyGamePlayer extends Rooms.RoomGamePlayer<Jeopardy> {
+class JeopardyGamePlayer extends Rooms.RoomGamePlayer {
 	answer: string;
 	points: number;
 	wager: number;
@@ -724,7 +726,9 @@ export const commands: Chat.ChatCommands = {
 				catStart = 'finals';
 				params.splice(0, 1);
 			} else {
-				if (isNaN(Utils.parseExactInt(params[0])) || isNaN(Utils.parseExactInt(params[1]))) {
+				// TODO: use Utils.parseExactInt once #8331 is merged
+				const numberRegex = /^(\s+)?\d+(\s+)?$/;
+				if (!numberRegex.test(params[0]) || !numberRegex.test(params[1])) {
 					return this.errorReply(`You must specify numeric values for Category Number Start and Question Number Start.`);
 				}
 				catStart = parseInt(params[0]);
