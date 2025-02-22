@@ -157,7 +157,7 @@
   {
     "name": "Tapu Lele",
     "species": "Tapu Lele",
-    "item": null,
+    "item": "",
     "ability": "Psychic Surge",
     "gender": "N",
     "nature": "Serious",
