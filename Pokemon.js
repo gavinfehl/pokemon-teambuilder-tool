@@ -73,14 +73,14 @@ class Pokemon {
     constructor(species, 
                 name = null,
                 gender = null,
-                ability = 'No Ability',
+                ability = null,
                 level = 100, 
                 nature = "Serious",
                 happiness = 255,
                 shiny = false, 
                 hiddenpowertype = 'Dark',
                 teratype = 'Normal',
-                item = 'No Item',
+                item = null,
                 ivs = { hp: 31, atk: 31, def: 31, spa: 31, spd: 31, spe: 31 },
                 evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 },
                 moveset = {move1: null, move2: null, move3: null, move4: null,}
@@ -102,9 +102,10 @@ class Pokemon {
             hiddenpowertype: hiddenpowertype,
             teratype: teratype,
             item: item,
-            ability: ability,
+            ability: ability || this.dex.abilities[0],
             potentialAbilities: this.dex.abilities,
-            weight: this.dex.weight
+            weight: this.dex.weight,
+            bst: this.dex.baseStats.hp +this.dex.baseStats.atk +this.dex.baseStats.def +this.dex.baseStats.spa +this.dex.baseStats.spd +this.dex.baseStats.spe
         };
         this.baseStats = {
             hp:this.dex.baseStats.hp,
@@ -114,7 +115,6 @@ class Pokemon {
             specialDefense:this.dex.baseStats.spd,
             speed:this.dex.baseStats.spe,
           };
-        this.bst =this.dex.baseStats.hp +this.dex.baseStats.atk +this.dex.baseStats.def +this.dex.baseStats.spa +this.dex.baseStats.spd +this.dex.baseStats.spe;
         this.ivs = ivs;
         this.evs = evs;
         this.learnset =this.dex.learnset;
@@ -148,7 +148,20 @@ class Pokemon {
 
 
     // Methods
-    
+    toJSON() {
+        return {
+            name: this.species,
+            species: this.species,
+            item: this.info.item,
+            ability: this.info.ability,
+            gender: this.info.gender,
+            nature: this.info.nature,
+            evs: this.evs,
+            ivs: this.ivs,
+            moves: Object.values(this.moveset).filter(move => move !== null),
+            level: this.info.level,
+        };
+    }
 
 
     toString() {
@@ -173,6 +186,8 @@ class Pokemon {
         return '========================================\n' +
                `NAME: ${this.info.name}\n` +
                `SPECIES: ${this.species}\n` +
+               `ITEM: ${this.info.item}\n` +
+               `ABILITY: ${this.info.ability}\n` +
                `GENDER: ${this.info.gender}\n` +
                `TIER: ${this.info.tier}\n` +
                `NATURE: ${getNatureDescription(this.info.nature)}\n` +
@@ -190,7 +205,7 @@ class Pokemon {
                '----------------------------------------\n' +
                `MOVES: ` + movesetstring + "\n" +
                '----------------------------------------\n' +
-               `BST: ${this.bst}\n` +
+               `BST: ${this.info.bst}\n` +
                `SPRITERELPATH: ${this.displayinfo.spriteRelativePath}\n` +
                '========================================\n';
     }

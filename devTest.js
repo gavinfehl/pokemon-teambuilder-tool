@@ -14,7 +14,9 @@ function showMenu() {
     console.log('1. Add Pokémon');
     console.log('2. Remove Pokémon');
     console.log('3. View Team');
-    console.log('4. Exit');
+    console.log('4. Import Team');
+    console.log('5. Export Team');
+    console.log('6. Exit');
     rl.question('Choose an option: ', handleMenu);
 }
 
@@ -37,6 +39,14 @@ function handleMenu(option) {
             showMenu();
             break;
         case '4':
+            pokemonTeam.importTeam();
+            showMenu();
+            break;
+        case '5':
+            pokemonTeam.exportTeam();
+            showMenu();
+            break;
+        case '6':
             rl.close();
             break;
         default:
