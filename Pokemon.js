@@ -16,7 +16,7 @@ const modifiers = {
     //SWEET
         Timid:      { spe: 1.1, atk: 0.9 },
         Hasty:      { spe: 1.1, def: 0.9 },
-        Serious:    {spe: 1.1, def: 0.9},
+        Serious:    {},
         Jolly:      { spe: 1.1, spa: 0.9 },
         Naive:      { spe: 1.1, spd: 0.9 },
     //BITTER
@@ -48,7 +48,7 @@ function calculateHP(base, iv, ev, level) {
 function getNatureDescription(nature) {
     const modifier = modifiers[nature];
     if (!modifier) return `${nature} (Unknown Nature)`;
-    
+
     const descriptions = {
         atk: "Atk",
         def: "Def",
@@ -60,11 +60,13 @@ function getNatureDescription(nature) {
     const positive = Object.entries(modifier).find(([_, value]) => value > 1);
     const negative = Object.entries(modifier).find(([_, value]) => value < 1);
 
-    if (positive && negative) {
-        return `${nature} (+${descriptions[positive[0]]}, -${descriptions[negative[0]]})`;
+    if (!positive && !negative) {
+        return `${nature} (Neutral Nature)`;
     }
-    return `${nature} (Neutral Nature)`;
+
+    return `${nature} (+${descriptions[positive?.[0]] || "None"}, -${descriptions[negative?.[0]] || "None"})`;
 }
+
 
 
 class Pokemon {
@@ -93,9 +95,10 @@ class Pokemon {
             tier: this.dex.tier,
             level: level,
             nature: nature,
-            natureModifier: modifiers[nature] || modifiers.Serious,
+            natureModifier: modifiers[nature],
             happiness: happiness,
             shiny: shiny, 
+            facingRight: false,
             hiddenpowertype: hiddenpowertype,
             teratype: teratype,
             item: item,
@@ -118,8 +121,7 @@ class Pokemon {
         this.moveset = moveset;
         //TODO: ADD GENERATION SPECIFIC SPRITES
         this.displayinfo = {
-            facingRight: false,
-            spriteRelativePath: (this.dex.exists) ? "node_modules/pokesprite-images/pokemon-gen7x/"+(shiny ? "shiny" : "regular")+(facingRight ? "/right" : "")+"/"+(this.species)+".png" : "node_modules/pokesprite-images/pokemon-gen7x/unknown-gen5.png",
+            spriteRelativePath: (this.dex.exists) ? "node_modules/pokesprite-images/pokemon-gen7x/"+(shiny ? "shiny" : "regular")+(this.info.facingRight ? "/right" : "")+"/"+(this.species)+".png" : "node_modules/pokesprite-images/pokemon-gen7x/unknown-gen5.png",
             type1spriteRelativePath: "node_modules/pokesprite-images/misc/type-logos/gen8/"+this.dex.types[0]+".png",
             type2spriteRelativePath: "node_modules/pokesprite-images/misc/type-logos/gen8/"+this.dex.types[1]+".png",
         }
@@ -174,7 +176,7 @@ class Pokemon {
                `GENDER: ${this.info.gender}\n` +
                `TIER: ${this.info.tier}\n` +
                `NATURE: ${getNatureDescription(this.info.nature)}\n` +
-               `TYPES : ${this.info.types[0]}, ${this.info.types[1]}\n` +
+               `TYPE${(this.info.types[1]==undefined ? "" : "S")}: ${this.info.types[0]||"None"}, ${this.info.types[1]||"None"}\n` +
                '----------------------------------------\n' +
                `HP : ${this.effectiveStats.hp}\n` +
                `ATK: ${this.effectiveStats.attack}\n` +
@@ -189,7 +191,7 @@ class Pokemon {
                `MOVES: ` + movesetstring + "\n" +
                '----------------------------------------\n' +
                `BST: ${this.bst}\n` +
-               `SPRITERELPATH: ${this.spriteRelativePath}\n` +
+               `SPRITERELPATH: ${this.displayinfo.spriteRelativePath}\n` +
                '========================================\n';
     }
 }
