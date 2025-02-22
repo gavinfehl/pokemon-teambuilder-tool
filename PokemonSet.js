@@ -149,7 +149,7 @@ class PokemonSet {
 
 
 // Team class is a more specific version of PokemonSet that can only have up to 6 Pokémon.
-class Team extends PokemonSet {
+class PokemonTeam extends PokemonSet {
     constructor() {
         super('Team');
     }
@@ -172,5 +172,5 @@ class Team extends PokemonSet {
 
 module.exports = {
     PokemonSet,
-    Team
+    PokemonTeam
 };

@@ -1,13 +1,13 @@
 const readline = require('readline');
 const { Pokemon } = require('./Pokemon');
-const { PokemonSet } = require('./PokemonSet');
+const { PokemonSet, PokemonTeam } = require('./PokemonSet');
 
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
-let pokemonTeam = new PokemonSet();
+let pokemonTeam = new PokemonTeam();
 
 function showMenu() {
     console.log('\nPokémon Team Builder');

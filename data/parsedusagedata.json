@@ -1,0 +1,4238 @@
+[
+  {
+    "rank": "1",
+    "name": "Landorus-Therian",
+    "usage_percent": 39.99615,
+    "viability_ceiling": "Centralizing"
+  },
+  {
+    "rank": "2",
+    "name": "Magearna",
+    "usage_percent": 25.79701,
+    "viability_ceiling": "Centralizing"
+  },
+  {
+    "rank": "3",
+    "name": "Greninja",
+    "usage_percent": 25.78609,
+    "viability_ceiling": "Centralizing"
+  },
+  {
+    "rank": "4",
+    "name": "Tapu Koko",
+    "usage_percent": 18.29701,
+    "viability_ceiling": "Very Popular"
+  },
+  {
+    "rank": "5",
+    "name": "Kartana",
+    "usage_percent": 17.7842,
+    "viability_ceiling": "Very Popular"
+  },
+  {
+    "rank": "6",
+    "name": "Ferrothorn",
+    "usage_percent": 17.1125,
+    "viability_ceiling": "Very Popular"
+  },
+  {
+    "rank": "7",
+    "name": "Heatran",
+    "usage_percent": 15.0828,
+    "viability_ceiling": "Very Popular"
+  },
+  {
+    "rank": "8",
+    "name": "Tapu Lele",
+    "usage_percent": 13.9107,
+    "viability_ceiling": "Popular"
+  },
+  {
+    "rank": "9",
+    "name": "Tapu Fini",
+    "usage_percent": 11.84321,
+    "viability_ceiling": "Popular"
+  },
+  {
+    "rank": "10",
+    "name": "Serperior",
+    "usage_percent": 11.65062,
+    "viability_ceiling": "Popular"
+  },
+  {
+    "rank": "11",
+    "name": "Rotom-Wash",
+    "usage_percent": 11.29303,
+    "viability_ceiling": "Popular"
+  },
+  {
+    "rank": "12",
+    "name": "Chansey",
+    "usage_percent": 10.50282,
+    "viability_ceiling": "Popular"
+  },
+  {
+    "rank": "13",
+    "name": "Toxapex",
+    "usage_percent": 10.36149,
+    "viability_ceiling": "Popular"
+  },
+  {
+    "rank": "14",
+    "name": "Tornadus-Therian",
+    "usage_percent": 10.33913,
+    "viability_ceiling": "Popular"
+  },
+  {
+    "rank": "15",
+    "name": "Hawlucha",
+    "usage_percent": 9.8907,
+    "viability_ceiling": "Popular"
+  },
+  {
+    "rank": "16",
+    "name": "Garchomp",
+    "usage_percent": 9.37551,
+    "viability_ceiling": "Popular"
+  },
+  {
+    "rank": "17",
+    "name": "Zapdos",
+    "usage_percent": 9.24891,
+    "viability_ceiling": "Popular"
+  },
+  {
+    "rank": "18",
+    "name": "Excadrill",
+    "usage_percent": 9.01579,
+    "viability_ceiling": "Popular"
+  },
+  {
+    "rank": "19",
+    "name": "Gliscor",
+    "usage_percent": 8.93664,
+    "viability_ceiling": "Popular"
+  },
+  {
+    "rank": "20",
+    "name": "Volcarona",
+    "usage_percent": 8.63705,
+    "viability_ceiling": "Popular"
+  },
+  {
+    "rank": "21",
+    "name": "Medicham-Mega",
+    "usage_percent": 8.63657,
+    "viability_ceiling": "Popular"
+  },
+  {
+    "rank": "22",
+    "name": "Victini",
+    "usage_percent": 8.32007,
+    "viability_ceiling": "Popular"
+  },
+  {
+    "rank": "23",
+    "name": "Kyurem-Black",
+    "usage_percent": 7.78308,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "24",
+    "name": "Clefable",
+    "usage_percent": 7.62437,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "25",
+    "name": "Kommo-o",
+    "usage_percent": 7.61398,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "26",
+    "name": "Charizard-Mega-X",
+    "usage_percent": 7.4334,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "27",
+    "name": "Alakazam-Mega",
+    "usage_percent": 7.20522,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "28",
+    "name": "Mawile-Mega",
+    "usage_percent": 7.10756,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "29",
+    "name": "Skarmory",
+    "usage_percent": 6.82624,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "30",
+    "name": "Lopunny-Mega",
+    "usage_percent": 6.47499,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "31",
+    "name": "Tapu Bulu",
+    "usage_percent": 6.16765,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "32",
+    "name": "Pelipper",
+    "usage_percent": 6.13902,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "33",
+    "name": "Swampert-Mega",
+    "usage_percent": 5.9198,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "34",
+    "name": "Celesteela",
+    "usage_percent": 5.79162,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "35",
+    "name": "Charizard-Mega-Y",
+    "usage_percent": 5.54458,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "36",
+    "name": "Magnezone",
+    "usage_percent": 5.36081,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "37",
+    "name": "Blacephalon",
+    "usage_percent": 5.1811,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "38",
+    "name": "Scizor-Mega",
+    "usage_percent": 5.05525,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "39",
+    "name": "Diancie-Mega",
+    "usage_percent": 4.81486,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "40",
+    "name": "Tyranitar",
+    "usage_percent": 4.6144,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "41",
+    "name": "Jirachi",
+    "usage_percent": 4.28866,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "42",
+    "name": "Cresselia",
+    "usage_percent": 4.20629,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "43",
+    "name": "Weavile",
+    "usage_percent": 4.12126,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "44",
+    "name": "Dragonite",
+    "usage_percent": 4.07403,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "45",
+    "name": "Sableye-Mega",
+    "usage_percent": 4.03662,
+    "viability_ceiling": "Common"
+  },
+  {
+    "rank": "46",
+    "name": "Tyranitar-Mega",
+    "usage_percent": 3.64688,
+    "viability_ceiling": "Notable"
+  },
+  {
+    "rank": "47",
+    "name": "Gyarados-Mega",
+    "usage_percent": 3.5993,
+    "viability_ceiling": "Notable"
+  },
+  {
+    "rank": "48",
+    "name": "Latias-Mega",
+    "usage_percent": 3.54352,
+    "viability_ceiling": "Notable"
+  },
+  {
+    "rank": "49",
+    "name": "Mimikyu",
+    "usage_percent": 3.21352,
+    "viability_ceiling": "Notable"
+  },
+  {
+    "rank": "50",
+    "name": "Pinsir-Mega",
+    "usage_percent": 3.17942,
+    "viability_ceiling": "Notable"
+  },
+  {
+    "rank": "51",
+    "name": "Tangrowth",
+    "usage_percent": 3.17061,
+    "viability_ceiling": "Notable"
+  },
+  {
+    "rank": "52",
+    "name": "Manaphy",
+    "usage_percent": 2.97984,
+    "viability_ceiling": "Notable"
+  },
+  {
+    "rank": "53",
+    "name": "Keldeo",
+    "usage_percent": 2.93908,
+    "viability_ceiling": "Notable"
+  },
+  {
+    "rank": "54",
+    "name": "Venusaur-Mega",
+    "usage_percent": 2.93669,
+    "viability_ceiling": "Notable"
+  },
+  {
+    "rank": "55",
+    "name": "Azumarill",
+    "usage_percent": 2.79674,
+    "viability_ceiling": "Notable"
+  },
+  {
+    "rank": "56",
+    "name": "Bisharp",
+    "usage_percent": 2.72398,
+    "viability_ceiling": "Notable"
+  },
+  {
+    "rank": "57",
+    "name": "Mew",
+    "usage_percent": 2.48549,
+    "viability_ceiling": "Notable"
+  },
+  {
+    "rank": "58",
+    "name": "Marowak-Alola",
+    "usage_percent": 2.27333,
+    "viability_ceiling": "Notable"
+  },
+  {
+    "rank": "59",
+    "name": "Crawdaunt",
+    "usage_percent": 2.2268,
+    "viability_ceiling": "Notable"
+  },
+  {
+    "rank": "60",
+    "name": "Seismitoad",
+    "usage_percent": 2.1439,
+    "viability_ceiling": "Notable"
+  },
+  {
+    "rank": "61",
+    "name": "Ditto",
+    "usage_percent": 2.07966,
+    "viability_ceiling": "Notable"
+  },
+  {
+    "rank": "62",
+    "name": "Hoopa-Unbound",
+    "usage_percent": 1.96555,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "63",
+    "name": "Beedrill-Mega",
+    "usage_percent": 1.93211,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "64",
+    "name": "Zeraora",
+    "usage_percent": 1.87931,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "65",
+    "name": "Reuniclus",
+    "usage_percent": 1.87646,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "66",
+    "name": "Slowbro",
+    "usage_percent": 1.66681,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "67",
+    "name": "Scizor",
+    "usage_percent": 1.55375,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "68",
+    "name": "Araquanid",
+    "usage_percent": 1.54576,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "69",
+    "name": "Gyarados",
+    "usage_percent": 1.51648,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "70",
+    "name": "Breloom",
+    "usage_percent": 1.50037,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "71",
+    "name": "Thundurus-Therian",
+    "usage_percent": 1.48613,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "72",
+    "name": "Amoonguss",
+    "usage_percent": 1.4437,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "73",
+    "name": "Hippowdon",
+    "usage_percent": 1.43221,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "74",
+    "name": "Starmie",
+    "usage_percent": 1.43146,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "75",
+    "name": "Torkoal",
+    "usage_percent": 1.38333,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "76",
+    "name": "Ninetales-Alola",
+    "usage_percent": 1.37515,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "77",
+    "name": "Muk-Alola",
+    "usage_percent": 1.35677,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "78",
+    "name": "Infernape",
+    "usage_percent": 1.35036,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "79",
+    "name": "Gastrodon",
+    "usage_percent": 1.34369,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "80",
+    "name": "Ribombee",
+    "usage_percent": 1.3363,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "81",
+    "name": "Buzzwole",
+    "usage_percent": 1.33434,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "82",
+    "name": "Porygon-Z",
+    "usage_percent": 1.32035,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "83",
+    "name": "Gallade-Mega",
+    "usage_percent": 1.30042,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "84",
+    "name": "Hydreigon",
+    "usage_percent": 1.27745,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "85",
+    "name": "Quagsire",
+    "usage_percent": 1.25842,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "86",
+    "name": "Gengar",
+    "usage_percent": 1.22564,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "87",
+    "name": "Blissey",
+    "usage_percent": 1.14795,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "88",
+    "name": "Mamoswine",
+    "usage_percent": 1.09935,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "89",
+    "name": "Cloyster",
+    "usage_percent": 1.0931,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "90",
+    "name": "Manectric-Mega",
+    "usage_percent": 1.08742,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "91",
+    "name": "Venusaur",
+    "usage_percent": 1.06384,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "92",
+    "name": "Altaria-Mega",
+    "usage_percent": 1.0539,
+    "viability_ceiling": "Uncommon"
+  },
+  {
+    "rank": "93",
+    "name": "Darmanitan",
+    "usage_percent": 0.99352,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "94",
+    "name": "Goodra",
+    "usage_percent": 0.98506,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "95",
+    "name": "Porygon2",
+    "usage_percent": 0.97418,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "96",
+    "name": "Xurkitree",
+    "usage_percent": 0.9649,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "97",
+    "name": "Kingdra",
+    "usage_percent": 0.95225,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "98",
+    "name": "Arcanine",
+    "usage_percent": 0.94828,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "99",
+    "name": "Latios",
+    "usage_percent": 0.93726,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "100",
+    "name": "Shedinja",
+    "usage_percent": 0.93196,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "101",
+    "name": "Espeon",
+    "usage_percent": 0.89356,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "102",
+    "name": "Salamence",
+    "usage_percent": 0.86936,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "103",
+    "name": "Togekiss",
+    "usage_percent": 0.86437,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "104",
+    "name": "Heracross-Mega",
+    "usage_percent": 0.86344,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "105",
+    "name": "Volcanion",
+    "usage_percent": 0.83928,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "106",
+    "name": "Staraptor",
+    "usage_percent": 0.83891,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "107",
+    "name": "Nidoking",
+    "usage_percent": 0.83341,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "108",
+    "name": "Conkeldurr",
+    "usage_percent": 0.82703,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "109",
+    "name": "Latios-Mega",
+    "usage_percent": 0.82645,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "110",
+    "name": "Garchomp-Mega",
+    "usage_percent": 0.82626,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "111",
+    "name": "Nihilego",
+    "usage_percent": 0.81917,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "112",
+    "name": "Snorlax",
+    "usage_percent": 0.77058,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "113",
+    "name": "Gardevoir-Mega",
+    "usage_percent": 0.76309,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "114",
+    "name": "Shuckle",
+    "usage_percent": 0.71904,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "115",
+    "name": "Slowbro-Mega",
+    "usage_percent": 0.71743,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "116",
+    "name": "Sharpedo-Mega",
+    "usage_percent": 0.70437,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "117",
+    "name": "Azelf",
+    "usage_percent": 0.69971,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "118",
+    "name": "Suicune",
+    "usage_percent": 0.68475,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "119",
+    "name": "Alomomola",
+    "usage_percent": 0.68206,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "120",
+    "name": "Primarina",
+    "usage_percent": 0.66904,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "121",
+    "name": "Uxie",
+    "usage_percent": 0.63172,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "122",
+    "name": "Forretress",
+    "usage_percent": 0.629,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "123",
+    "name": "Chandelure",
+    "usage_percent": 0.62398,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "124",
+    "name": "Carbink",
+    "usage_percent": 0.62175,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "125",
+    "name": "Galvantula",
+    "usage_percent": 0.58663,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "126",
+    "name": "Empoleon",
+    "usage_percent": 0.55059,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "127",
+    "name": "Raichu-Alola",
+    "usage_percent": 0.54728,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "128",
+    "name": "Roserade",
+    "usage_percent": 0.54185,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "129",
+    "name": "Kyurem",
+    "usage_percent": 0.54183,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "130",
+    "name": "Salazzle",
+    "usage_percent": 0.5414,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "131",
+    "name": "Camerupt-Mega",
+    "usage_percent": 0.53924,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "132",
+    "name": "Sceptile-Mega",
+    "usage_percent": 0.53689,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "133",
+    "name": "Krookodile",
+    "usage_percent": 0.52811,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "134",
+    "name": "Aggron-Mega",
+    "usage_percent": 0.51601,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "135",
+    "name": "Mandibuzz",
+    "usage_percent": 0.51514,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "136",
+    "name": "Thundurus",
+    "usage_percent": 0.51305,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "137",
+    "name": "Aerodactyl-Mega",
+    "usage_percent": 0.50795,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "138",
+    "name": "Alakazam",
+    "usage_percent": 0.50451,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "139",
+    "name": "Latias",
+    "usage_percent": 0.49909,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "140",
+    "name": "Diggersby",
+    "usage_percent": 0.49836,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "141",
+    "name": "Umbreon",
+    "usage_percent": 0.47455,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "142",
+    "name": "Scolipede",
+    "usage_percent": 0.46883,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "143",
+    "name": "Mantine",
+    "usage_percent": 0.44366,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "144",
+    "name": "Klefki",
+    "usage_percent": 0.43998,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "145",
+    "name": "Rotom-Heat",
+    "usage_percent": 0.42,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "146",
+    "name": "Crobat",
+    "usage_percent": 0.41733,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "147",
+    "name": "Bronzong",
+    "usage_percent": 0.41649,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "148",
+    "name": "Necrozma",
+    "usage_percent": 0.41128,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "149",
+    "name": "Nidoqueen",
+    "usage_percent": 0.40647,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "150",
+    "name": "Stakataka",
+    "usage_percent": 0.40274,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "151",
+    "name": "Metagross",
+    "usage_percent": 0.39191,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "152",
+    "name": "Pyukumuku",
+    "usage_percent": 0.36985,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "153",
+    "name": "Rhyperior",
+    "usage_percent": 0.36155,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "154",
+    "name": "Incineroar",
+    "usage_percent": 0.34814,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "155",
+    "name": "Lucario",
+    "usage_percent": 0.32957,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "156",
+    "name": "Sylveon",
+    "usage_percent": 0.32198,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "157",
+    "name": "Tentacruel",
+    "usage_percent": 0.32152,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "158",
+    "name": "Aerodactyl",
+    "usage_percent": 0.31878,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "159",
+    "name": "Donphan",
+    "usage_percent": 0.30981,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "160",
+    "name": "Komala",
+    "usage_percent": 0.30071,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "161",
+    "name": "Golisopod",
+    "usage_percent": 0.29772,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "162",
+    "name": "Cofagrigus",
+    "usage_percent": 0.29677,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "163",
+    "name": "Decidueye",
+    "usage_percent": 0.29441,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "164",
+    "name": "Milotic",
+    "usage_percent": 0.2851,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "165",
+    "name": "Raikou",
+    "usage_percent": 0.28035,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "166",
+    "name": "Haxorus",
+    "usage_percent": 0.27858,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "167",
+    "name": "Houndoom-Mega",
+    "usage_percent": 0.2767,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "168",
+    "name": "Glalie-Mega",
+    "usage_percent": 0.27439,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "169",
+    "name": "Talonflame",
+    "usage_percent": 0.27192,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "170",
+    "name": "Feraligatr",
+    "usage_percent": 0.2673,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "171",
+    "name": "Slurpuff",
+    "usage_percent": 0.26705,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "172",
+    "name": "Absol-Mega",
+    "usage_percent": 0.2657,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "173",
+    "name": "Pidgeot-Mega",
+    "usage_percent": 0.25837,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "174",
+    "name": "Florges",
+    "usage_percent": 0.25674,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "175",
+    "name": "Swampert",
+    "usage_percent": 0.25439,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "176",
+    "name": "Hitmonlee",
+    "usage_percent": 0.24844,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "177",
+    "name": "Heracross",
+    "usage_percent": 0.2474,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "178",
+    "name": "Banette-Mega",
+    "usage_percent": 0.24671,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "179",
+    "name": "Ampharos-Mega",
+    "usage_percent": 0.24054,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "180",
+    "name": "Terrakion",
+    "usage_percent": 0.23786,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "181",
+    "name": "Accelgor",
+    "usage_percent": 0.23491,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "182",
+    "name": "Moltres",
+    "usage_percent": 0.22862,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "183",
+    "name": "Escavalier",
+    "usage_percent": 0.2182,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "184",
+    "name": "Blastoise",
+    "usage_percent": 0.21177,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "185",
+    "name": "Gardevoir",
+    "usage_percent": 0.21048,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "186",
+    "name": "Zygarde-10%",
+    "usage_percent": 0.20735,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "187",
+    "name": "Pikachu",
+    "usage_percent": 0.2032,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "188",
+    "name": "Linoone",
+    "usage_percent": 0.20208,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "189",
+    "name": "Jolteon",
+    "usage_percent": 0.20056,
+    "viability_ceiling": "Rare"
+  },
+  {
+    "rank": "190",
+    "name": "Xatu",
+    "usage_percent": 0.19856,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "191",
+    "name": "Golem-Alola",
+    "usage_percent": 0.19784,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "192",
+    "name": "Ludicolo",
+    "usage_percent": 0.19701,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "193",
+    "name": "Aggron",
+    "usage_percent": 0.18883,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "194",
+    "name": "Ninetales",
+    "usage_percent": 0.18775,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "195",
+    "name": "Kecleon",
+    "usage_percent": 0.18718,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "196",
+    "name": "Froslass",
+    "usage_percent": 0.18509,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "197",
+    "name": "Swellow",
+    "usage_percent": 0.1842,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "198",
+    "name": "Politoed",
+    "usage_percent": 0.1834,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "199",
+    "name": "Doublade",
+    "usage_percent": 0.18192,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "200",
+    "name": "Claydol",
+    "usage_percent": 0.18163,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "201",
+    "name": "Sceptile",
+    "usage_percent": 0.1802,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "202",
+    "name": "Toucannon",
+    "usage_percent": 0.17566,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "203",
+    "name": "Noivern",
+    "usage_percent": 0.17535,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "204",
+    "name": "Celebi",
+    "usage_percent": 0.17489,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "205",
+    "name": "Mienshao",
+    "usage_percent": 0.17447,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "206",
+    "name": "Tyrantrum",
+    "usage_percent": 0.17418,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "207",
+    "name": "Whimsicott",
+    "usage_percent": 0.17196,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "208",
+    "name": "Venomoth",
+    "usage_percent": 0.17191,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "209",
+    "name": "Dragalge",
+    "usage_percent": 0.16296,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "210",
+    "name": "Vivillon",
+    "usage_percent": 0.15871,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "211",
+    "name": "Vaporeon",
+    "usage_percent": 0.15744,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "212",
+    "name": "Chesnaught",
+    "usage_percent": 0.15569,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "213",
+    "name": "Machamp",
+    "usage_percent": 0.15156,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "214",
+    "name": "Dhelmise",
+    "usage_percent": 0.15053,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "215",
+    "name": "Toxicroak",
+    "usage_percent": 0.15019,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "216",
+    "name": "Slowking",
+    "usage_percent": 0.14556,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "217",
+    "name": "Blastoise-Mega",
+    "usage_percent": 0.14508,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "218",
+    "name": "Electivire",
+    "usage_percent": 0.14216,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "219",
+    "name": "Steelix-Mega",
+    "usage_percent": 0.14138,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "220",
+    "name": "Jellicent",
+    "usage_percent": 0.13989,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "221",
+    "name": "Cobalion",
+    "usage_percent": 0.13972,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "222",
+    "name": "Miltank",
+    "usage_percent": 0.13722,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "223",
+    "name": "Persian-Alola",
+    "usage_percent": 0.13597,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "224",
+    "name": "Archeops",
+    "usage_percent": 0.13381,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "225",
+    "name": "Lycanroc-Dusk",
+    "usage_percent": 0.13265,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "226",
+    "name": "Victreebel",
+    "usage_percent": 0.1322,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "227",
+    "name": "Aurorus",
+    "usage_percent": 0.13173,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "228",
+    "name": "Zangoose",
+    "usage_percent": 0.12965,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "229",
+    "name": "Sandslash-Alola",
+    "usage_percent": 0.12856,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "230",
+    "name": "Drampa",
+    "usage_percent": 0.12528,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "231",
+    "name": "Abomasnow-Mega",
+    "usage_percent": 0.12169,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "232",
+    "name": "Heliolisk",
+    "usage_percent": 0.12013,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "233",
+    "name": "Bewear",
+    "usage_percent": 0.11916,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "234",
+    "name": "Gourgeist-Super",
+    "usage_percent": 0.11821,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "235",
+    "name": "Typhlosion",
+    "usage_percent": 0.11736,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "236",
+    "name": "Lycanroc",
+    "usage_percent": 0.11658,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "237",
+    "name": "Vikavolt",
+    "usage_percent": 0.11583,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "238",
+    "name": "Golduck",
+    "usage_percent": 0.11512,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "239",
+    "name": "Trevenant",
+    "usage_percent": 0.11463,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "240",
+    "name": "Cinccino",
+    "usage_percent": 0.11453,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "241",
+    "name": "Ambipom",
+    "usage_percent": 0.11402,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "242",
+    "name": "Yanmega",
+    "usage_percent": 0.11311,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "243",
+    "name": "Delphox",
+    "usage_percent": 0.11226,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "244",
+    "name": "Qwilfish",
+    "usage_percent": 0.11216,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "245",
+    "name": "Entei",
+    "usage_percent": 0.11021,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "246",
+    "name": "Lilligant",
+    "usage_percent": 0.10991,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "247",
+    "name": "Exeggutor-Alola",
+    "usage_percent": 0.10595,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "248",
+    "name": "Flygon",
+    "usage_percent": 0.10511,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "249",
+    "name": "Leafeon",
+    "usage_percent": 0.10497,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "250",
+    "name": "Magneton",
+    "usage_percent": 0.10269,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "251",
+    "name": "Smeargle",
+    "usage_percent": 0.10006,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "252",
+    "name": "Eelektross",
+    "usage_percent": 0.09843,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "253",
+    "name": "Togedemaru",
+    "usage_percent": 0.09783,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "254",
+    "name": "Zoroark",
+    "usage_percent": 0.09708,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "255",
+    "name": "Lapras",
+    "usage_percent": 0.09706,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "256",
+    "name": "Dusclops",
+    "usage_percent": 0.09408,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "257",
+    "name": "Exploud",
+    "usage_percent": 0.09308,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "258",
+    "name": "Hitmontop",
+    "usage_percent": 0.09259,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "259",
+    "name": "Glaceon",
+    "usage_percent": 0.09026,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "260",
+    "name": "Piloswine",
+    "usage_percent": 0.08941,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "261",
+    "name": "Masquerain",
+    "usage_percent": 0.0889,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "262",
+    "name": "Sigilyph",
+    "usage_percent": 0.08832,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "263",
+    "name": "Tornadus",
+    "usage_percent": 0.08683,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "264",
+    "name": "Comfey",
+    "usage_percent": 0.08656,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "265",
+    "name": "Druddigon",
+    "usage_percent": 0.08495,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "266",
+    "name": "Meloetta",
+    "usage_percent": 0.08317,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "267",
+    "name": "Rampardos",
+    "usage_percent": 0.07562,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "268",
+    "name": "Registeel",
+    "usage_percent": 0.07526,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "269",
+    "name": "Durant",
+    "usage_percent": 0.07478,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "270",
+    "name": "Spiritomb",
+    "usage_percent": 0.07122,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "271",
+    "name": "Gligar",
+    "usage_percent": 0.06936,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "272",
+    "name": "Kabutops",
+    "usage_percent": 0.06849,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "273",
+    "name": "Guzzlord",
+    "usage_percent": 0.06834,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "274",
+    "name": "Tsareena",
+    "usage_percent": 0.06779,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "275",
+    "name": "Leavanny",
+    "usage_percent": 0.06672,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "276",
+    "name": "Shaymin",
+    "usage_percent": 0.06601,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "277",
+    "name": "Honchkrow",
+    "usage_percent": 0.06524,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "278",
+    "name": "Mudsdale",
+    "usage_percent": 0.0635,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "279",
+    "name": "Sableye",
+    "usage_percent": 0.06209,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "280",
+    "name": "Stunfisk",
+    "usage_percent": 0.06198,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "281",
+    "name": "Minior",
+    "usage_percent": 0.05938,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "282",
+    "name": "Charizard",
+    "usage_percent": 0.05927,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "283",
+    "name": "Gigalith",
+    "usage_percent": 0.05914,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "284",
+    "name": "Chatot",
+    "usage_percent": 0.05713,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "285",
+    "name": "Avalugg",
+    "usage_percent": 0.05636,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "286",
+    "name": "Vileplume",
+    "usage_percent": 0.05579,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "287",
+    "name": "Slaking",
+    "usage_percent": 0.05563,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "288",
+    "name": "Bibarel",
+    "usage_percent": 0.05546,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "289",
+    "name": "Dugtrio",
+    "usage_percent": 0.05541,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "290",
+    "name": "Silvally",
+    "usage_percent": 0.05525,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "291",
+    "name": "Drapion",
+    "usage_percent": 0.05439,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "292",
+    "name": "Wishiwashi",
+    "usage_percent": 0.05367,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "293",
+    "name": "Cryogonal",
+    "usage_percent": 0.05286,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "294",
+    "name": "Dusknoir",
+    "usage_percent": 0.05263,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "295",
+    "name": "Cradily",
+    "usage_percent": 0.05046,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "296",
+    "name": "Malamar",
+    "usage_percent": 0.04912,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "297",
+    "name": "Braviary",
+    "usage_percent": 0.04818,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "298",
+    "name": "Audino",
+    "usage_percent": 0.0479,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "299",
+    "name": "Meowstic",
+    "usage_percent": 0.04708,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "300",
+    "name": "Raichu",
+    "usage_percent": 0.04612,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "301",
+    "name": "Lurantis",
+    "usage_percent": 0.04497,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "302",
+    "name": "Ariados",
+    "usage_percent": 0.04402,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "303",
+    "name": "Mismagius",
+    "usage_percent": 0.04216,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "304",
+    "name": "Carracosta",
+    "usage_percent": 0.04208,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "305",
+    "name": "Stoutland",
+    "usage_percent": 0.04174,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "306",
+    "name": "Scyther",
+    "usage_percent": 0.04026,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "307",
+    "name": "Gallade",
+    "usage_percent": 0.04,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "308",
+    "name": "Rotom",
+    "usage_percent": 0.03996,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "309",
+    "name": "Floatzel",
+    "usage_percent": 0.03578,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "310",
+    "name": "Frogadier",
+    "usage_percent": 0.03519,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "311",
+    "name": "Omastar",
+    "usage_percent": 0.03468,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "312",
+    "name": "Hoopa",
+    "usage_percent": 0.03437,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "313",
+    "name": "Houndoom",
+    "usage_percent": 0.03389,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "314",
+    "name": "Rotom-Mow",
+    "usage_percent": 0.03381,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "315",
+    "name": "Palossand",
+    "usage_percent": 0.03373,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "316",
+    "name": "Steelix",
+    "usage_percent": 0.03354,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "317",
+    "name": "Rhydon",
+    "usage_percent": 0.03338,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "318",
+    "name": "Exeggutor",
+    "usage_percent": 0.03306,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "319",
+    "name": "Pangoro",
+    "usage_percent": 0.03242,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "320",
+    "name": "Ursaring",
+    "usage_percent": 0.03165,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "321",
+    "name": "Samurott",
+    "usage_percent": 0.03134,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "322",
+    "name": "Mimikyu-Totem",
+    "usage_percent": 0.03054,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "323",
+    "name": "Medicham",
+    "usage_percent": 0.03047,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "324",
+    "name": "Golurk",
+    "usage_percent": 0.03023,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "325",
+    "name": "Lickilicky",
+    "usage_percent": 0.03011,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "326",
+    "name": "Aron",
+    "usage_percent": 0.0299,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "327",
+    "name": "Flareon",
+    "usage_percent": 0.02957,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "328",
+    "name": "Pyroar",
+    "usage_percent": 0.02949,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "329",
+    "name": "Emolga",
+    "usage_percent": 0.02921,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "330",
+    "name": "Kingler",
+    "usage_percent": 0.02884,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "331",
+    "name": "Scrafty",
+    "usage_percent": 0.02871,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "332",
+    "name": "Skuntank",
+    "usage_percent": 0.02825,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "333",
+    "name": "Electrode",
+    "usage_percent": 0.02819,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "334",
+    "name": "Rotom-Frost",
+    "usage_percent": 0.02818,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "335",
+    "name": "Poliwrath",
+    "usage_percent": 0.02785,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "336",
+    "name": "Regice",
+    "usage_percent": 0.02733,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "337",
+    "name": "Beheeyem",
+    "usage_percent": 0.02726,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "338",
+    "name": "Armaldo",
+    "usage_percent": 0.02656,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "339",
+    "name": "Bruxish",
+    "usage_percent": 0.02585,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "340",
+    "name": "Clawitzer",
+    "usage_percent": 0.0257,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "341",
+    "name": "Marowak",
+    "usage_percent": 0.02495,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "342",
+    "name": "Lycanroc-Midnight",
+    "usage_percent": 0.02457,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "343",
+    "name": "Dugtrio-Alola",
+    "usage_percent": 0.02435,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "344",
+    "name": "Liepard",
+    "usage_percent": 0.02435,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "345",
+    "name": "Roselia",
+    "usage_percent": 0.02429,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "346",
+    "name": "Torterra",
+    "usage_percent": 0.02371,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "347",
+    "name": "Lanturn",
+    "usage_percent": 0.02357,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "348",
+    "name": "Mr. Mime",
+    "usage_percent": 0.02355,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "349",
+    "name": "Tangela",
+    "usage_percent": 0.02314,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "350",
+    "name": "Diancie",
+    "usage_percent": 0.02259,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "351",
+    "name": "Audino-Mega",
+    "usage_percent": 0.02241,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "352",
+    "name": "Taillow",
+    "usage_percent": 0.02225,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "353",
+    "name": "Froakie",
+    "usage_percent": 0.02177,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "354",
+    "name": "Sharpedo",
+    "usage_percent": 0.02173,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "355",
+    "name": "Magnemite",
+    "usage_percent": 0.02138,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "356",
+    "name": "Silvally-Steel",
+    "usage_percent": 0.02125,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "357",
+    "name": "Emboar",
+    "usage_percent": 0.0212,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "358",
+    "name": "Sawsbuck",
+    "usage_percent": 0.02118,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "359",
+    "name": "Probopass",
+    "usage_percent": 0.02112,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "360",
+    "name": "Aromatisse",
+    "usage_percent": 0.0206,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "361",
+    "name": "Dedenne",
+    "usage_percent": 0.02053,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "362",
+    "name": "Crustle",
+    "usage_percent": 0.02033,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "363",
+    "name": "Gogoat",
+    "usage_percent": 0.01964,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "364",
+    "name": "Cacturne",
+    "usage_percent": 0.0193,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "365",
+    "name": "Sawk",
+    "usage_percent": 0.01928,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "366",
+    "name": "Silvally-Dragon",
+    "usage_percent": 0.01914,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "367",
+    "name": "Swanna",
+    "usage_percent": 0.01902,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "368",
+    "name": "Golbat",
+    "usage_percent": 0.01885,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "369",
+    "name": "Magcargo",
+    "usage_percent": 0.01852,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "370",
+    "name": "Magmortar",
+    "usage_percent": 0.01844,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "371",
+    "name": "Butterfree",
+    "usage_percent": 0.01826,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "372",
+    "name": "Klinklang",
+    "usage_percent": 0.01816,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "373",
+    "name": "Vanilluxe",
+    "usage_percent": 0.01813,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "374",
+    "name": "Jumpluff",
+    "usage_percent": 0.01776,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "375",
+    "name": "Murkrow",
+    "usage_percent": 0.0177,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "376",
+    "name": "Weezing",
+    "usage_percent": 0.01714,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "377",
+    "name": "Articuno",
+    "usage_percent": 0.01713,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "378",
+    "name": "Dustox",
+    "usage_percent": 0.01668,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "379",
+    "name": "Dodrio",
+    "usage_percent": 0.01665,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "380",
+    "name": "Ninjask",
+    "usage_percent": 0.01657,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "381",
+    "name": "Hariyama",
+    "usage_percent": 0.01633,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "382",
+    "name": "Ampharos",
+    "usage_percent": 0.01596,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "383",
+    "name": "Plusle",
+    "usage_percent": 0.01584,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "384",
+    "name": "Tauros",
+    "usage_percent": 0.01572,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "385",
+    "name": "Riolu",
+    "usage_percent": 0.01534,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "386",
+    "name": "Regirock",
+    "usage_percent": 0.01482,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "387",
+    "name": "Regigigas",
+    "usage_percent": 0.01467,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "388",
+    "name": "Virizion",
+    "usage_percent": 0.01435,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "389",
+    "name": "Sandslash",
+    "usage_percent": 0.01434,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "390",
+    "name": "Simisage",
+    "usage_percent": 0.01419,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "391",
+    "name": "Golem",
+    "usage_percent": 0.01413,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "392",
+    "name": "Whiscash",
+    "usage_percent": 0.01372,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "393",
+    "name": "Volbeat",
+    "usage_percent": 0.01356,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "394",
+    "name": "Turtonator",
+    "usage_percent": 0.01337,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "395",
+    "name": "Drifblim",
+    "usage_percent": 0.01301,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "396",
+    "name": "Passimian",
+    "usage_percent": 0.0124,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "397",
+    "name": "Beartic",
+    "usage_percent": 0.01239,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "398",
+    "name": "Delibird",
+    "usage_percent": 0.01237,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "399",
+    "name": "Meganium",
+    "usage_percent": 0.01184,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "400",
+    "name": "Croagunk",
+    "usage_percent": 0.01181,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "401",
+    "name": "Gorebyss",
+    "usage_percent": 0.01176,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "402",
+    "name": "Rattata",
+    "usage_percent": 0.01172,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "403",
+    "name": "Crabominable",
+    "usage_percent": 0.01132,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "404",
+    "name": "Hitmonchan",
+    "usage_percent": 0.01111,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "405",
+    "name": "Jynx",
+    "usage_percent": 0.0111,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "406",
+    "name": "Pineco",
+    "usage_percent": 0.01109,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "407",
+    "name": "Cottonee",
+    "usage_percent": 0.01099,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "408",
+    "name": "Lopunny",
+    "usage_percent": 0.01089,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "409",
+    "name": "Absol",
+    "usage_percent": 0.0108,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "410",
+    "name": "Wobbuffet",
+    "usage_percent": 0.01054,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "411",
+    "name": "Luxray",
+    "usage_percent": 0.01033,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "412",
+    "name": "Shiftry",
+    "usage_percent": 0.01032,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "413",
+    "name": "Oranguru",
+    "usage_percent": 0.01028,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "414",
+    "name": "Dunsparce",
+    "usage_percent": 0.00995,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "415",
+    "name": "Bouffalant",
+    "usage_percent": 0.0099,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "416",
+    "name": "Corsola",
+    "usage_percent": 0.0097,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "417",
+    "name": "Garbodor",
+    "usage_percent": 0.00964,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "418",
+    "name": "Persian",
+    "usage_percent": 0.0096,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "419",
+    "name": "Granbull",
+    "usage_percent": 0.00953,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "420",
+    "name": "Purugly",
+    "usage_percent": 0.00953,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "421",
+    "name": "Eevee",
+    "usage_percent": 0.00939,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "422",
+    "name": "Arbok",
+    "usage_percent": 0.00919,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "423",
+    "name": "Primeape",
+    "usage_percent": 0.00918,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "424",
+    "name": "Wailord",
+    "usage_percent": 0.00879,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "425",
+    "name": "Mawile",
+    "usage_percent": 0.00866,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "426",
+    "name": "Wormadam-Sandy",
+    "usage_percent": 0.00858,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "427",
+    "name": "Raticate",
+    "usage_percent": 0.00841,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "428",
+    "name": "Musharna",
+    "usage_percent": 0.00837,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "429",
+    "name": "Gurdurr",
+    "usage_percent": 0.00814,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "430",
+    "name": "Abomasnow",
+    "usage_percent": 0.00813,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "431",
+    "name": "Dragonair",
+    "usage_percent": 0.00811,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "432",
+    "name": "Oricorio-Pom-Pom",
+    "usage_percent": 0.00789,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "433",
+    "name": "Barbaracle",
+    "usage_percent": 0.00759,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "434",
+    "name": "Swoobat",
+    "usage_percent": 0.00745,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "435",
+    "name": "Hypno",
+    "usage_percent": 0.00734,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "436",
+    "name": "Manectric",
+    "usage_percent": 0.00729,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "437",
+    "name": "Silvally-Electric",
+    "usage_percent": 0.00697,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "438",
+    "name": "Kangaskhan",
+    "usage_percent": 0.00683,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "439",
+    "name": "Muk",
+    "usage_percent": 0.00678,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "440",
+    "name": "Parasect",
+    "usage_percent": 0.00666,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "441",
+    "name": "Rapidash",
+    "usage_percent": 0.00665,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "442",
+    "name": "Walrein",
+    "usage_percent": 0.00651,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "443",
+    "name": "Zebstrika",
+    "usage_percent": 0.00646,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "444",
+    "name": "Silvally-Ground",
+    "usage_percent": 0.00638,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "445",
+    "name": "Shiinotic",
+    "usage_percent": 0.00623,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "446",
+    "name": "Sunflora",
+    "usage_percent": 0.00606,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "447",
+    "name": "Wigglytuff",
+    "usage_percent": 0.00588,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "448",
+    "name": "Oricorio-Sensu",
+    "usage_percent": 0.00576,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "449",
+    "name": "Hippopotas",
+    "usage_percent": 0.00574,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "450",
+    "name": "Ferroseed",
+    "usage_percent": 0.00568,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "451",
+    "name": "Unfezant",
+    "usage_percent": 0.00565,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "452",
+    "name": "Illumise",
+    "usage_percent": 0.00553,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "453",
+    "name": "Simipour",
+    "usage_percent": 0.00537,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "454",
+    "name": "Altaria",
+    "usage_percent": 0.00537,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "455",
+    "name": "Seaking",
+    "usage_percent": 0.00529,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "456",
+    "name": "Silvally-Fire",
+    "usage_percent": 0.00514,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "457",
+    "name": "Bidoof",
+    "usage_percent": 0.0051,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "458",
+    "name": "Clamperl",
+    "usage_percent": 0.00489,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "459",
+    "name": "Misdreavus",
+    "usage_percent": 0.00486,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "460",
+    "name": "Furfrou",
+    "usage_percent": 0.00482,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "461",
+    "name": "Furret",
+    "usage_percent": 0.0048,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "462",
+    "name": "Kricketune",
+    "usage_percent": 0.00477,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "463",
+    "name": "Abra",
+    "usage_percent": 0.00462,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "464",
+    "name": "Bastiodon",
+    "usage_percent": 0.00458,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "465",
+    "name": "Silvally-Fairy",
+    "usage_percent": 0.00443,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "466",
+    "name": "Gumshoos",
+    "usage_percent": 0.00441,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "467",
+    "name": "Pachirisu",
+    "usage_percent": 0.0043,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "468",
+    "name": "Purrloin",
+    "usage_percent": 0.00422,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "469",
+    "name": "Simisear",
+    "usage_percent": 0.00419,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "470",
+    "name": "Beautifly",
+    "usage_percent": 0.00412,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "471",
+    "name": "Seviper",
+    "usage_percent": 0.00412,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "472",
+    "name": "Pidgeot",
+    "usage_percent": 0.00407,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "473",
+    "name": "Sudowoodo",
+    "usage_percent": 0.00404,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "474",
+    "name": "Duosion",
+    "usage_percent": 0.00389,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "475",
+    "name": "Bellossom",
+    "usage_percent": 0.00377,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "476",
+    "name": "Silvally-Ghost",
+    "usage_percent": 0.00359,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "477",
+    "name": "Kadabra",
+    "usage_percent": 0.00356,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "478",
+    "name": "Mesprit",
+    "usage_percent": 0.00351,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "479",
+    "name": "Pinsir",
+    "usage_percent": 0.0035,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "480",
+    "name": "Tropius",
+    "usage_percent": 0.00326,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "481",
+    "name": "Rotom-Fan",
+    "usage_percent": 0.00325,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "482",
+    "name": "Dewgong",
+    "usage_percent": 0.00321,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "483",
+    "name": "Togetic",
+    "usage_percent": 0.00317,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "484",
+    "name": "Relicanth",
+    "usage_percent": 0.00315,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "485",
+    "name": "Poipole",
+    "usage_percent": 0.00313,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "486",
+    "name": "Octillery",
+    "usage_percent": 0.00313,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "487",
+    "name": "Raticate-Alola",
+    "usage_percent": 0.00308,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "488",
+    "name": "Banette",
+    "usage_percent": 0.00289,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "489",
+    "name": "Cherrim",
+    "usage_percent": 0.00286,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "490",
+    "name": "Silvally-Ice",
+    "usage_percent": 0.00286,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "491",
+    "name": "Haunter",
+    "usage_percent": 0.00285,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "492",
+    "name": "Drilbur",
+    "usage_percent": 0.00275,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "493",
+    "name": "Onix",
+    "usage_percent": 0.00274,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "494",
+    "name": "Charmander",
+    "usage_percent": 0.00265,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "495",
+    "name": "Throh",
+    "usage_percent": 0.00265,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "496",
+    "name": "Swadloon",
+    "usage_percent": 0.00263,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "497",
+    "name": "Munchlax",
+    "usage_percent": 0.00261,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "498",
+    "name": "Vullaby",
+    "usage_percent": 0.00261,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "499",
+    "name": "Minun",
+    "usage_percent": 0.0026,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "500",
+    "name": "Combee",
+    "usage_percent": 0.00241,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "501",
+    "name": "Braixen",
+    "usage_percent": 0.00241,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "502",
+    "name": "Roggenrola",
+    "usage_percent": 0.0022,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "503",
+    "name": "Combusken",
+    "usage_percent": 0.00218,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "504",
+    "name": "Ralts",
+    "usage_percent": 0.00215,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "505",
+    "name": "Oricorio",
+    "usage_percent": 0.00215,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "506",
+    "name": "Noctowl",
+    "usage_percent": 0.00214,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "507",
+    "name": "Chimecho",
+    "usage_percent": 0.00207,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "508",
+    "name": "Gastly",
+    "usage_percent": 0.00206,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "509",
+    "name": "Silvally-Water",
+    "usage_percent": 0.00205,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "510",
+    "name": "Chikorita",
+    "usage_percent": 0.00199,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "511",
+    "name": "Fearow",
+    "usage_percent": 0.00196,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "512",
+    "name": "Spinda",
+    "usage_percent": 0.00195,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "513",
+    "name": "Salazzle-Totem",
+    "usage_percent": 0.00193,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "514",
+    "name": "Oddish",
+    "usage_percent": 0.00191,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "515",
+    "name": "Castform",
+    "usage_percent": 0.0019,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "516",
+    "name": "Delcatty",
+    "usage_percent": 0.00188,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "517",
+    "name": "Starly",
+    "usage_percent": 0.00168,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "518",
+    "name": "Trapinch",
+    "usage_percent": 0.00157,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "519",
+    "name": "Gothitelle",
+    "usage_percent": 0.00153,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "520",
+    "name": "Electabuzz",
+    "usage_percent": 0.00151,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "521",
+    "name": "Gourgeist-Large",
+    "usage_percent": 0.00145,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "522",
+    "name": "Nosepass",
+    "usage_percent": 0.00144,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "523",
+    "name": "Bayleef",
+    "usage_percent": 0.00143,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "524",
+    "name": "Oricorio-Pa'u",
+    "usage_percent": 0.00139,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "525",
+    "name": "Rowlet",
+    "usage_percent": 0.00136,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "526",
+    "name": "Mightyena",
+    "usage_percent": 0.00131,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "527",
+    "name": "Mareanie",
+    "usage_percent": 0.00127,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "528",
+    "name": "Silvally-Dark",
+    "usage_percent": 0.00124,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "529",
+    "name": "Bulbasaur",
+    "usage_percent": 0.00122,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "530",
+    "name": "Solrock",
+    "usage_percent": 0.00119,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "531",
+    "name": "Camerupt",
+    "usage_percent": 0.00117,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "532",
+    "name": "Marill",
+    "usage_percent": 0.00117,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "533",
+    "name": "Clefairy",
+    "usage_percent": 0.00115,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "534",
+    "name": "Silvally-Psychic",
+    "usage_percent": 0.00113,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "535",
+    "name": "Maractus",
+    "usage_percent": 0.00113,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "536",
+    "name": "Piplup",
+    "usage_percent": 0.00112,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "537",
+    "name": "Pichu",
+    "usage_percent": 0.0011,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "538",
+    "name": "Lairon",
+    "usage_percent": 0.00108,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "539",
+    "name": "Magikarp",
+    "usage_percent": 0.00106,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "540",
+    "name": "Sneasel",
+    "usage_percent": 0.00104,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "541",
+    "name": "Croconaw",
+    "usage_percent": 0.00102,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "542",
+    "name": "Silvally-Flying",
+    "usage_percent": 0.00101,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "543",
+    "name": "Beedrill",
+    "usage_percent": 0.00099,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "544",
+    "name": "Basculin",
+    "usage_percent": 0.00094,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "545",
+    "name": "Vanillish",
+    "usage_percent": 0.00093,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "546",
+    "name": "Vulpix-Alola",
+    "usage_percent": 0.00092,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "547",
+    "name": "Gloom",
+    "usage_percent": 0.00089,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "548",
+    "name": "Wartortle",
+    "usage_percent": 0.00085,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "549",
+    "name": "Buizel",
+    "usage_percent": 0.00084,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "550",
+    "name": "Cosmog",
+    "usage_percent": 0.00084,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "551",
+    "name": "Koffing",
+    "usage_percent": 0.00082,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "552",
+    "name": "Silvally-Rock",
+    "usage_percent": 0.00081,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "553",
+    "name": "Ledian",
+    "usage_percent": 0.0008,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "554",
+    "name": "Cosmoem",
+    "usage_percent": 0.00079,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "555",
+    "name": "Dewpider",
+    "usage_percent": 0.00077,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "556",
+    "name": "Squirtle",
+    "usage_percent": 0.00077,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "557",
+    "name": "Corphish",
+    "usage_percent": 0.00076,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "558",
+    "name": "Kommo-o-Totem",
+    "usage_percent": 0.00075,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "559",
+    "name": "Stunky",
+    "usage_percent": 0.00073,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "560",
+    "name": "Rattata-Alola",
+    "usage_percent": 0.00072,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "561",
+    "name": "Quilava",
+    "usage_percent": 0.00071,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "562",
+    "name": "Sunkern",
+    "usage_percent": 0.00069,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "563",
+    "name": "Ivysaur",
+    "usage_percent": 0.00065,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "564",
+    "name": "Magmar",
+    "usage_percent": 0.00062,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "565",
+    "name": "Glalie",
+    "usage_percent": 0.0006,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "566",
+    "name": "Hakamo-o",
+    "usage_percent": 0.00059,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "567",
+    "name": "Oshawott",
+    "usage_percent": 0.00057,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "568",
+    "name": "Marowak-Alola-Totem",
+    "usage_percent": 0.00057,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "569",
+    "name": "Machoke",
+    "usage_percent": 0.00056,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "570",
+    "name": "Meditite",
+    "usage_percent": 0.00055,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "571",
+    "name": "Herdier",
+    "usage_percent": 0.00054,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "572",
+    "name": "Torchic",
+    "usage_percent": 0.00054,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "573",
+    "name": "Silvally-Fighting",
+    "usage_percent": 0.00053,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "574",
+    "name": "Azurill",
+    "usage_percent": 0.00051,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "575",
+    "name": "Caterpie",
+    "usage_percent": 0.0005,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "576",
+    "name": "Gothita",
+    "usage_percent": 0.00049,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "577",
+    "name": "Wormadam",
+    "usage_percent": 0.00049,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "578",
+    "name": "Aipom",
+    "usage_percent": 0.00049,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "579",
+    "name": "Metapod",
+    "usage_percent": 0.00049,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "580",
+    "name": "Growlithe",
+    "usage_percent": 0.00048,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "581",
+    "name": "Cleffa",
+    "usage_percent": 0.00047,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "582",
+    "name": "Shroomish",
+    "usage_percent": 0.00047,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "583",
+    "name": "Treecko",
+    "usage_percent": 0.00047,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "584",
+    "name": "Dartrix",
+    "usage_percent": 0.00046,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "585",
+    "name": "Vespiquen",
+    "usage_percent": 0.00046,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "586",
+    "name": "Mudkip",
+    "usage_percent": 0.00045,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "587",
+    "name": "Minccino",
+    "usage_percent": 0.00044,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "588",
+    "name": "Phione",
+    "usage_percent": 0.00043,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "589",
+    "name": "Lunatone",
+    "usage_percent": 0.00041,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "590",
+    "name": "Flaaffy",
+    "usage_percent": 0.0004,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "591",
+    "name": "Jigglypuff",
+    "usage_percent": 0.0004,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "592",
+    "name": "Mothim",
+    "usage_percent": 0.00039,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "593",
+    "name": "Carnivine",
+    "usage_percent": 0.00039,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "594",
+    "name": "Electrike",
+    "usage_percent": 0.00038,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "595",
+    "name": "Gourgeist-Small",
+    "usage_percent": 0.00037,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "596",
+    "name": "Noibat",
+    "usage_percent": 0.00037,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "597",
+    "name": "Lickitung",
+    "usage_percent": 0.00034,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "598",
+    "name": "Psyduck",
+    "usage_percent": 0.00033,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "599",
+    "name": "Heatmor",
+    "usage_percent": 0.00032,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "600",
+    "name": "Huntail",
+    "usage_percent": 0.00031,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "601",
+    "name": "Geodude-Alola",
+    "usage_percent": 0.00031,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "602",
+    "name": "Grovyle",
+    "usage_percent": 0.00028,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "603",
+    "name": "Wimpod",
+    "usage_percent": 0.00028,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "604",
+    "name": "Silvally-Grass",
+    "usage_percent": 0.00027,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "605",
+    "name": "Axew",
+    "usage_percent": 0.00027,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "606",
+    "name": "Drowzee",
+    "usage_percent": 0.00027,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "607",
+    "name": "Zorua",
+    "usage_percent": 0.00027,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "608",
+    "name": "Diglett",
+    "usage_percent": 0.00027,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "609",
+    "name": "Rockruff",
+    "usage_percent": 0.00025,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "610",
+    "name": "Metang",
+    "usage_percent": 0.00025,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "611",
+    "name": "Zigzagoon",
+    "usage_percent": 0.00025,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "612",
+    "name": "Shelmet",
+    "usage_percent": 0.00025,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "613",
+    "name": "Silvally-Bug",
+    "usage_percent": 0.00024,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "614",
+    "name": "Tentacool",
+    "usage_percent": 0.00024,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "615",
+    "name": "Pidgey",
+    "usage_percent": 0.00024,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "616",
+    "name": "Yungoos",
+    "usage_percent": 0.00023,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "617",
+    "name": "Sandshrew-Alola",
+    "usage_percent": 0.00022,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "618",
+    "name": "Quilladin",
+    "usage_percent": 0.0002,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "619",
+    "name": "Geodude",
+    "usage_percent": 0.0002,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "620",
+    "name": "Totodile",
+    "usage_percent": 0.0002,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "621",
+    "name": "Wynaut",
+    "usage_percent": 0.00019,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "622",
+    "name": "Marshtomp",
+    "usage_percent": 0.00019,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "623",
+    "name": "Chespin",
+    "usage_percent": 0.00019,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "624",
+    "name": "Stantler",
+    "usage_percent": 0.00019,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "625",
+    "name": "Yanma",
+    "usage_percent": 0.00018,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "626",
+    "name": "Poochyena",
+    "usage_percent": 0.00017,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "627",
+    "name": "Girafarig",
+    "usage_percent": 0.00017,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "628",
+    "name": "Sandshrew",
+    "usage_percent": 0.00016,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "629",
+    "name": "Bronzor",
+    "usage_percent": 0.00016,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "630",
+    "name": "Gible",
+    "usage_percent": 0.00014,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "631",
+    "name": "Pupitar",
+    "usage_percent": 0.00013,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "632",
+    "name": "Slugma",
+    "usage_percent": 0.00013,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "633",
+    "name": "Scatterbug",
+    "usage_percent": 0.00013,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "634",
+    "name": "Swalot",
+    "usage_percent": 0.00012,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "635",
+    "name": "Lampent",
+    "usage_percent": 0.0001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "636",
+    "name": "Panpour",
+    "usage_percent": 0.0001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "637",
+    "name": "Rhyhorn",
+    "usage_percent": 0.0001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "638",
+    "name": "Skiploom",
+    "usage_percent": 0.0001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "639",
+    "name": "Watchog",
+    "usage_percent": 0.00009,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "640",
+    "name": "Porygon",
+    "usage_percent": 0.00009,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "641",
+    "name": "Swablu",
+    "usage_percent": 0.00009,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "642",
+    "name": "Magby",
+    "usage_percent": 0.00009,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "643",
+    "name": "Buneary",
+    "usage_percent": 0.00008,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "644",
+    "name": "Bonsly",
+    "usage_percent": 0.00008,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "645",
+    "name": "Gourgeist",
+    "usage_percent": 0.00007,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "646",
+    "name": "Espurr",
+    "usage_percent": 0.00007,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "647",
+    "name": "Type: Null",
+    "usage_percent": 0.00006,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "648",
+    "name": "Weedle",
+    "usage_percent": 0.00006,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "649",
+    "name": "Timburr",
+    "usage_percent": 0.00004,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "650",
+    "name": "Duskull",
+    "usage_percent": 0.00004,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "651",
+    "name": "Graveler-Alola",
+    "usage_percent": 0.00003,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "652",
+    "name": "Graveler",
+    "usage_percent": 0.00003,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "653",
+    "name": "Farfetch'd",
+    "usage_percent": 0.00002,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "654",
+    "name": "Lumineon",
+    "usage_percent": 0.00002,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "655",
+    "name": "Morelull",
+    "usage_percent": 0.00002,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "656",
+    "name": "Phantump",
+    "usage_percent": 0.00002,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "657",
+    "name": "Pumpkaboo-Super",
+    "usage_percent": 0.00002,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "658",
+    "name": "Seedot",
+    "usage_percent": 0.00002,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "659",
+    "name": "Staryu",
+    "usage_percent": 0.00002,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "660",
+    "name": "Shelgon",
+    "usage_percent": 0.00002,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "661",
+    "name": "Pumpkaboo-Small",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "662",
+    "name": "Torracat",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "663",
+    "name": "Bunnelby",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "664",
+    "name": "Charmeleon",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "665",
+    "name": "Pansage",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "666",
+    "name": "Charjabug",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "667",
+    "name": "Salandit",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "668",
+    "name": "Goomy",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "669",
+    "name": "Unown",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "670",
+    "name": "Fletchling",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "671",
+    "name": "Vigoroth",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "672",
+    "name": "Joltik",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "673",
+    "name": "Stufful",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "674",
+    "name": "Pidgeotto",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "675",
+    "name": "Phanpy",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "676",
+    "name": "Fletchinder",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "677",
+    "name": "Numel",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "678",
+    "name": "Voltorb",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "679",
+    "name": "Skitty",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "680",
+    "name": "Klang",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "681",
+    "name": "Meowth",
+    "usage_percent": 0.00001,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "682",
+    "name": "Ducklett",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "683",
+    "name": "Tirtouga",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "684",
+    "name": "Lotad",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "685",
+    "name": "Grumpig",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "686",
+    "name": "Kirlia",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "687",
+    "name": "Wormadam-Trash",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "688",
+    "name": "Surskit",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "689",
+    "name": "Gumshoos-Totem",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "690",
+    "name": "Goldeen",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "691",
+    "name": "Swirlix",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "692",
+    "name": "Mienfoo",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "693",
+    "name": "Mudbray",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "694",
+    "name": "Inkay",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "695",
+    "name": "Pidove",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "696",
+    "name": "Darumaka",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "697",
+    "name": "Togedemaru-Totem",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "698",
+    "name": "Araquanid-Totem",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "699",
+    "name": "Scraggy",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "700",
+    "name": "Yamask",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "701",
+    "name": "Feebas",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "702",
+    "name": "Snivy",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "703",
+    "name": "Hoothoot",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "704",
+    "name": "Chimchar",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "705",
+    "name": "Poliwag",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  },
+  {
+    "rank": "706",
+    "name": "Krokorok",
+    "usage_percent": 0,
+    "viability_ceiling": "Very Rare"
+  }
+]
