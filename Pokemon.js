@@ -116,7 +116,14 @@ class Pokemon {
         this.evs = evs;
         this.learnset =this.dex.learnset;
         this.moveset = moveset;
-        this.effectiveStats = {
+        //TODO: ADD GENERATION SPECIFIC SPRITES
+        this.displayinfo = {
+            facingRight: false,
+            spriteRelativePath: (this.dex.exists) ? "node_modules/pokesprite-images/pokemon-gen7x/"+(shiny ? "shiny" : "regular")+(facingRight ? "/right" : "")+"/"+(this.species)+".png" : "node_modules/pokesprite-images/pokemon-gen7x/unknown-gen5.png",
+            type1spriteRelativePath: "node_modules/pokesprite-images/misc/type-logos/gen8/"+this.dex.types[0]+".png",
+            type2spriteRelativePath: "node_modules/pokesprite-images/misc/type-logos/gen8/"+this.dex.types[1]+".png",
+        }
+            this.effectiveStats = {
             hp:             calculateHP  (this.baseStats.hp,             this.ivs.hp,  this.evs.hp,  this.info.level),
             attack:         calculateStat(this.baseStats.attack,         this.ivs.atk, this.evs.atk, this.info.level, this.info.natureModifier.atk || 1),
             defense:        calculateStat(this.baseStats.defense,        this.ivs.def, this.evs.def, this.info.level, this.info.natureModifier.def || 1),
@@ -182,6 +189,7 @@ class Pokemon {
                `MOVES: ` + movesetstring + "\n" +
                '----------------------------------------\n' +
                `BST: ${this.bst}\n` +
+               `SPRITERELPATH: ${this.spriteRelativePath}\n` +
                '========================================\n';
     }
 }
