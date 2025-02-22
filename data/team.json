@@ -1,10 +1,10 @@
 [
   {
-    "name": "",
+    "name": "Swampert-Mega",
     "species": "Swampert-Mega",
     "item": "Swampertite",
     "ability": "Damp",
-    "gender": "",
+    "gender": "F",
     "nature": "Jolly",
     "evs": {
       "hp": 0,
@@ -22,20 +22,20 @@
       "spd": 31,
       "spe": 31
     },
-    "level": 100,
     "moves": [
       "Waterfall",
       "Earthquake",
       "Ice Punch",
       "Superpower"
-    ]
+    ],
+    "level": 100
   },
   {
-    "name": "",
+    "name": "Pelipper",
     "species": "Pelipper",
     "item": "Damp Rock",
     "ability": "Drizzle",
-    "gender": "",
+    "gender": "F",
     "nature": "Relaxed",
     "evs": {
       "hp": 248,
@@ -53,20 +53,20 @@
       "spd": 31,
       "spe": 0
     },
-    "level": 100,
     "moves": [
       "Scald",
       "Knock Off",
       "Roost",
       "U-turn"
-    ]
+    ],
+    "level": 100
   },
   {
-    "name": "",
+    "name": "Manaphy",
     "species": "Manaphy",
     "item": "Waterium Z",
     "ability": "Hydration",
-    "gender": "",
+    "gender": "N",
     "nature": "Timid",
     "evs": {
       "hp": 0,
@@ -84,51 +84,20 @@
       "spd": 31,
       "spe": 31
     },
-    "level": 100,
     "moves": [
       "Tail Glow",
       "Surf",
       "Psychic",
       "Rest"
-    ]
+    ],
+    "level": 100
   },
   {
-    "name": "",
-    "species": "Ferrothorn",
-    "item": "Figy Berry",
-    "ability": "Iron Barbs",
-    "gender": "",
-    "nature": "Careful",
-    "evs": {
-      "hp": 248,
-      "atk": 0,
-      "def": 24,
-      "spa": 0,
-      "spd": 236,
-      "spe": 0
-    },
-    "ivs": {
-      "hp": 31,
-      "atk": 31,
-      "def": 31,
-      "spa": 31,
-      "spd": 31,
-      "spe": 31
-    },
-    "level": 100,
-    "moves": [
-      "Stealth Rock",
-      "Spikes",
-      "Knock Off",
-      "Power Whip"
-    ]
-  },
-  {
-    "name": "",
+    "name": "Tornadus-Therian",
     "species": "Tornadus-Therian",
     "item": "Rocky Helmet",
     "ability": "Regenerator",
-    "gender": "",
+    "gender": "M",
     "nature": "Timid",
     "evs": {
       "hp": 248,
@@ -146,20 +115,20 @@
       "spd": 31,
       "spe": 31
     },
-    "level": 100,
     "moves": [
       "Hurricane",
       "Knock Off",
       "Defog",
       "U-turn"
-    ]
+    ],
+    "level": 100
   },
   {
-    "name": "",
+    "name": "Greninja-Ash",
     "species": "Greninja-Ash",
     "item": "Choice Specs",
     "ability": "Battle Bond",
-    "gender": "",
+    "gender": "M",
     "nature": "Timid",
     "evs": {
       "hp": 0,
@@ -177,12 +146,38 @@
       "spd": 31,
       "spe": 31
     },
-    "level": 100,
     "moves": [
       "Hydro Pump",
       "Dark Pulse",
       "Surf",
       "Water Shuriken"
-    ]
+    ],
+    "level": 100
+  },
+  {
+    "name": "Tapu Lele",
+    "species": "Tapu Lele",
+    "item": null,
+    "ability": "Psychic Surge",
+    "gender": "N",
+    "nature": "Serious",
+    "evs": {
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 0
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "moves": [],
+    "level": 100
   }
 ]

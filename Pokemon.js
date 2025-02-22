@@ -16,7 +16,7 @@ const modifiers = {
     //SWEET
         Timid:      { spe: 1.1, atk: 0.9 },
         Hasty:      { spe: 1.1, def: 0.9 },
-        Serious:    {spe: 1.1, def: 0.9},
+        Serious:    {},
         Jolly:      { spe: 1.1, spa: 0.9 },
         Naive:      { spe: 1.1, spd: 0.9 },
     //BITTER
@@ -48,7 +48,7 @@ function calculateHP(base, iv, ev, level) {
 function getNatureDescription(nature) {
     const modifier = modifiers[nature];
     if (!modifier) return `${nature} (Unknown Nature)`;
-    
+
     const descriptions = {
         atk: "Atk",
         def: "Def",
@@ -60,25 +60,27 @@ function getNatureDescription(nature) {
     const positive = Object.entries(modifier).find(([_, value]) => value > 1);
     const negative = Object.entries(modifier).find(([_, value]) => value < 1);
 
-    if (positive && negative) {
-        return `${nature} (+${descriptions[positive[0]]}, -${descriptions[negative[0]]})`;
+    if (!positive && !negative) {
+        return `${nature} (Neutral Nature)`;
     }
-    return `${nature} (Neutral Nature)`;
+
+    return `${nature} (+${descriptions[positive?.[0]] || "None"}, -${descriptions[negative?.[0]] || "None"})`;
 }
+
 
 
 class Pokemon {
     constructor(species, 
                 name = null,
                 gender = null,
-                ability = 'No Ability',
+                ability = null,
                 level = 100, 
                 nature = "Serious",
                 happiness = 255,
                 shiny = false, 
                 hiddenpowertype = 'Dark',
                 teratype = 'Normal',
-                item = 'No Item',
+                item = null,
                 ivs = { hp: 31, atk: 31, def: 31, spa: 31, spd: 31, spe: 31 },
                 evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 },
                 moveset = {move1: null, move2: null, move3: null, move4: null,}
@@ -88,20 +90,23 @@ class Pokemon {
         this.species = species;
         this.info = {
             name: name,
+            natdexnumber: this.dex.num,
             gender: gender || this.dex.gender || "F",
             types: this.dex.types,
             tier: this.dex.tier,
             level: level,
             nature: nature,
-            natureModifier: modifiers[nature] || modifiers.Serious,
+            natureModifier: modifiers[nature],
             happiness: happiness,
             shiny: shiny, 
+            facingRight: false,
             hiddenpowertype: hiddenpowertype,
             teratype: teratype,
             item: item,
-            ability: ability,
+            ability: ability || this.dex.abilities[0],
             potentialAbilities: this.dex.abilities,
-            weight: this.dex.weight
+            weight: this.dex.weight,
+            bst: this.dex.baseStats.hp +this.dex.baseStats.atk +this.dex.baseStats.def +this.dex.baseStats.spa +this.dex.baseStats.spd +this.dex.baseStats.spe
         };
         this.baseStats = {
             hp:this.dex.baseStats.hp,
@@ -111,12 +116,17 @@ class Pokemon {
             specialDefense:this.dex.baseStats.spd,
             speed:this.dex.baseStats.spe,
           };
-        this.bst =this.dex.baseStats.hp +this.dex.baseStats.atk +this.dex.baseStats.def +this.dex.baseStats.spa +this.dex.baseStats.spd +this.dex.baseStats.spe;
         this.ivs = ivs;
         this.evs = evs;
         this.learnset =this.dex.learnset;
         this.moveset = moveset;
-        this.effectiveStats = {
+        //TODO: ADD GENERATION SPECIFIC SPRITES
+        this.displayinfo = {
+            spriteRelativePath: (this.dex.exists) ? "node_modules/pokesprite-images/pokemon-gen7x/"+(shiny ? "shiny" : "regular")+(this.info.facingRight ? "/right" : "")+"/"+(this.species)+".png" : "node_modules/pokesprite-images/pokemon-gen7x/unknown-gen5.png",
+            type1spriteRelativePath: "node_modules/pokesprite-images/misc/type-logos/gen8/"+this.dex.types[0]+".png",
+            type2spriteRelativePath: "node_modules/pokesprite-images/misc/type-logos/gen8/"+this.dex.types[1]+".png",
+        }
+            this.effectiveStats = {
             hp:             calculateHP  (this.baseStats.hp,             this.ivs.hp,  this.evs.hp,  this.info.level),
             attack:         calculateStat(this.baseStats.attack,         this.ivs.atk, this.evs.atk, this.info.level, this.info.natureModifier.atk || 1),
             defense:        calculateStat(this.baseStats.defense,        this.ivs.def, this.evs.def, this.info.level, this.info.natureModifier.def || 1),
@@ -139,7 +149,20 @@ class Pokemon {
 
 
     // Methods
-    
+    toJSON() {
+        return {
+            name: this.species,
+            species: this.species,
+            item: this.info.item,
+            ability: this.info.ability,
+            gender: this.info.gender,
+            nature: this.info.nature,
+            evs: this.evs,
+            ivs: this.ivs,
+            moves: Object.values(this.moveset).filter(move => move !== null),
+            level: this.info.level,
+        };
+    }
 
 
     toString() {
@@ -162,12 +185,14 @@ class Pokemon {
             }
         }
         return '========================================\n' +
-               `NAME: ${this.info.name}\n` +
+               `NAME: ${this.info.name} (${this.info.natdexnumber})\n` +
                `SPECIES: ${this.species}\n` +
+               `ITEM: ${this.info.item}\n` +
+               `ABILITY: ${this.info.ability}\n` +
                `GENDER: ${this.info.gender}\n` +
                `TIER: ${this.info.tier}\n` +
                `NATURE: ${getNatureDescription(this.info.nature)}\n` +
-               `TYPES : ${this.info.types[0]}, ${this.info.types[1]}\n` +
+               `TYPE${(this.info.types[1]==undefined ? "" : "S")}: ${this.info.types[0]||"None"}, ${this.info.types[1]||"None"}\n` +
                '----------------------------------------\n' +
                `HP : ${this.effectiveStats.hp}\n` +
                `ATK: ${this.effectiveStats.attack}\n` +
@@ -181,7 +206,8 @@ class Pokemon {
                '----------------------------------------\n' +
                `MOVES: ` + movesetstring + "\n" +
                '----------------------------------------\n' +
-               `BST: ${this.bst}\n` +
+               `BST: ${this.info.bst}\n` +
+               `SPRITERELPATH: ${this.displayinfo.spriteRelativePath}\n` +
                '========================================\n';
     }
 }
