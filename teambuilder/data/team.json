@@ -1,0 +1,183 @@
+[
+  {
+    "name": "",
+    "species": "Swampert-Mega",
+    "item": "Swampertite",
+    "ability": "Damp",
+    "gender": "F",
+    "nature": "Jolly",
+    "evs": {
+      "hp": 0,
+      "atk": 252,
+      "def": 0,
+      "spa": 0,
+      "spd": 4,
+      "spe": 252
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "level": 100,
+    "moves": [
+      "Waterfall",
+      "Earthquake",
+      "Ice Punch",
+      "Superpower"
+    ]
+  },
+  {
+    "name": "",
+    "species": "Pelipper",
+    "item": "Damp Rock",
+    "ability": "Drizzle",
+    "gender": "F",
+    "nature": "Relaxed",
+    "evs": {
+      "hp": 248,
+      "atk": 0,
+      "def": 252,
+      "spa": 0,
+      "spd": 8,
+      "spe": 0
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 0
+    },
+    "level": 100,
+    "moves": [
+      "Scald",
+      "Knock Off",
+      "Roost",
+      "U-turn"
+    ]
+  },
+  {
+    "name": "",
+    "species": "Manaphy",
+    "item": "Waterium Z",
+    "ability": "Hydration",
+    "gender": "",
+    "nature": "Timid",
+    "evs": {
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spa": 252,
+      "spd": 4,
+      "spe": 252
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 0,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "level": 100,
+    "moves": [
+      "Tail Glow",
+      "Surf",
+      "Psychic",
+      "Rest"
+    ]
+  },
+  {
+    "name": "",
+    "species": "Tornadus-Therian",
+    "item": "Rocky Helmet",
+    "ability": "Regenerator",
+    "gender": "M",
+    "nature": "Timid",
+    "evs": {
+      "hp": 248,
+      "atk": 0,
+      "def": 8,
+      "spa": 0,
+      "spd": 0,
+      "spe": 252
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "level": 100,
+    "moves": [
+      "Hurricane",
+      "Knock Off",
+      "Defog",
+      "U-turn"
+    ]
+  },
+  {
+    "name": "",
+    "species": "Greninja-Ash",
+    "item": "Choice Specs",
+    "ability": "Battle Bond",
+    "gender": "M",
+    "nature": "Timid",
+    "evs": {
+      "hp": 0,
+      "atk": 0,
+      "def": 4,
+      "spa": 252,
+      "spd": 0,
+      "spe": 252
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "level": 100,
+    "moves": [
+      "Hydro Pump",
+      "Dark Pulse",
+      "Surf",
+      "Water Shuriken"
+    ]
+  },
+  {
+    "name": "",
+    "species": "Tapu Lele",
+    "item": "",
+    "ability": "Psychic Surge",
+    "gender": "",
+    "nature": "Serious",
+    "evs": {
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 0
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "level": 100,
+    "moves": []
+  }
+]
