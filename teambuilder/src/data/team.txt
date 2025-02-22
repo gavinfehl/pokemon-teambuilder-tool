@@ -36,15 +36,6 @@ Timid Nature
 - Defog  
 - U-turn  
 
-Greninja-Ash (M) @ Choice Specs  
-Ability: Battle Bond  
-EVs: 4 Def / 252 SpA / 252 Spe  
-Timid Nature  
-- Hydro Pump  
-- Dark Pulse  
-- Surf  
-- Water Shuriken  
-
 Tapu Lele  
 Ability: Psychic Surge  
 Serious Nature  

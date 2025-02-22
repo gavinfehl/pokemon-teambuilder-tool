@@ -9,9 +9,9 @@ class PokemonSet {
         this.name = name;
         this.pokemons = [];
         this.format = 'gen7ou';
-        this.teamExportFile = path.join(__dirname, 'data/team.txt');
-        this.teamJSONFile = path.join(__dirname, 'data/team.json');
-        this.teamPackedFile = path.join(__dirname, 'data/packedteam.txt');
+        this.teamExportFile = path.join(__dirname, '../data/team.txt');
+        this.teamJSONFile = path.join(__dirname, '../data/team.json');
+        this.teamPackedFile = path.join(__dirname, '../data/packedteam.txt');
         
     }
     

@@ -1,6 +1,6 @@
 const readline = require('readline');
-const { Pokemon } = require('./Pokemon');
-const { PokemonSet, PokemonTeam } = require('./PokemonSet');
+const { Pokemon } = require('../classes/Pokemon');
+const { PokemonSet, PokemonTeam } = require('../classes/PokemonSet');
 
 const rl = readline.createInterface({
     input: process.stdin,

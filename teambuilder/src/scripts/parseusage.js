@@ -144,8 +144,8 @@ function saveToJson(data, outputFile) {
 function main(usage, movesetusage) {
     const inputUsageFile = `${usage}.txt`;
     const inputMovesetUsageFile = `${movesetusage}.txt`;
-    const outputUsageFile = `data/parsedusagedata.json`;
-    const outputMovesetUsageFile = `data/parsedmovesetusagedata.json`;
+    const outputUsageFile = `../data/parsedusagedata.json`;
+    const outputMovesetUsageFile = `../data/parsedmovesetusagedata.json`;
     
     try {
         console.log(`Parsing usage stats from ${inputUsageFile}...`);
@@ -171,4 +171,4 @@ function main(usage, movesetusage) {
     } 
 }
 
-main("data/usage", "data/movesetusage");
+main("../data/usage", "../data/movesetusage");
