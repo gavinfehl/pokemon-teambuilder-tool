@@ -90,6 +90,7 @@ class Pokemon {
         this.species = species;
         this.info = {
             name: name,
+            natdexnumber: this.dex.num,
             gender: gender || this.dex.gender || "F",
             types: this.dex.types,
             tier: this.dex.tier,
@@ -184,7 +185,7 @@ class Pokemon {
             }
         }
         return '========================================\n' +
-               `NAME: ${this.info.name}\n` +
+               `NAME: ${this.info.name} (${this.info.natdexnumber})\n` +
                `SPECIES: ${this.species}\n` +
                `ITEM: ${this.info.item}\n` +
                `ABILITY: ${this.info.ability}\n` +

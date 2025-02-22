@@ -45,3 +45,7 @@ Timid Nature
 - Surf  
 - Water Shuriken  
 
+Tapu Lele  
+Ability: Psychic Surge  
+Serious Nature  
+
