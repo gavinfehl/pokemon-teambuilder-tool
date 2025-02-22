@@ -14,7 +14,16 @@ class PokemonSet {
         this.teamPackedFile = path.join(__dirname, '../data/packedteam.txt');
         
     }
-    
+    // Get a Pokémon from the set by species name or index
+    getMember(identifier) {
+        if (typeof identifier === 'number') {
+            return this.pokemons[identifier] || null;
+        } else if (typeof identifier === 'string') {
+            return this.pokemons.find(pokemon => pokemon.species === identifier) || null;
+        } else {
+            return null;
+        }
+    }
     // Add a Pokémon to the set with the given species name with no extra information.
     addPokemonFromSpecies(species) {
         let pokemon = new Pokemon(species);

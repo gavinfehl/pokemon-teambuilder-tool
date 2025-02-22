@@ -47,6 +47,18 @@ function handleMenu(option) {
             showMenu();
             break;
         case '6':
+            rl.question('Enter Pokémon name or teamslot to get details: ', (name) => {
+            const pokemon = pokemonTeam.getMember(name.trim());
+            if (pokemon) {
+                console.log(pokemon.toString());
+            } else {
+                console.log('Pokémon not found in the team.');
+            }
+            showMenu();
+            });
+            break;
+        case '7':
+            console.log('Exiting...');
             rl.close();
             break;
         default:
@@ -54,5 +66,6 @@ function handleMenu(option) {
             showMenu();
     }
 }
-
 showMenu();
+
+export default devTest;
