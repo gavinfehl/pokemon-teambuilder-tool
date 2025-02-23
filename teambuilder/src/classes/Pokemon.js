@@ -1,5 +1,7 @@
 // Pokemon Class
 const { Dex } = require('pokemon-showdown');
+const fs = require('fs');
+
 const modifiers = {     
     //SPICY
         Hardy:      {},
@@ -34,6 +36,8 @@ const modifiers = {
 };
 const generation = 7;
 const GenDex = Dex.mod("gen"+generation);
+const usageDataFile = '../data/parsedusagedata.json';
+const movesetUsageDataFile = '../data/parsedmovesetusagedata.json';
 
 // calculates the effective Atk, Def, SpA, SpD, or Spe stat as a result of a pokemon's attributes
 function calculateStat(base, iv, ev, level, natureModifier) {
@@ -125,8 +129,8 @@ class Pokemon {
             spriteRelativePath: (this.dex.exists) ? "node_modules/pokesprite-images/pokemon-gen7x/"+(shiny ? "shiny" : "regular")+(this.info.facingRight ? "/right" : "")+"/"+(this.species)+".png" : "node_modules/pokesprite-images/pokemon-gen7x/unknown-gen5.png",
             type1spriteRelativePath: "node_modules/pokesprite-images/misc/type-logos/gen8/"+this.dex.types[0]+".png",
             type2spriteRelativePath: "node_modules/pokesprite-images/misc/type-logos/gen8/"+this.dex.types[1]+".png",
-        }
-            this.effectiveStats = {
+        };
+        this.effectiveStats = {
             hp:             calculateHP  (this.baseStats.hp,             this.ivs.hp,  this.evs.hp,  this.info.level),
             attack:         calculateStat(this.baseStats.attack,         this.ivs.atk, this.evs.atk, this.info.level, this.info.natureModifier.atk || 1),
             defense:        calculateStat(this.baseStats.defense,        this.ivs.def, this.evs.def, this.info.level, this.info.natureModifier.def || 1),
@@ -134,8 +138,64 @@ class Pokemon {
             specialDefense: calculateStat(this.baseStats.specialDefense, this.ivs.spd, this.evs.spd, this.info.level, this.info.natureModifier.spd || 1),
             speed:          calculateStat(this.baseStats.speed,          this.ivs.spe, this.evs.spe, this.info.level, this.info.natureModifier.spe || 1),
         };
+        /*  UsageEntry: {
+                usage: {
+                rank: '33',
+                name: 'Swampert-Mega',
+                usage_percent: 5.9198,
+                viability_ceiling: 'Common'
+                },
+                movesetUsage: {
+                Pokemon: 'Swampert-Mega',
+                Raw_count: '13219',
+                'Avg._weight': '0.6525389859705429',
+                Viability_Ceiling: '95',
+                Abilities: [Array],
+                Items: [Array],
+                Spreads: [Array],
+                Moves: [Array],
+                'Tera Types': [Array],
+                Teammates: [Array],
+                'Checks and Counters': [Array]
+                }
+            }*/                               
+        this.UsageEntry = {
+            usage: this.findUsageEntrySync(this.species),
+            movesetUsage: this.findMovesetUsageEntrySync(this.species)
+        };
     }
-    
+    findUsageEntrySync(species) {
+        try {
+            const data = fs.readFileSync(usageDataFile, 'utf8');
+            const entry =  JSON.parse(data).find(entry => entry.name === species);
+            if (!entry) {
+                console.warn(`No usage data found for species: ${species}`);
+            }
+            return entry;
+        } catch (err) {
+            console.error('Error reading moveset usage data file for:', species, "error:", err);
+            return null;
+        }
+    }
+    findMovesetUsageEntrySync(species) {
+        try {
+            const data = fs.readFileSync(movesetUsageDataFile, 'utf8');
+            const entry = JSON.parse(data).find(entry => entry.Pokemon === species);
+            if (!entry) {
+                console.warn(`No moveset usage data found for species: ${species}`);
+            }
+            return entry;
+        } catch (err) {
+            console.error('Error reading moveset usage data file for:', species, "error:", err);
+            return null;
+        }
+    }
+    getUsageData() {
+        return this.UsageEntry.usage;
+    }
+    getMovesetUsageData() {
+        return this.UsageEntry.movesetUsage;
+    }
     /*
     required item(s?)
     effective stats
@@ -147,7 +207,20 @@ class Pokemon {
     
 
 
-
+    toFullJSON() {
+        return {
+            species: this.species,
+            info: this.info,
+            baseStats: this.baseStats,
+            ivs: this.ivs,
+            evs: this.evs,
+            learnset: this.learnset,
+            moveset: this.moveset,
+            displayinfo: this.displayinfo,
+            effectiveStats: this.effectiveStats,
+            UsageEntry: this.UsageEntry
+        };
+    }
     // Methods
     toJSON() {
         return {

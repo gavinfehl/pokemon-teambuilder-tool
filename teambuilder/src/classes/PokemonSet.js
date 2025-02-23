@@ -24,6 +24,14 @@ class PokemonSet {
             return null;
         }
     }
+    // Get usage data for each Pokémon in the set
+    printUsageData() {
+        this.pokemons.forEach(pokemon => {
+            console.log(pokemon.getUsageData());
+            console.log(pokemon.getMovesetUsageData());
+        });
+        return;
+    }
     // Add a Pokémon to the set with the given species name with no extra information.
     addPokemonFromSpecies(species) {
         let pokemon = new Pokemon(species);
@@ -60,7 +68,7 @@ class PokemonSet {
                 )
                 this.addPokemonObject(pokemon);
             });
-            console.log("Team initialized successfully:");
+            //console.log("Team initialized successfully:");
             return;
         } catch (err) {
             console.error('Error initializing team:', err);

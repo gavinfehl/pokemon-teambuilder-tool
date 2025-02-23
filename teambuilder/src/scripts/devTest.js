@@ -16,7 +16,9 @@ function showMenu() {
     console.log('3. View Team');
     console.log('4. Import Team');
     console.log('5. Export Team');
-    console.log('6. Exit');
+    console.log('6. See Member Details');
+    console.log('7. Get Usage Data');
+    console.log('8. Exit');
     rl.question('Choose an option: ', handleMenu);
 }
 
@@ -47,10 +49,10 @@ function handleMenu(option) {
             showMenu();
             break;
         case '6':
-            rl.question('Enter Pokémon name or teamslot to get details: ', (name) => {
-            const pokemon = pokemonTeam.getMember(name.trim());
+            rl.question('Enter Pokémon name to get its fullJSON: ', (inp) => {
+            const pokemon = pokemonTeam.getMember(inp.trim());
             if (pokemon) {
-                console.log(pokemon.toString());
+                console.log(pokemon.toFullJSON());
             } else {
                 console.log('Pokémon not found in the team.');
             }
@@ -58,6 +60,10 @@ function handleMenu(option) {
             });
             break;
         case '7':
+            console.log(pokemonTeam.printUsageData());
+            showMenu();
+            break;
+        case '8':
             console.log('Exiting...');
             rl.close();
             break;
@@ -67,5 +73,3 @@ function handleMenu(option) {
     }
 }
 showMenu();
-
-export default devTest;
