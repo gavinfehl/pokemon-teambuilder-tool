@@ -1,0 +1,2023 @@
+[
+  {
+    "species": "Hoopa-Unbound",
+    "slug": "hoopa",
+    "info": {
+      "name": "ms. hole",
+      "natdexnumber": 720,
+      "gender": "N",
+      "types": [
+        "Psychic",
+        "Dark"
+      ],
+      "tier": "UUBL",
+      "level": 100,
+      "nature": "Jolly",
+      "natureModifier": {
+        "spe": 1.1,
+        "spa": 0.9
+      },
+      "happiness": 255,
+      "shiny": false,
+      "facingRight": false,
+      "hiddenpowertype": "Dark",
+      "teratype": "Normal",
+      "item": "Choice Band",
+      "ability": "Magician",
+      "potentialAbilities": {
+        "0": "Magician"
+      },
+      "bst": 680
+    },
+    "baseStats": {
+      "hp": 80,
+      "attack": 160,
+      "defense": 60,
+      "specialAttack": 170,
+      "specialDefense": 130,
+      "speed": 80
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "evs": {
+      "hp": 32,
+      "atk": 224,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 252
+    },
+    "moveset": {
+      "move1": "Hyperspace Fury",
+      "move2": "Gunk Shot",
+      "move3": "Fire Punch",
+      "move4": "Drain Punch"
+    },
+    "displayinfo": {
+      "spriteRelativePath": "../../node_modules/pokesprite-images/pokemon-gen7x/regular/hoopa.png",
+      "type1spriteRelativePath": "../../node_modules/pokesprite-images/misc/type-logos/gen8/Psychic.png",
+      "type2spriteRelativePath": "../../node_modules/pokesprite-images/misc/type-logos/gen8/Dark.png"
+    },
+    "effectiveStats": {
+      "hp": 309,
+      "attack": 412,
+      "defense": 156,
+      "specialAttack": 338,
+      "specialDefense": 296,
+      "speed": 284
+    },
+    "UsageEntry": {
+      "usage": {
+        "rank": "62",
+        "name": "Hoopa-Unbound",
+        "usage_percent": 1.96555,
+        "viability_ceiling": "Uncommon"
+      },
+      "movesetUsage": {
+        "Pokemon": "Hoopa-Unbound",
+        "Raw_count": "3811",
+        "Avg._weight": "0.7501721828067663",
+        "Viability_Ceiling": "95",
+        "Abilities": [
+          {
+            "item": "Magician",
+            "value": "100.000%"
+          }
+        ],
+        "Items": [
+          {
+            "item": "Choice_Band",
+            "value": "50.640%"
+          },
+          {
+            "item": "Choice_Specs",
+            "value": "11.033%"
+          },
+          {
+            "item": "Life_Orb",
+            "value": "10.921%"
+          },
+          {
+            "item": "Choice_Scarf",
+            "value": "9.580%"
+          },
+          {
+            "item": "Darkinium_Z",
+            "value": "4.976%"
+          },
+          {
+            "item": "Assault_Vest",
+            "value": "4.844%"
+          },
+          {
+            "item": "Fightinium_Z",
+            "value": "3.158%"
+          },
+          {
+            "item": "Other",
+            "value": "4.847%"
+          }
+        ],
+        "Spreads": [
+          {
+            "item": "Jolly:0/252/0/0/4/252",
+            "value": "24.709%"
+          },
+          {
+            "item": "Jolly:32/224/0/0/0/252",
+            "value": "8.137%"
+          },
+          {
+            "item": "Adamant:0/252/0/0/4/252",
+            "value": "6.454%"
+          },
+          {
+            "item": "Timid:4/0/0/252/0/252",
+            "value": "5.034%"
+          },
+          {
+            "item": "Adamant:0/252/0/0/20/236",
+            "value": "4.757%"
+          },
+          {
+            "item": "Timid:0/0/0/252/4/252",
+            "value": "3.635%"
+          },
+          {
+            "item": "Other",
+            "value": "47.274%"
+          }
+        ],
+        "Moves": [
+          {
+            "item": "Hyperspace_Fury",
+            "value": "75.409%"
+          },
+          {
+            "item": "Drain_Punch",
+            "value": "55.598%"
+          },
+          {
+            "item": "Gunk_Shot",
+            "value": "51.886%"
+          },
+          {
+            "item": "Fire_Punch",
+            "value": "42.868%"
+          },
+          {
+            "item": "Zen_Headbutt",
+            "value": "26.330%"
+          },
+          {
+            "item": "Focus_Blast",
+            "value": "23.187%"
+          },
+          {
+            "item": "Dark_Pulse",
+            "value": "21.936%"
+          },
+          {
+            "item": "Psychic",
+            "value": "20.667%"
+          },
+          {
+            "item": "Psyshock",
+            "value": "17.177%"
+          },
+          {
+            "item": "Ice_Punch",
+            "value": "17.062%"
+          },
+          {
+            "item": "Trick",
+            "value": "12.328%"
+          },
+          {
+            "item": "Knock_Off",
+            "value": "8.316%"
+          },
+          {
+            "item": "Nasty_Plot",
+            "value": "6.669%"
+          },
+          {
+            "item": "Trick_Room",
+            "value": "3.723%"
+          },
+          {
+            "item": "Other",
+            "value": "16.845%"
+          }
+        ],
+        "Tera Types": [
+          {
+            "item": "Nothing",
+            "value": "100.000%"
+          }
+        ],
+        "Teammates": [
+          {
+            "item": "Landorus-Therian",
+            "value": "46.966%"
+          },
+          {
+            "item": "Magearna",
+            "value": "33.405%"
+          },
+          {
+            "item": "Greninja",
+            "value": "21.038%"
+          },
+          {
+            "item": "Rotom-Wash",
+            "value": "18.147%"
+          },
+          {
+            "item": "Heatran",
+            "value": "16.457%"
+          },
+          {
+            "item": "Kartana",
+            "value": "15.472%"
+          },
+          {
+            "item": "Zapdos",
+            "value": "14.636%"
+          },
+          {
+            "item": "Tapu_Lele",
+            "value": "14.563%"
+          },
+          {
+            "item": "Victini",
+            "value": "13.248%"
+          },
+          {
+            "item": "Scizor-Mega",
+            "value": "12.363%"
+          },
+          {
+            "item": "Tapu_Fini",
+            "value": "12.326%"
+          }
+        ],
+        "Checks and Counters": [
+          {
+            "pokemon": "Lopunny-Mega",
+            "matchup_occurred": "75.680",
+            "counter_kos_or_forces_switch_percent": "89.21",
+            "stdevofkoswitch": "3.38",
+            "ko_percent": "31.1%",
+            "switch_out_percent": "58.1%"
+          },
+          {
+            "pokemon": "Charizard-Mega-X",
+            "matchup_occurred": "65.745",
+            "counter_kos_or_forces_switch_percent": "87.66",
+            "stdevofkoswitch": "5.48",
+            "ko_percent": "62.7%",
+            "switch_out_percent": "24.9%"
+          },
+          {
+            "pokemon": "Kartana",
+            "matchup_occurred": "64.493",
+            "counter_kos_or_forces_switch_percent": "78.66",
+            "stdevofkoswitch": "3.54",
+            "ko_percent": "35.7%",
+            "switch_out_percent": "43.0%"
+          },
+          {
+            "pokemon": "Medicham-Mega",
+            "matchup_occurred": "52.969",
+            "counter_kos_or_forces_switch_percent": "73.23",
+            "stdevofkoswitch": "5.06",
+            "ko_percent": "37.6%",
+            "switch_out_percent": "35.6%"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "species": "Tapu Lele",
+    "slug": "tapu-lele",
+    "info": {
+      "name": "pink world",
+      "natdexnumber": 786,
+      "gender": "N",
+      "types": [
+        "Psychic",
+        "Fairy"
+      ],
+      "tier": "OU",
+      "level": 100,
+      "nature": "Timid",
+      "natureModifier": {
+        "spe": 1.1,
+        "atk": 0.9
+      },
+      "happiness": 255,
+      "shiny": true,
+      "facingRight": false,
+      "hiddenpowertype": "Dark",
+      "teratype": "Normal",
+      "item": "Choice Scarf",
+      "ability": "Psychic Surge",
+      "potentialAbilities": {
+        "0": "Psychic Surge"
+      },
+      "bst": 570
+    },
+    "baseStats": {
+      "hp": 70,
+      "attack": 85,
+      "defense": 75,
+      "specialAttack": 130,
+      "specialDefense": 115,
+      "speed": 95
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "evs": {
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spa": 252,
+      "spd": 4,
+      "spe": 252
+    },
+    "moveset": {
+      "move1": "Psychic",
+      "move2": "Moonblast",
+      "move3": "Hidden Power Fire",
+      "move4": "Focus Blast"
+    },
+    "displayinfo": {
+      "spriteRelativePath": "../../node_modules/pokesprite-images/pokemon-gen7x/shiny/tapu-lele.png",
+      "type1spriteRelativePath": "../../node_modules/pokesprite-images/misc/type-logos/gen8/Psychic.png",
+      "type2spriteRelativePath": "../../node_modules/pokesprite-images/misc/type-logos/gen8/Fairy.png"
+    },
+    "effectiveStats": {
+      "hp": 281,
+      "attack": 185,
+      "defense": 186,
+      "specialAttack": 359,
+      "specialDefense": 267,
+      "speed": 317
+    },
+    "UsageEntry": {
+      "usage": {
+        "rank": "8",
+        "name": "Tapu Lele",
+        "usage_percent": 13.9107,
+        "viability_ceiling": "Popular"
+      },
+      "movesetUsage": {
+        "Pokemon": "Tapu Lele",
+        "Raw_count": "27402",
+        "Avg._weight": "0.7350230076032918",
+        "Viability_Ceiling": "95",
+        "Abilities": [
+          {
+            "item": "Psychic_Surge",
+            "value": "100.000%"
+          }
+        ],
+        "Items": [
+          {
+            "item": "Choice_Specs",
+            "value": "33.815%"
+          },
+          {
+            "item": "Choice_Scarf",
+            "value": "23.139%"
+          },
+          {
+            "item": "Twisted_Spoon",
+            "value": "14.269%"
+          },
+          {
+            "item": "Psychium_Z",
+            "value": "7.541%"
+          },
+          {
+            "item": "Fightinium_Z",
+            "value": "5.957%"
+          },
+          {
+            "item": "Terrain_Extender",
+            "value": "4.764%"
+          },
+          {
+            "item": "Assault_Vest",
+            "value": "3.924%"
+          },
+          {
+            "item": "Life_Orb",
+            "value": "2.384%"
+          },
+          {
+            "item": "Other",
+            "value": "4.207%"
+          }
+        ],
+        "Spreads": [
+          {
+            "item": "Timid:0/0/0/252/4/252",
+            "value": "49.063%"
+          },
+          {
+            "item": "Modest:0/0/0/252/4/252",
+            "value": "28.172%"
+          },
+          {
+            "item": "Modest:4/0/0/252/0/252",
+            "value": "3.475%"
+          },
+          {
+            "item": "Timid:0/0/4/252/0/252",
+            "value": "2.869%"
+          },
+          {
+            "item": "Timid:4/0/0/252/0/252",
+            "value": "2.814%"
+          },
+          {
+            "item": "Timid:0/0/0/252/0/252",
+            "value": "1.953%"
+          },
+          {
+            "item": "Other",
+            "value": "11.654%"
+          }
+        ],
+        "Moves": [
+          {
+            "item": "Moonblast",
+            "value": "98.918%"
+          },
+          {
+            "item": "Psyshock",
+            "value": "81.584%"
+          },
+          {
+            "item": "Hidden_Power Fire",
+            "value": "57.222%"
+          },
+          {
+            "item": "Psychic",
+            "value": "56.999%"
+          },
+          {
+            "item": "Focus_Blast",
+            "value": "42.122%"
+          },
+          {
+            "item": "Calm_Mind",
+            "value": "20.342%"
+          },
+          {
+            "item": "Thunderbolt",
+            "value": "10.613%"
+          },
+          {
+            "item": "Taunt",
+            "value": "10.106%"
+          },
+          {
+            "item": "Shadow_Ball",
+            "value": "6.344%"
+          },
+          {
+            "item": "Other",
+            "value": "15.750%"
+          }
+        ],
+        "Tera Types": [
+          {
+            "item": "Nothing",
+            "value": "100.000%"
+          }
+        ],
+        "Teammates": [
+          {
+            "item": "Landorus-Therian",
+            "value": "55.399%"
+          },
+          {
+            "item": "Alakazam-Mega",
+            "value": "31.902%"
+          },
+          {
+            "item": "Magearna",
+            "value": "30.899%"
+          },
+          {
+            "item": "Kartana",
+            "value": "29.306%"
+          },
+          {
+            "item": "Greninja",
+            "value": "28.804%"
+          },
+          {
+            "item": "Hawlucha",
+            "value": "20.463%"
+          },
+          {
+            "item": "Rotom-Wash",
+            "value": "17.923%"
+          },
+          {
+            "item": "Ferrothorn",
+            "value": "14.273%"
+          },
+          {
+            "item": "Excadrill",
+            "value": "10.636%"
+          },
+          {
+            "item": "Victini",
+            "value": "9.701%"
+          },
+          {
+            "item": "Garchomp",
+            "value": "9.449%"
+          }
+        ],
+        "Checks and Counters": [
+          {
+            "pokemon": "Muk-Alola",
+            "matchup_occurred": "72.762",
+            "counter_kos_or_forces_switch_percent": "84.46",
+            "stdevofkoswitch": "2.92",
+            "ko_percent": "24.3%",
+            "switch_out_percent": "60.1%"
+          },
+          {
+            "pokemon": "Kartana",
+            "matchup_occurred": "69.540",
+            "counter_kos_or_forces_switch_percent": "74.46",
+            "stdevofkoswitch": "1.23",
+            "ko_percent": "31.2%",
+            "switch_out_percent": "43.2%"
+          },
+          {
+            "pokemon": "Celesteela",
+            "matchup_occurred": "67.907",
+            "counter_kos_or_forces_switch_percent": "74.58",
+            "stdevofkoswitch": "1.67",
+            "ko_percent": "22.8%",
+            "switch_out_percent": "51.8%"
+          },
+          {
+            "pokemon": "Stakataka",
+            "matchup_occurred": "63.641",
+            "counter_kos_or_forces_switch_percent": "88.04",
+            "stdevofkoswitch": "6.10",
+            "ko_percent": "44.7%",
+            "switch_out_percent": "43.4%"
+          },
+          {
+            "pokemon": "Swampert-Mega",
+            "matchup_occurred": "63.503",
+            "counter_kos_or_forces_switch_percent": "71.77",
+            "stdevofkoswitch": "2.07",
+            "ko_percent": "37.1%",
+            "switch_out_percent": "34.7%"
+          },
+          {
+            "pokemon": "Blacephalon",
+            "matchup_occurred": "62.923",
+            "counter_kos_or_forces_switch_percent": "73.29",
+            "stdevofkoswitch": "2.59",
+            "ko_percent": "38.9%",
+            "switch_out_percent": "34.4%"
+          },
+          {
+            "pokemon": "Victini",
+            "matchup_occurred": "61.305",
+            "counter_kos_or_forces_switch_percent": "68.32",
+            "stdevofkoswitch": "1.75",
+            "ko_percent": "27.0%",
+            "switch_out_percent": "41.3%"
+          },
+          {
+            "pokemon": "Metagross",
+            "matchup_occurred": "59.951",
+            "counter_kos_or_forces_switch_percent": "85.33",
+            "stdevofkoswitch": "6.34",
+            "ko_percent": "19.8%",
+            "switch_out_percent": "65.5%"
+          },
+          {
+            "pokemon": "Jirachi",
+            "matchup_occurred": "59.185",
+            "counter_kos_or_forces_switch_percent": "66.84",
+            "stdevofkoswitch": "1.91",
+            "ko_percent": "12.7%",
+            "switch_out_percent": "54.2%"
+          },
+          {
+            "pokemon": "Mimikyu",
+            "matchup_occurred": "57.535",
+            "counter_kos_or_forces_switch_percent": "71.39",
+            "stdevofkoswitch": "3.46",
+            "ko_percent": "46.1%",
+            "switch_out_percent": "25.3%"
+          },
+          {
+            "pokemon": "Alakazam-Mega",
+            "matchup_occurred": "55.320",
+            "counter_kos_or_forces_switch_percent": "65.18",
+            "stdevofkoswitch": "2.47",
+            "ko_percent": "40.6%",
+            "switch_out_percent": "24.6%"
+          },
+          {
+            "pokemon": "Excadrill",
+            "matchup_occurred": "52.717",
+            "counter_kos_or_forces_switch_percent": "60.97",
+            "stdevofkoswitch": "2.06",
+            "ko_percent": "19.5%",
+            "switch_out_percent": "41.5%"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "species": "Victini",
+    "slug": "victini",
+    "info": {
+      "name": "vanessa vanjie",
+      "natdexnumber": 494,
+      "gender": "N",
+      "types": [
+        "Psychic",
+        "Fire"
+      ],
+      "tier": "OU",
+      "level": 100,
+      "nature": "Timid",
+      "natureModifier": {
+        "spe": 1.1,
+        "atk": 0.9
+      },
+      "happiness": 255,
+      "shiny": false,
+      "facingRight": false,
+      "hiddenpowertype": "Dark",
+      "teratype": "Normal",
+      "item": "Normalium Z",
+      "ability": "Victory Star",
+      "potentialAbilities": {
+        "0": "Victory Star"
+      },
+      "bst": 600
+    },
+    "baseStats": {
+      "hp": 100,
+      "attack": 100,
+      "defense": 100,
+      "specialAttack": 100,
+      "specialDefense": 100,
+      "speed": 100
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 0,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "evs": {
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spa": 252,
+      "spd": 4,
+      "spe": 252
+    },
+    "moveset": {
+      "move1": "Celebrate",
+      "move2": "Searing Shot",
+      "move3": "Stored Power",
+      "move4": "Focus Blast"
+    },
+    "displayinfo": {
+      "spriteRelativePath": "../../node_modules/pokesprite-images/pokemon-gen7x/regular/victini.png",
+      "type1spriteRelativePath": "../../node_modules/pokesprite-images/misc/type-logos/gen8/Psychic.png",
+      "type2spriteRelativePath": "../../node_modules/pokesprite-images/misc/type-logos/gen8/Fire.png"
+    },
+    "effectiveStats": {
+      "hp": 341,
+      "attack": 184,
+      "defense": 236,
+      "specialAttack": 299,
+      "specialDefense": 237,
+      "speed": 328
+    },
+    "UsageEntry": {
+      "usage": {
+        "rank": "22",
+        "name": "Victini",
+        "usage_percent": 8.32007,
+        "viability_ceiling": "Popular"
+      },
+      "movesetUsage": {
+        "Pokemon": "Victini",
+        "Raw_count": "15984",
+        "Avg._weight": "0.7520497106077413",
+        "Viability_Ceiling": "94",
+        "Abilities": [
+          {
+            "item": "Victory_Star",
+            "value": "100.000%"
+          }
+        ],
+        "Items": [
+          {
+            "item": "Choice_Scarf",
+            "value": "36.004%"
+          },
+          {
+            "item": "Choice_Band",
+            "value": "32.089%"
+          },
+          {
+            "item": "Normalium_Z",
+            "value": "23.782%"
+          },
+          {
+            "item": "Assault_Vest",
+            "value": "2.542%"
+          },
+          {
+            "item": "Leftovers",
+            "value": "1.537%"
+          },
+          {
+            "item": "Other",
+            "value": "4.046%"
+          }
+        ],
+        "Spreads": [
+          {
+            "item": "Jolly:0/252/0/0/4/252",
+            "value": "33.649%"
+          },
+          {
+            "item": "Timid:0/0/0/252/4/252",
+            "value": "20.082%"
+          },
+          {
+            "item": "Jolly:252/4/0/0/0/252",
+            "value": "14.279%"
+          },
+          {
+            "item": "Adamant:0/252/0/0/4/252",
+            "value": "5.950%"
+          },
+          {
+            "item": "Jolly:4/252/0/0/0/252",
+            "value": "2.686%"
+          },
+          {
+            "item": "Timid:4/0/0/252/0/252",
+            "value": "1.697%"
+          },
+          {
+            "item": "Other",
+            "value": "21.657%"
+          }
+        ],
+        "Moves": [
+          {
+            "item": "V-create",
+            "value": "73.177%"
+          },
+          {
+            "item": "U-turn",
+            "value": "65.793%"
+          },
+          {
+            "item": "Bolt_Strike",
+            "value": "55.476%"
+          },
+          {
+            "item": "Trick",
+            "value": "42.013%"
+          },
+          {
+            "item": "Final_Gambit",
+            "value": "25.837%"
+          },
+          {
+            "item": "Celebrate",
+            "value": "23.732%"
+          },
+          {
+            "item": "Searing_Shot",
+            "value": "23.094%"
+          },
+          {
+            "item": "Stored_Power",
+            "value": "21.875%"
+          },
+          {
+            "item": "Focus_Blast",
+            "value": "19.145%"
+          },
+          {
+            "item": "Zen_Headbutt",
+            "value": "16.129%"
+          },
+          {
+            "item": "Brick_Break",
+            "value": "4.361%"
+          },
+          {
+            "item": "Glaciate",
+            "value": "2.974%"
+          },
+          {
+            "item": "Psyshock",
+            "value": "2.824%"
+          },
+          {
+            "item": "Fusion_Bolt",
+            "value": "2.441%"
+          },
+          {
+            "item": "Energy_Ball",
+            "value": "2.296%"
+          },
+          {
+            "item": "Other",
+            "value": "18.834%"
+          }
+        ],
+        "Tera Types": [
+          {
+            "item": "Nothing",
+            "value": "100.000%"
+          }
+        ],
+        "Teammates": [
+          {
+            "item": "Landorus-Therian",
+            "value": "43.535%"
+          },
+          {
+            "item": "Greninja",
+            "value": "20.755%"
+          },
+          {
+            "item": "Magearna",
+            "value": "20.174%"
+          },
+          {
+            "item": "Ferrothorn",
+            "value": "17.090%"
+          },
+          {
+            "item": "Tapu_Lele",
+            "value": "16.253%"
+          },
+          {
+            "item": "Tapu_Fini",
+            "value": "16.121%"
+          },
+          {
+            "item": "Serperior",
+            "value": "15.066%"
+          },
+          {
+            "item": "Garchomp",
+            "value": "12.845%"
+          },
+          {
+            "item": "Rotom-Wash",
+            "value": "12.688%"
+          },
+          {
+            "item": "Kartana",
+            "value": "12.389%"
+          },
+          {
+            "item": "Tapu_Koko",
+            "value": "12.176%"
+          }
+        ],
+        "Checks and Counters": [
+          {
+            "pokemon": "Latias-Mega",
+            "matchup_occurred": "59.371",
+            "counter_kos_or_forces_switch_percent": "72.53",
+            "stdevofkoswitch": "3.29",
+            "ko_percent": "15.9%",
+            "switch_out_percent": "56.7%"
+          },
+          {
+            "pokemon": "Garchomp",
+            "matchup_occurred": "57.724",
+            "counter_kos_or_forces_switch_percent": "67.26",
+            "stdevofkoswitch": "2.38",
+            "ko_percent": "24.3%",
+            "switch_out_percent": "43.0%"
+          },
+          {
+            "pokemon": "Swampert-Mega",
+            "matchup_occurred": "56.520",
+            "counter_kos_or_forces_switch_percent": "68.29",
+            "stdevofkoswitch": "2.94",
+            "ko_percent": "28.9%",
+            "switch_out_percent": "39.4%"
+          },
+          {
+            "pokemon": "Mimikyu",
+            "matchup_occurred": "56.374",
+            "counter_kos_or_forces_switch_percent": "75.87",
+            "stdevofkoswitch": "4.87",
+            "ko_percent": "33.3%",
+            "switch_out_percent": "42.5%"
+          },
+          {
+            "pokemon": "Charizard-Mega-X",
+            "matchup_occurred": "55.327",
+            "counter_kos_or_forces_switch_percent": "67.04",
+            "stdevofkoswitch": "2.93",
+            "ko_percent": "23.4%",
+            "switch_out_percent": "43.6%"
+          },
+          {
+            "pokemon": "Dragonite",
+            "matchup_occurred": "54.754",
+            "counter_kos_or_forces_switch_percent": "70.64",
+            "stdevofkoswitch": "3.97",
+            "ko_percent": "35.5%",
+            "switch_out_percent": "35.2%"
+          },
+          {
+            "pokemon": "Crawdaunt",
+            "matchup_occurred": "54.420",
+            "counter_kos_or_forces_switch_percent": "75.14",
+            "stdevofkoswitch": "5.18",
+            "ko_percent": "32.9%",
+            "switch_out_percent": "42.2%"
+          },
+          {
+            "pokemon": "Starmie",
+            "matchup_occurred": "53.506",
+            "counter_kos_or_forces_switch_percent": "71.64",
+            "stdevofkoswitch": "4.53",
+            "ko_percent": "13.6%",
+            "switch_out_percent": "58.0%"
+          },
+          {
+            "pokemon": "Kingdra",
+            "matchup_occurred": "52.932",
+            "counter_kos_or_forces_switch_percent": "81.73",
+            "stdevofkoswitch": "7.20",
+            "ko_percent": "53.0%",
+            "switch_out_percent": "28.8%"
+          },
+          {
+            "pokemon": "Marowak-Alola",
+            "matchup_occurred": "51.438",
+            "counter_kos_or_forces_switch_percent": "68.29",
+            "stdevofkoswitch": "4.21",
+            "ko_percent": "29.3%",
+            "switch_out_percent": "39.0%"
+          },
+          {
+            "pokemon": "Greninja",
+            "matchup_occurred": "50.881",
+            "counter_kos_or_forces_switch_percent": "57.18",
+            "stdevofkoswitch": "1.58",
+            "ko_percent": "26.2%",
+            "switch_out_percent": "31.0%"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "species": "Alakazam-Mega",
+    "slug": "alakazam",
+    "info": {
+      "name": "muva",
+      "natdexnumber": 65,
+      "gender": "F",
+      "types": [
+        "Psychic"
+      ],
+      "tier": "OU",
+      "level": 100,
+      "nature": "Timid",
+      "natureModifier": {
+        "spe": 1.1,
+        "atk": 0.9
+      },
+      "happiness": 255,
+      "shiny": false,
+      "facingRight": false,
+      "hiddenpowertype": "Dark",
+      "teratype": "Normal",
+      "item": "Alakazite",
+      "ability": "Magic Guard",
+      "potentialAbilities": {
+        "0": "Trace"
+      },
+      "bst": 600
+    },
+    "baseStats": {
+      "hp": 55,
+      "attack": 50,
+      "defense": 65,
+      "specialAttack": 175,
+      "specialDefense": 105,
+      "speed": 150
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 0,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "evs": {
+      "hp": 0,
+      "atk": 0,
+      "def": 4,
+      "spa": 252,
+      "spd": 0,
+      "spe": 252
+    },
+    "moveset": {
+      "move1": "Psychic",
+      "move2": "Focus Blast",
+      "move3": "Recover",
+      "move4": "Calm Mind"
+    },
+    "displayinfo": {
+      "spriteRelativePath": "../../node_modules/pokesprite-images/pokemon-gen7x/regular/alakazam.png",
+      "type1spriteRelativePath": "../../node_modules/pokesprite-images/misc/type-logos/gen8/Psychic.png",
+      "type2spriteRelativePath": "../../node_modules/pokesprite-images/misc/type-logos/gen8/undefined.png"
+    },
+    "effectiveStats": {
+      "hp": 251,
+      "attack": 94,
+      "defense": 167,
+      "specialAttack": 449,
+      "specialDefense": 246,
+      "speed": 438
+    },
+    "UsageEntry": {
+      "usage": {
+        "rank": "27",
+        "name": "Alakazam-Mega",
+        "usage_percent": 7.20522,
+        "viability_ceiling": "Common"
+      },
+      "movesetUsage": {
+        "Pokemon": "Alakazam-Mega",
+        "Raw_count": "15776",
+        "Avg._weight": "0.664775562353455",
+        "Viability_Ceiling": "94",
+        "Abilities": [
+          {
+            "item": "Trace",
+            "value": "100.000%"
+          }
+        ],
+        "Items": [
+          {
+            "item": "Alakazite",
+            "value": "100.000%"
+          }
+        ],
+        "Spreads": [
+          {
+            "item": "Timid:0/0/0/252/4/252",
+            "value": "47.860%"
+          },
+          {
+            "item": "Timid:0/0/4/252/0/252",
+            "value": "24.554%"
+          },
+          {
+            "item": "Modest:0/0/0/252/4/252",
+            "value": "6.100%"
+          },
+          {
+            "item": "Timid:4/0/0/252/0/252",
+            "value": "5.348%"
+          },
+          {
+            "item": "Modest:4/0/0/252/0/252",
+            "value": "4.915%"
+          },
+          {
+            "item": "Timid:0/0/32/224/0/252",
+            "value": "1.584%"
+          },
+          {
+            "item": "Other",
+            "value": "9.639%"
+          }
+        ],
+        "Moves": [
+          {
+            "item": "Focus_Blast",
+            "value": "90.490%"
+          },
+          {
+            "item": "Psychic",
+            "value": "88.192%"
+          },
+          {
+            "item": "Shadow_Ball",
+            "value": "73.968%"
+          },
+          {
+            "item": "Calm_Mind",
+            "value": "34.262%"
+          },
+          {
+            "item": "Recover",
+            "value": "30.780%"
+          },
+          {
+            "item": "Energy_Ball",
+            "value": "25.028%"
+          },
+          {
+            "item": "Psyshock",
+            "value": "14.171%"
+          },
+          {
+            "item": "Dazzling_Gleam",
+            "value": "11.488%"
+          },
+          {
+            "item": "Taunt",
+            "value": "7.904%"
+          },
+          {
+            "item": "Hidden_Power Ice",
+            "value": "6.196%"
+          },
+          {
+            "item": "Other",
+            "value": "17.521%"
+          }
+        ],
+        "Tera Types": [
+          {
+            "item": "Nothing",
+            "value": "100.000%"
+          }
+        ],
+        "Teammates": [
+          {
+            "item": "Tapu_Lele",
+            "value": "61.266%"
+          },
+          {
+            "item": "Landorus-Therian",
+            "value": "56.614%"
+          },
+          {
+            "item": "Magearna",
+            "value": "36.773%"
+          },
+          {
+            "item": "Greninja",
+            "value": "30.115%"
+          },
+          {
+            "item": "Kartana",
+            "value": "29.141%"
+          },
+          {
+            "item": "Rotom-Wash",
+            "value": "22.104%"
+          },
+          {
+            "item": "Hawlucha",
+            "value": "20.248%"
+          },
+          {
+            "item": "Ferrothorn",
+            "value": "16.736%"
+          },
+          {
+            "item": "Excadrill",
+            "value": "11.439%"
+          },
+          {
+            "item": "Garchomp",
+            "value": "11.078%"
+          },
+          {
+            "item": "Heatran",
+            "value": "11.059%"
+          }
+        ],
+        "Checks and Counters": [
+          {
+            "pokemon": "Muk-Alola",
+            "matchup_occurred": "68.989",
+            "counter_kos_or_forces_switch_percent": "86.58",
+            "stdevofkoswitch": "4.40",
+            "ko_percent": "76.1%",
+            "switch_out_percent": "10.5%"
+          },
+          {
+            "pokemon": "Celesteela",
+            "matchup_occurred": "62.181",
+            "counter_kos_or_forces_switch_percent": "72.48",
+            "stdevofkoswitch": "2.58",
+            "ko_percent": "30.8%",
+            "switch_out_percent": "41.7%"
+          },
+          {
+            "pokemon": "Mawile-Mega",
+            "matchup_occurred": "58.078",
+            "counter_kos_or_forces_switch_percent": "70.15",
+            "stdevofkoswitch": "3.02",
+            "ko_percent": "28.8%",
+            "switch_out_percent": "41.4%"
+          },
+          {
+            "pokemon": "Hoopa-Unbound",
+            "matchup_occurred": "57.835",
+            "counter_kos_or_forces_switch_percent": "78.24",
+            "stdevofkoswitch": "5.10",
+            "ko_percent": "39.3%",
+            "switch_out_percent": "39.0%"
+          },
+          {
+            "pokemon": "Kartana",
+            "matchup_occurred": "57.587",
+            "counter_kos_or_forces_switch_percent": "64.92",
+            "stdevofkoswitch": "1.83",
+            "ko_percent": "28.1%",
+            "switch_out_percent": "36.8%"
+          },
+          {
+            "pokemon": "Chansey",
+            "matchup_occurred": "56.382",
+            "counter_kos_or_forces_switch_percent": "64.70",
+            "stdevofkoswitch": "2.08",
+            "ko_percent": "10.8%",
+            "switch_out_percent": "53.9%"
+          },
+          {
+            "pokemon": "Mimikyu",
+            "matchup_occurred": "53.086",
+            "counter_kos_or_forces_switch_percent": "72.55",
+            "stdevofkoswitch": "4.86",
+            "ko_percent": "31.7%",
+            "switch_out_percent": "40.8%"
+          },
+          {
+            "pokemon": "Bisharp",
+            "matchup_occurred": "52.212",
+            "counter_kos_or_forces_switch_percent": "71.76",
+            "stdevofkoswitch": "4.89",
+            "ko_percent": "29.2%",
+            "switch_out_percent": "42.6%"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "species": "Landorus-Therian",
+    "slug": "landorus",
+    "info": {
+      "name": "ew",
+      "natdexnumber": 645,
+      "gender": "M",
+      "types": [
+        "Ground",
+        "Flying"
+      ],
+      "tier": "OU",
+      "level": 100,
+      "nature": "Impish",
+      "natureModifier": {
+        "def": 1.1,
+        "spa": 0.9
+      },
+      "happiness": 255,
+      "shiny": false,
+      "facingRight": false,
+      "hiddenpowertype": "Dark",
+      "teratype": "Normal",
+      "item": "Rocky Helmet",
+      "ability": "Intimidate",
+      "potentialAbilities": {
+        "0": "Intimidate"
+      },
+      "bst": 600
+    },
+    "baseStats": {
+      "hp": 89,
+      "attack": 145,
+      "defense": 90,
+      "specialAttack": 105,
+      "specialDefense": 80,
+      "speed": 91
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "evs": {
+      "hp": 252,
+      "atk": 0,
+      "def": 112,
+      "spa": 0,
+      "spd": 0,
+      "spe": 144
+    },
+    "moveset": {
+      "move1": "Stealth Rock",
+      "move2": "Earthquake",
+      "move3": "Hidden Power Ice",
+      "move4": "Defog"
+    },
+    "displayinfo": {
+      "spriteRelativePath": "../../node_modules/pokesprite-images/pokemon-gen7x/regular/landorus.png",
+      "type1spriteRelativePath": "../../node_modules/pokesprite-images/misc/type-logos/gen8/Ground.png",
+      "type2spriteRelativePath": "../../node_modules/pokesprite-images/misc/type-logos/gen8/Flying.png"
+    },
+    "effectiveStats": {
+      "hp": 382,
+      "attack": 326,
+      "defense": 268,
+      "specialAttack": 221,
+      "specialDefense": 196,
+      "speed": 254
+    },
+    "UsageEntry": {
+      "usage": {
+        "rank": "1",
+        "name": "Landorus-Therian",
+        "usage_percent": 39.99615,
+        "viability_ceiling": "Centralizing"
+      },
+      "movesetUsage": {
+        "Pokemon": "Landorus-Therian",
+        "Raw_count": "76454",
+        "Avg._weight": "0.7608625251285074",
+        "Viability_Ceiling": "96",
+        "Abilities": [
+          {
+            "item": "Intimidate",
+            "value": "100.000%"
+          }
+        ],
+        "Items": [
+          {
+            "item": "Rocky_Helmet",
+            "value": "34.937%"
+          },
+          {
+            "item": "Choice_Scarf",
+            "value": "30.099%"
+          },
+          {
+            "item": "Flyinium_Z",
+            "value": "9.429%"
+          },
+          {
+            "item": "Focus_Sash",
+            "value": "8.380%"
+          },
+          {
+            "item": "Leftovers",
+            "value": "7.155%"
+          },
+          {
+            "item": "Iapapa_Berry",
+            "value": "2.356%"
+          },
+          {
+            "item": "Rockium_Z",
+            "value": "2.306%"
+          },
+          {
+            "item": "Yache_Berry",
+            "value": "1.891%"
+          },
+          {
+            "item": "Other",
+            "value": "3.447%"
+          }
+        ],
+        "Spreads": [
+          {
+            "item": "Jolly:0/252/0/0/4/252",
+            "value": "17.581%"
+          },
+          {
+            "item": "Impish:252/0/112/0/0/144",
+            "value": "11.911%"
+          },
+          {
+            "item": "Jolly:0/232/68/0/0/208",
+            "value": "8.269%"
+          },
+          {
+            "item": "Impish:204/0/156/0/0/148",
+            "value": "3.975%"
+          },
+          {
+            "item": "Relaxed:248/0/232/28/0/0",
+            "value": "2.483%"
+          },
+          {
+            "item": "Jolly:0/252/4/0/0/252",
+            "value": "2.436%"
+          },
+          {
+            "item": "Other",
+            "value": "53.345%"
+          }
+        ],
+        "Moves": [
+          {
+            "item": "Earthquake",
+            "value": "97.890%"
+          },
+          {
+            "item": "U-turn",
+            "value": "74.205%"
+          },
+          {
+            "item": "Stealth_Rock",
+            "value": "56.737%"
+          },
+          {
+            "item": "Defog",
+            "value": "39.719%"
+          },
+          {
+            "item": "Stone_Edge",
+            "value": "22.235%"
+          },
+          {
+            "item": "Hidden_Power Ice",
+            "value": "22.084%"
+          },
+          {
+            "item": "Explosion",
+            "value": "18.756%"
+          },
+          {
+            "item": "Swords_Dance",
+            "value": "13.925%"
+          },
+          {
+            "item": "Knock_Off",
+            "value": "12.613%"
+          },
+          {
+            "item": "Fly",
+            "value": "9.553%"
+          },
+          {
+            "item": "Toxic",
+            "value": "6.975%"
+          },
+          {
+            "item": "Smack_Down",
+            "value": "5.762%"
+          },
+          {
+            "item": "Other",
+            "value": "19.546%"
+          }
+        ],
+        "Tera Types": [
+          {
+            "item": "Nothing",
+            "value": "100.000%"
+          }
+        ],
+        "Teammates": [
+          {
+            "item": "Magearna",
+            "value": "35.524%"
+          },
+          {
+            "item": "Greninja",
+            "value": "30.008%"
+          },
+          {
+            "item": "Tapu_Koko",
+            "value": "24.944%"
+          },
+          {
+            "item": "Kartana",
+            "value": "24.684%"
+          },
+          {
+            "item": "Heatran",
+            "value": "21.443%"
+          },
+          {
+            "item": "Tapu_Lele",
+            "value": "19.181%"
+          },
+          {
+            "item": "Tapu_Fini",
+            "value": "18.832%"
+          },
+          {
+            "item": "Ferrothorn",
+            "value": "16.877%"
+          },
+          {
+            "item": "Rotom-Wash",
+            "value": "16.398%"
+          },
+          {
+            "item": "Medicham-Mega",
+            "value": "14.510%"
+          },
+          {
+            "item": "Hawlucha",
+            "value": "12.854%"
+          }
+        ],
+        "Checks and Counters": [
+          {
+            "pokemon": "Slowbro-Mega",
+            "matchup_occurred": "86.291",
+            "counter_kos_or_forces_switch_percent": "93.73",
+            "stdevofkoswitch": "1.86",
+            "ko_percent": "27.4%",
+            "switch_out_percent": "66.3%"
+          },
+          {
+            "pokemon": "Porygon2",
+            "matchup_occurred": "81.399",
+            "counter_kos_or_forces_switch_percent": "89.95",
+            "stdevofkoswitch": "2.14",
+            "ko_percent": "22.7%",
+            "switch_out_percent": "67.2%"
+          },
+          {
+            "pokemon": "Kingdra",
+            "matchup_occurred": "80.750",
+            "counter_kos_or_forces_switch_percent": "91.45",
+            "stdevofkoswitch": "2.67",
+            "ko_percent": "55.2%",
+            "switch_out_percent": "36.3%"
+          },
+          {
+            "pokemon": "Latias-Mega",
+            "matchup_occurred": "78.730",
+            "counter_kos_or_forces_switch_percent": "83.99",
+            "stdevofkoswitch": "1.31",
+            "ko_percent": "22.9%",
+            "switch_out_percent": "61.1%"
+          },
+          {
+            "pokemon": "Kyurem-Black",
+            "matchup_occurred": "77.792",
+            "counter_kos_or_forces_switch_percent": "81.32",
+            "stdevofkoswitch": "0.88",
+            "ko_percent": "24.5%",
+            "switch_out_percent": "56.8%"
+          },
+          {
+            "pokemon": "Cloyster",
+            "matchup_occurred": "77.253",
+            "counter_kos_or_forces_switch_percent": "88.27",
+            "stdevofkoswitch": "2.75",
+            "ko_percent": "39.2%",
+            "switch_out_percent": "49.1%"
+          },
+          {
+            "pokemon": "Mamoswine",
+            "matchup_occurred": "76.993",
+            "counter_kos_or_forces_switch_percent": "86.48",
+            "stdevofkoswitch": "2.37",
+            "ko_percent": "31.6%",
+            "switch_out_percent": "54.9%"
+          },
+          {
+            "pokemon": "Serperior",
+            "matchup_occurred": "75.718",
+            "counter_kos_or_forces_switch_percent": "79.60",
+            "stdevofkoswitch": "0.97",
+            "ko_percent": "23.2%",
+            "switch_out_percent": "56.4%"
+          },
+          {
+            "pokemon": "Gyarados-Mega",
+            "matchup_occurred": "75.582",
+            "counter_kos_or_forces_switch_percent": "80.99",
+            "stdevofkoswitch": "1.35",
+            "ko_percent": "24.6%",
+            "switch_out_percent": "56.4%"
+          },
+          {
+            "pokemon": "Kyurem",
+            "matchup_occurred": "74.522",
+            "counter_kos_or_forces_switch_percent": "85.95",
+            "stdevofkoswitch": "2.86",
+            "ko_percent": "17.0%",
+            "switch_out_percent": "69.0%"
+          },
+          {
+            "pokemon": "Hawlucha",
+            "matchup_occurred": "73.618",
+            "counter_kos_or_forces_switch_percent": "77.79",
+            "stdevofkoswitch": "1.04",
+            "ko_percent": "35.1%",
+            "switch_out_percent": "42.7%"
+          },
+          {
+            "pokemon": "Manaphy",
+            "matchup_occurred": "73.604",
+            "counter_kos_or_forces_switch_percent": "82.61",
+            "stdevofkoswitch": "2.25",
+            "ko_percent": "38.6%",
+            "switch_out_percent": "44.0%"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "species": "Toxapex",
+    "slug": "toxapex",
+    "info": {
+      "name": "obligatory wall",
+      "natdexnumber": 748,
+      "gender": "F",
+      "types": [
+        "Poison",
+        "Water"
+      ],
+      "tier": "OU",
+      "level": 100,
+      "nature": "Calm",
+      "natureModifier": {
+        "spd": 1.1,
+        "atk": 0.9
+      },
+      "happiness": 255,
+      "shiny": true,
+      "facingRight": false,
+      "hiddenpowertype": "Dark",
+      "teratype": "Normal",
+      "item": "Black Sludge",
+      "ability": "Regenerator",
+      "potentialAbilities": {
+        "0": "Merciless",
+        "1": "Limber",
+        "H": "Regenerator"
+      },
+      "bst": 495
+    },
+    "baseStats": {
+      "hp": 50,
+      "attack": 63,
+      "defense": 152,
+      "specialAttack": 53,
+      "specialDefense": 142,
+      "speed": 35
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "evs": {
+      "hp": 252,
+      "atk": 0,
+      "def": 4,
+      "spa": 0,
+      "spd": 252,
+      "spe": 0
+    },
+    "moveset": {
+      "move1": "Knock Off",
+      "move2": "Haze",
+      "move3": "Recover",
+      "move4": "Toxic"
+    },
+    "displayinfo": {
+      "spriteRelativePath": "../../node_modules/pokesprite-images/pokemon-gen7x/shiny/toxapex.png",
+      "type1spriteRelativePath": "../../node_modules/pokesprite-images/misc/type-logos/gen8/Poison.png",
+      "type2spriteRelativePath": "../../node_modules/pokesprite-images/misc/type-logos/gen8/Water.png"
+    },
+    "effectiveStats": {
+      "hp": 304,
+      "attack": 145,
+      "defense": 341,
+      "specialAttack": 142,
+      "specialDefense": 421,
+      "speed": 106
+    },
+    "UsageEntry": {
+      "usage": {
+        "rank": "13",
+        "name": "Toxapex",
+        "usage_percent": 10.36149,
+        "viability_ceiling": "Popular"
+      },
+      "movesetUsage": {
+        "Pokemon": "Toxapex",
+        "Raw_count": "23457",
+        "Avg._weight": "0.6559662787546822",
+        "Viability_Ceiling": "96",
+        "Abilities": [
+          {
+            "item": "Regenerator",
+            "value": "98.521%"
+          },
+          {
+            "item": "Merciless",
+            "value": "1.269%"
+          },
+          {
+            "item": "Limber",
+            "value": "0.210%"
+          }
+        ],
+        "Items": [
+          {
+            "item": "Black_Sludge",
+            "value": "80.538%"
+          },
+          {
+            "item": "Shed_Shell",
+            "value": "4.659%"
+          },
+          {
+            "item": "Rocky_Helmet",
+            "value": "3.903%"
+          },
+          {
+            "item": "Leftovers",
+            "value": "3.233%"
+          },
+          {
+            "item": "Eject_Button",
+            "value": "2.219%"
+          },
+          {
+            "item": "Icium_Z",
+            "value": "2.203%"
+          },
+          {
+            "item": "Other",
+            "value": "3.246%"
+          }
+        ],
+        "Spreads": [
+          {
+            "item": "Calm:252/0/4/0/252/0",
+            "value": "22.189%"
+          },
+          {
+            "item": "Bold:252/0/252/0/4/0",
+            "value": "17.115%"
+          },
+          {
+            "item": "Calm:248/0/8/0/252/0",
+            "value": "4.150%"
+          },
+          {
+            "item": "Bold:248/0/252/0/8/0",
+            "value": "2.453%"
+          },
+          {
+            "item": "Calm:248/0/20/0/240/0",
+            "value": "2.214%"
+          },
+          {
+            "item": "Bold:252/0/176/0/80/0",
+            "value": "1.800%"
+          },
+          {
+            "item": "Other",
+            "value": "50.080%"
+          }
+        ],
+        "Moves": [
+          {
+            "item": "Scald",
+            "value": "93.808%"
+          },
+          {
+            "item": "Recover",
+            "value": "93.043%"
+          },
+          {
+            "item": "Haze",
+            "value": "73.880%"
+          },
+          {
+            "item": "Toxic",
+            "value": "52.383%"
+          },
+          {
+            "item": "Toxic_Spikes",
+            "value": "51.343%"
+          },
+          {
+            "item": "Baneful_Bunker",
+            "value": "15.659%"
+          },
+          {
+            "item": "Other",
+            "value": "19.884%"
+          }
+        ],
+        "Tera Types": [
+          {
+            "item": "Nothing",
+            "value": "100.000%"
+          }
+        ],
+        "Teammates": [
+          {
+            "item": "Gliscor",
+            "value": "28.089%"
+          },
+          {
+            "item": "Chansey",
+            "value": "26.136%"
+          },
+          {
+            "item": "Landorus-Therian",
+            "value": "25.588%"
+          },
+          {
+            "item": "Celesteela",
+            "value": "19.121%"
+          },
+          {
+            "item": "Ferrothorn",
+            "value": "18.509%"
+          },
+          {
+            "item": "Sableye-Mega",
+            "value": "17.483%"
+          },
+          {
+            "item": "Clefable",
+            "value": "17.345%"
+          },
+          {
+            "item": "Skarmory",
+            "value": "14.977%"
+          },
+          {
+            "item": "Greninja",
+            "value": "14.787%"
+          },
+          {
+            "item": "Tornadus-Therian",
+            "value": "14.147%"
+          },
+          {
+            "item": "Latias-Mega",
+            "value": "12.388%"
+          }
+        ],
+        "Checks and Counters": [
+          {
+            "pokemon": "Alakazam-Mega",
+            "matchup_occurred": "81.146",
+            "counter_kos_or_forces_switch_percent": "88.12",
+            "stdevofkoswitch": "1.74",
+            "ko_percent": "21.8%",
+            "switch_out_percent": "66.3%"
+          },
+          {
+            "pokemon": "Raichu-Alola",
+            "matchup_occurred": "78.489",
+            "counter_kos_or_forces_switch_percent": "95.20",
+            "stdevofkoswitch": "4.18",
+            "ko_percent": "29.7%",
+            "switch_out_percent": "65.5%"
+          },
+          {
+            "pokemon": "Swampert-Mega",
+            "matchup_occurred": "75.430",
+            "counter_kos_or_forces_switch_percent": "82.62",
+            "stdevofkoswitch": "1.80",
+            "ko_percent": "17.7%",
+            "switch_out_percent": "64.9%"
+          },
+          {
+            "pokemon": "Garchomp",
+            "matchup_occurred": "74.264",
+            "counter_kos_or_forces_switch_percent": "81.98",
+            "stdevofkoswitch": "1.93",
+            "ko_percent": "11.9%",
+            "switch_out_percent": "70.1%"
+          },
+          {
+            "pokemon": "Necrozma",
+            "matchup_occurred": "74.233",
+            "counter_kos_or_forces_switch_percent": "94.24",
+            "stdevofkoswitch": "5.00",
+            "ko_percent": "17.9%",
+            "switch_out_percent": "76.3%"
+          },
+          {
+            "pokemon": "Breloom",
+            "matchup_occurred": "73.637",
+            "counter_kos_or_forces_switch_percent": "84.77",
+            "stdevofkoswitch": "2.78",
+            "ko_percent": "4.2%",
+            "switch_out_percent": "80.6%"
+          },
+          {
+            "pokemon": "Serperior",
+            "matchup_occurred": "73.396",
+            "counter_kos_or_forces_switch_percent": "80.42",
+            "stdevofkoswitch": "1.76",
+            "ko_percent": "11.4%",
+            "switch_out_percent": "69.0%"
+          },
+          {
+            "pokemon": "Gyarados-Mega",
+            "matchup_occurred": "73.346",
+            "counter_kos_or_forces_switch_percent": "83.80",
+            "stdevofkoswitch": "2.61",
+            "ko_percent": "27.1%",
+            "switch_out_percent": "56.7%"
+          },
+          {
+            "pokemon": "Lele",
+            "matchup_occurred": "73.156",
+            "counter_kos_or_forces_switch_percent": "78.95",
+            "stdevofkoswitch": "1.45",
+            "ko_percent": "21.2%",
+            "switch_out_percent": "57.8%"
+          },
+          {
+            "pokemon": "Medicham-Mega",
+            "matchup_occurred": "72.641",
+            "counter_kos_or_forces_switch_percent": "79.17",
+            "stdevofkoswitch": "1.63",
+            "ko_percent": "24.0%",
+            "switch_out_percent": "55.2%"
+          },
+          {
+            "pokemon": "Kyurem-Black",
+            "matchup_occurred": "71.851",
+            "counter_kos_or_forces_switch_percent": "78.10",
+            "stdevofkoswitch": "1.56",
+            "ko_percent": "16.6%",
+            "switch_out_percent": "61.5%"
+          },
+          {
+            "pokemon": "Porygon-Z",
+            "matchup_occurred": "71.659",
+            "counter_kos_or_forces_switch_percent": "90.04",
+            "stdevofkoswitch": "4.59",
+            "ko_percent": "36.0%",
+            "switch_out_percent": "54.1%"
+          }
+        ]
+      }
+    }
+  }
+]

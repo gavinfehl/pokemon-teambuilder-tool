@@ -1,6 +1,7 @@
 // Pokemon Class
 const { Dex } = require('pokemon-showdown');
 const fs = require('fs');
+const path = require('path');
 
 const modifiers = {     
     //SPICY
@@ -38,6 +39,7 @@ const generation = 7;
 const GenDex = Dex.mod("gen"+generation);
 const usageDataFile = '../data/parsedusagedata.json';
 const movesetUsageDataFile = '../data/parsedmovesetusagedata.json';
+const pokespriteinfoFile = '../../node_modules/pokesprite-images/data/pokemon.json'
 
 // calculates the effective Atk, Def, SpA, SpD, or Spe stat as a result of a pokemon's attributes
 function calculateStat(base, iv, ev, level, natureModifier) {
@@ -70,7 +72,22 @@ function getNatureDescription(nature) {
 
     return `${nature} (+${descriptions[positive?.[0]] || "None"}, -${descriptions[negative?.[0]] || "None"})`;
 }
-
+async function getImageBase64(relativePath) {
+    try {
+      const absolutePath = path.resolve(__dirname, relativePath);
+      console.log("Reading png:", absolutePath);
+  
+      const buffer = await fs.promises.readFile(absolutePath);
+      const base64String = buffer.toString('base64');
+      console.log("Base64 conversion complete");
+      console.log(`data:image/png;base64,${base64String}`);
+      return `data:image/png;base64,${base64String}`;
+    } catch (error) {
+      console.error('Error converting image to Base64:', error);
+      return null;
+    }
+  }
+  
 
 
 class Pokemon {
@@ -112,6 +129,7 @@ class Pokemon {
             weight: this.dex.weight,
             bst: this.dex.baseStats.hp +this.dex.baseStats.atk +this.dex.baseStats.def +this.dex.baseStats.spa +this.dex.baseStats.spd +this.dex.baseStats.spe
         };
+        this.slug = this.findSlug(this.info.natdexnumber);
         this.baseStats = {
             hp:this.dex.baseStats.hp,
             attack:this.dex.baseStats.atk,
@@ -126,9 +144,9 @@ class Pokemon {
         this.moveset = moveset;
         //TODO: ADD GENERATION SPECIFIC SPRITES
         this.displayinfo = {
-            spriteRelativePath: (this.dex.exists) ? "node_modules/pokesprite-images/pokemon-gen7x/"+(shiny ? "shiny" : "regular")+(this.info.facingRight ? "/right" : "")+"/"+(this.species)+".png" : "node_modules/pokesprite-images/pokemon-gen7x/unknown-gen5.png",
-            type1spriteRelativePath: "node_modules/pokesprite-images/misc/type-logos/gen8/"+this.dex.types[0]+".png",
-            type2spriteRelativePath: "node_modules/pokesprite-images/misc/type-logos/gen8/"+this.dex.types[1]+".png",
+            spriteRelativePath: (this.dex.exists) ? "../../node_modules/pokesprite-images/pokemon-gen7x/"+(shiny ? "shiny" : "regular")+(this.info.facingRight ? "/right" : "")+"/"+(this.slug)+".png" : "node_modules/pokesprite-images/pokemon-gen7x/unknown-gen5.png",
+            type1spriteRelativePath: "../../node_modules/pokesprite-images/misc/type-logos/gen8/"+this.dex.types[0]+".png",
+            type2spriteRelativePath: "../../node_modules/pokesprite-images/misc/type-logos/gen8/"+this.dex.types[1]+".png",
         };
         this.effectiveStats = {
             hp:             calculateHP  (this.baseStats.hp,             this.ivs.hp,  this.evs.hp,  this.info.level),
@@ -160,11 +178,11 @@ class Pokemon {
                 }
             }*/                               
         this.UsageEntry = {
-            usage: this.findUsageEntrySync(this.species),
-            movesetUsage: this.findMovesetUsageEntrySync(this.species)
+            usage: this.findUsageEntry(this.species),
+            movesetUsage: this.findMovesetUsageEntry(this.species)
         };
     }
-    findUsageEntrySync(species) {
+    findUsageEntry(species) {
         try {
             const data = fs.readFileSync(usageDataFile, 'utf8');
             const entry =  JSON.parse(data).find(entry => entry.name === species);
@@ -177,7 +195,31 @@ class Pokemon {
             return null;
         }
     }
-    findMovesetUsageEntrySync(species) {
+    findSlug(natdexnumber) {
+        try {
+            const data = JSON.parse(fs.readFileSync(pokespriteinfoFile, 'utf8'));
+            
+            // Ensure the natdexnumber is a string (since the keys are strings like "001", "002")
+            const idxString = natdexnumber.toString().padStart(3, '0');
+            
+            // Check if the idx exists in the data
+            const entry = data[idxString];
+            
+            if (!entry) {
+                console.warn(`No slug data found for idx: ${natdexnumber}`);
+                return null;
+            }
+            
+            // Return the slug in English (can be changed to any language like 'jpn' for Japanese)
+            return entry.slug.eng;
+        } catch (err) {
+            console.error('Error reading slug data file for:', natdexnumber, "error:", err);
+            return null;
+        }
+    }
+    
+    
+    findMovesetUsageEntry(species) {
         try {
             const data = fs.readFileSync(movesetUsageDataFile, 'utf8');
             const entry = JSON.parse(data).find(entry => entry.Pokemon === species);
@@ -196,6 +238,9 @@ class Pokemon {
     getMovesetUsageData() {
         return this.UsageEntry.movesetUsage;
     }
+    getSpriteBase64() {
+        return getImageBase64(this.displayinfo.spriteRelativePath);
+    }
     /*
     required item(s?)
     effective stats
@@ -210,6 +255,7 @@ class Pokemon {
     toFullJSON() {
         return {
             species: this.species,
+            slug: this.slug,
             info: this.info,
             baseStats: this.baseStats,
             ivs: this.ivs,

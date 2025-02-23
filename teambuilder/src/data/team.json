@@ -1,16 +1,47 @@
 [
   {
-    "name": "",
-    "species": "Swampert-Mega",
-    "item": "Swampertite",
-    "ability": "Damp",
-    "gender": "F",
+    "name": "ms. hole",
+    "species": "Hoopa-Unbound",
+    "item": "Choice Band",
+    "ability": "Magician",
+    "gender": "",
     "nature": "Jolly",
     "evs": {
-      "hp": 0,
-      "atk": 252,
+      "hp": 32,
+      "atk": 224,
       "def": 0,
       "spa": 0,
+      "spd": 0,
+      "spe": 252
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "level": 100,
+    "moves": [
+      "Hyperspace Fury",
+      "Gunk Shot",
+      "Fire Punch",
+      "Drain Punch"
+    ]
+  },
+  {
+    "name": "pink world",
+    "species": "Tapu Lele",
+    "item": "Choice Scarf",
+    "ability": "Psychic Surge",
+    "gender": "",
+    "nature": "Timid",
+    "evs": {
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spa": 252,
       "spd": 4,
       "spe": 252
     },
@@ -24,48 +55,18 @@
     },
     "level": 100,
     "moves": [
-      "Waterfall",
-      "Earthquake",
-      "Ice Punch",
-      "Superpower"
-    ]
+      "Psychic",
+      "Moonblast",
+      "Hidden Power Fire",
+      "Focus Blast"
+    ],
+    "shiny": true
   },
   {
-    "name": "",
-    "species": "Pelipper",
-    "item": "Damp Rock",
-    "ability": "Drizzle",
-    "gender": "F",
-    "nature": "Relaxed",
-    "evs": {
-      "hp": 248,
-      "atk": 0,
-      "def": 252,
-      "spa": 0,
-      "spd": 8,
-      "spe": 0
-    },
-    "ivs": {
-      "hp": 31,
-      "atk": 31,
-      "def": 31,
-      "spa": 31,
-      "spd": 31,
-      "spe": 0
-    },
-    "level": 100,
-    "moves": [
-      "Scald",
-      "Knock Off",
-      "Roost",
-      "U-turn"
-    ]
-  },
-  {
-    "name": "",
-    "species": "Manaphy",
-    "item": "Waterium Z",
-    "ability": "Hydration",
+    "name": "vanessa vanjie",
+    "species": "Victini",
+    "item": "Normalium Z",
+    "ability": "Victory Star",
     "gender": "",
     "nature": "Timid",
     "evs": {
@@ -86,26 +87,57 @@
     },
     "level": 100,
     "moves": [
-      "Tail Glow",
-      "Surf",
-      "Psychic",
-      "Rest"
+      "Celebrate",
+      "Searing Shot",
+      "Stored Power",
+      "Focus Blast"
     ]
   },
   {
-    "name": "",
-    "species": "Tornadus-Therian",
-    "item": "Rocky Helmet",
-    "ability": "Regenerator",
-    "gender": "M",
+    "name": "muva",
+    "species": "Alakazam-Mega",
+    "item": "Alakazite",
+    "ability": "Magic Guard",
+    "gender": "F",
     "nature": "Timid",
     "evs": {
-      "hp": 248,
+      "hp": 0,
       "atk": 0,
-      "def": 8,
-      "spa": 0,
+      "def": 4,
+      "spa": 252,
       "spd": 0,
       "spe": 252
+    },
+    "ivs": {
+      "hp": 31,
+      "atk": 0,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+    },
+    "level": 100,
+    "moves": [
+      "Psychic",
+      "Focus Blast",
+      "Recover",
+      "Calm Mind"
+    ]
+  },
+  {
+    "name": "ew",
+    "species": "Landorus-Therian",
+    "item": "Rocky Helmet",
+    "ability": "Intimidate",
+    "gender": "",
+    "nature": "Impish",
+    "evs": {
+      "hp": 252,
+      "atk": 0,
+      "def": 112,
+      "spa": 0,
+      "spd": 0,
+      "spe": 144
     },
     "ivs": {
       "hp": 31,
@@ -117,25 +149,25 @@
     },
     "level": 100,
     "moves": [
-      "Hurricane",
-      "Knock Off",
-      "Defog",
-      "U-turn"
+      "Stealth Rock",
+      "Earthquake",
+      "Hidden Power Ice",
+      "Defog"
     ]
   },
   {
-    "name": "",
-    "species": "Tapu Lele",
-    "item": "",
-    "ability": "Psychic Surge",
-    "gender": "",
-    "nature": "Serious",
+    "name": "obligatory wall",
+    "species": "Toxapex",
+    "item": "Black Sludge",
+    "ability": "Regenerator",
+    "gender": "F",
+    "nature": "Calm",
     "evs": {
-      "hp": 0,
+      "hp": 252,
       "atk": 0,
-      "def": 0,
+      "def": 4,
       "spa": 0,
-      "spd": 0,
+      "spd": 252,
       "spe": 0
     },
     "ivs": {
@@ -147,6 +179,12 @@
       "spe": 31
     },
     "level": 100,
-    "moves": []
+    "moves": [
+      "Knock Off",
+      "Haze",
+      "Recover",
+      "Toxic"
+    ],
+    "shiny": true
   }
 ]

@@ -12,6 +12,7 @@ class PokemonSet {
         this.teamExportFile = path.join(__dirname, '../data/team.txt');
         this.teamJSONFile = path.join(__dirname, '../data/team.json');
         this.teamPackedFile = path.join(__dirname, '../data/packedteam.txt');
+        this.teamAdvancedJSONFile = path.join(__dirname, '../data/advancedteam.json');
         
     }
     // Get a Pokémon from the set by species name or index
@@ -40,6 +41,13 @@ class PokemonSet {
     // Add a Pokémon object to the set
     addPokemonObject(pokemon) {
         this.pokemons.push(pokemon);
+    }
+    // Remove a Pokémon from the set with the given species name.
+    removePokemon(species) {
+            this.pokemons = this.pokemons.filter(pokemon => pokemon.species !== species);
+    }
+    removeAllPokemon() {
+        this.pokemons = [];
     }
     // Initialize the team with the given JSON team data
     initializeTeam(json){
@@ -78,6 +86,7 @@ class PokemonSet {
 
     // Import the team from the team.txt file
     importTeam(file = this.teamExportFile) {
+        this.removeAllPokemon();
         // Read the exported team string from team.txt
         fs.readFile(file, 'utf8', (err, data) => {
           if (err) {
@@ -148,11 +157,17 @@ class PokemonSet {
             }
         });
     }
-  
-    // Remove a Pokémon from the set with the given species name.
-    removePokemon(species) {
-        this.pokemons = this.pokemons.filter(pokemon => pokemon.species !== species);
-    }
+    // Uses toFullJSON to export the team instead of toJSON
+    advancedExportTeam(){
+        const teamJSON = this.pokemons.map(pokemon => pokemon.toFullJSON());
+        fs.writeFile(this.teamAdvancedJSONFile, JSON.stringify(teamJSON, null, 2), { flag: 'w' }, (err) => {
+            if (err) {
+                console.error('Error writing JSON team file:', err);
+            } else {
+                console.log('Team saved to', this.teamAdvancedJSONFile);
+            }
+        });
+    } 
 
     // Print the team
     toString(){
