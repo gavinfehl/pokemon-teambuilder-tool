@@ -1,19 +1,19 @@
-const {Teams, TeamValidator} = require('pokemon-showdown');
 const Pokemon = require('./Pokemon');
-const fs = require('fs');
-const path = require('path');
 
 // Contains a set of Pokémon as well as the format and export data file paths.
 class PokemonSet {
     constructor(name) {
         this.name = name;
         this.pokemons = [];
-        this.format = 'gen7ou';
-        this.teamExportFile = path.join(__dirname, '../data/team.txt');
+        this.format = 'gen7';
+/*      this.teamExportFile = path.join(__dirname, '../data/team.txt');
         this.teamJSONFile = path.join(__dirname, '../data/team.json');
         this.teamPackedFile = path.join(__dirname, '../data/packedteam.txt');
-        this.teamAdvancedJSONFile = path.join(__dirname, '../data/advancedteam.json');
-        
+        this.teamAdvancedJSONFile = path.join(__dirname, '../data/advancedteam.json'); */
+        this.teamExportString = 'NEEDTOMAKETHISSOMETHINGSINCENOTUSINGTXTFILES';
+        this.teamJSON = '';
+        this.teamPackedString = '';
+        this.teamAdvancedJSON = '';
     }
     // Get a Pokémon from the set by species name or index
     getMember(identifier) {
@@ -34,12 +34,21 @@ class PokemonSet {
         return;
     }
     // Add a Pokémon to the set with the given species name with no extra information.
-    addPokemonFromSpecies(species) {
-        let pokemon = new Pokemon(species);
-        pokemon.dex.exists ? this.pokemons.push(pokemon) : console.log("Invalid Pokémon species.");
+    async addPokemonFromSpecies(species) {
+        const pokemon = new Pokemon(species);
+        await pokemon.init(this.format, species);
+        if (pokemon) {
+            this.pokemons.push(pokemon);
+            return pokemon;
+        } else {
+            console.log("Invalid Pokémon species.");
+            return null;
+        }
     }
+
     // Add a Pokémon object to the set
-    addPokemonObject(pokemon) {
+    async addPokemonObject(pokemon) {
+        await pokemon.init();
         this.pokemons.push(pokemon);
     }
     // Remove a Pokémon from the set with the given species name.
@@ -85,88 +94,24 @@ class PokemonSet {
     }
 
     // Import the team from the team.txt file
-    importTeam(file = this.teamExportFile) {
+    importTeam(teamString) {
         this.removeAllPokemon();
-        // Read the exported team string from team.txt
-        fs.readFile(file, 'utf8', (err, data) => {
-          if (err) {
-            console.error('Error reading file:', err);
-            return;
-          }
+        this.teamJSON = Teams.import(teamString);
+        this.teamPackedString = Teams.pack(teamJSON);
         
-          // Convert the exported team string to a JSON team
-          const jsonTeam = Teams.import(data);
-          
-          // Add pokemon to this team object
-          this.initializeTeam(jsonTeam);
-
-          // Convert the JSON team to a string format
-          const jsonString = JSON.stringify(jsonTeam, null, 2);
-        
-          // Save the JSON team to a file
-          
-          fs.writeFile(this.teamJSONFile, jsonString, { flag: 'w' }, (err) => {
-            if (err) {
-              console.error('Error writing JSON team file:', err);
-            } else {
-              console.log('Team saved to', this.teamJSONFile);
-            }
-          });
-          
-        
-          // Convert the exported team string to a JSON team
-          const packedTeam = Teams.pack(jsonTeam);
-          // Save the packed team to a file
-          fs.writeFile(this.teamPackedFile, packedTeam, { flag: 'w' }, (err) => {
-            if (err) {
-              console.error('Error writing packed team file:', err);
-            } else {
-              console.log('Team saved to', this.teamPackedFile);
-            }
-          });
-        });
+        // Add pokemon to this team object
+        this.initializeTeam(jsonTeam);
     }
 
     // Export the team to all three file types
     exportTeam(){
-        const teamJSON = this.pokemons.map(pokemon => pokemon.toJSON());
-        const teamString = Teams.export(teamJSON);
-        const packedTeam = Teams.pack(teamJSON);
-
-        fs.writeFile(this.teamExportFile, teamString, { flag: 'w' }, (err) => {
-            if (err) {
-                console.error('Error writing team export file:', err);
-            } else {
-                console.log('Team exported to', this.teamExportFile);
-            }
-        });
-
-        fs.writeFile(this.teamJSONFile, JSON.stringify(teamJSON, null, 2), { flag: 'w' }, (err) => {
-            if (err) {
-                console.error('Error writing JSON team file:', err);
-            } else {
-                console.log('Team saved to', this.teamJSONFile);
-            }
-        });
-
-        fs.writeFile(this.teamPackedFile, packedTeam, { flag: 'w' }, (err) => {
-            if (err) {
-                console.error('Error writing packed team file:', err);
-            } else {
-                console.log('Team saved to', this.teamPackedFile);
-            }
-        });
+        this.teamJSON = this.pokemons.map(pokemon => pokemon.toJSON());
+        this.teamExportString = Teams.export(teamJSON);
+        this.teamPackedString = Teams.pack(teamJSON);
     }
     // Uses toFullJSON to export the team instead of toJSON
     advancedExportTeam(){
-        const teamJSON = this.pokemons.map(pokemon => pokemon.toFullJSON());
-        fs.writeFile(this.teamAdvancedJSONFile, JSON.stringify(teamJSON, null, 2), { flag: 'w' }, (err) => {
-            if (err) {
-                console.error('Error writing JSON team file:', err);
-            } else {
-                console.log('Team saved to', this.teamAdvancedJSONFile);
-            }
-        });
+        this.teamAdvancedJSON = JSON.stringify(this.pokemons.map(pokemon => pokemon.toFullJSON()));
     } 
 
     // Print the team
@@ -186,16 +131,16 @@ class PokemonTeam extends PokemonSet {
         super('Team');
     }
   
-    addPokemonFromSpecies(species) {
+    async addPokemonFromSpecies(species) {
         if (this.pokemons.length < 6) {
-            super.addPokemonFromSpecies(species);
+            await super.addPokemonFromSpecies(species);
         } else {
             console.log("A team can only have up to 6 Pokémon.");
         }
     }
-    addPokemonObject(pokemon) {
+    async addPokemonObject(pokemon) {
         if (this.pokemons.length < 6) {
-            super.addPokemonObject(pokemon);
+            await super.addPokemonObject(species);
         } else {
             console.log("A team can only have up to 6 Pokémon.");
         }

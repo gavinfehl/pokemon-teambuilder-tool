@@ -1,8 +1,4 @@
 // Pokemon Class
-const { Dex } = require('pokemon-showdown');
-const fs = require('fs');
-const path = require('path');
-
 const modifiers = {     
     //SPICY
         Hardy:      {},
@@ -19,7 +15,7 @@ const modifiers = {
     //SWEET
         Timid:      { spe: 1.1, atk: 0.9 },
         Hasty:      { spe: 1.1, def: 0.9 },
-        Serious:    {},
+        Serious:    { atk: 1, def: 1, spa: 1, spd: 1, spe: 1 },
         Jolly:      { spe: 1.1, spa: 0.9 },
         Naive:      { spe: 1.1, spd: 0.9 },
     //BITTER
@@ -33,14 +29,26 @@ const modifiers = {
         Gentle:     { spd: 1.1, def: 0.9 },
         Sassy:      { spd: 1.1, spe: 0.9 },
         Careful:    { spd: 1.1, spa: 0.9 },
-        Quirky:     {},
+        Quirky:     {}, 
 };
 const generation = 7;
-const GenDex = Dex.mod("gen"+generation);
-const usageDataFile = '../data/parsedusagedata.json';
-const movesetUsageDataFile = '../data/parsedmovesetusagedata.json';
-const pokespriteinfoFile = '../../node_modules/pokesprite-images/data/pokemon.json'
+const format = 'gen7';
+const usageDataJSON = require('@/data/parsedusagedata.json');
+const movesetUsageJSON = require('@/data/parsedmovesetusagedata.json');
+const pokespriteInfoJSON = require('@/data/pokespriteinfo.json'); 
 
+async function getPokemonDex(format, species) {
+    const response = await fetch(`http://localhost:3000/dex/${format}/${species}`);
+    if (response.ok) {
+        const pokemonDex = await response.json();
+        //console.log("DEX OUTPUT: ", pokemonDex);  // Should log the correct data
+        return pokemonDex;
+    } else {
+        console.error('Failed to fetch data:', response.status);
+        return null;
+    }
+    
+}
 // calculates the effective Atk, Def, SpA, SpD, or Spe stat as a result of a pokemon's attributes
 function calculateStat(base, iv, ev, level, natureModifier) {
     return Math.floor(((2 * base + iv + Math.floor(ev / 4)) * level / 100 + 5) * natureModifier);
@@ -72,24 +80,20 @@ function getNatureDescription(nature) {
 
     return `${nature} (+${descriptions[positive?.[0]] || "None"}, -${descriptions[negative?.[0]] || "None"})`;
 }
-async function getImageBase64(relativePath) {
+async function getImageBase64(imagePath) {
     try {
-      const absolutePath = path.resolve(__dirname, relativePath);
-      console.log("Reading png:", absolutePath);
-  
-      const buffer = await fs.promises.readFile(absolutePath);
-      const base64String = buffer.toString('base64');
-      console.log("Base64 conversion complete");
+      const response = await fetch(imagePath);
+      const buffer = await response.arrayBuffer();
+      const base64String = Buffer.from(buffer).toString('base64');
       console.log(`data:image/png;base64,${base64String}`);
       return `data:image/png;base64,${base64String}`;
     } catch (error) {
       console.error('Error converting image to Base64:', error);
       return null;
     }
-  }
+}
+// Pokemon class  
   
-
-
 class Pokemon {
     constructor(species, 
                 name = null,
@@ -107,14 +111,14 @@ class Pokemon {
                 moveset = {move1: null, move2: null, move3: null, move4: null,}
     ){
 
-        this.dex = GenDex.species.get(species)
+        this.dex = getPokemonDex(format, species);
         this.species = species;
         this.info = {
             name: name,
-            natdexnumber: this.dex.num,
-            gender: gender || this.dex.gender || "F",
-            types: this.dex.types,
-            tier: this.dex.tier,
+            natdexnumber: null,
+            gender: gender || "F",
+            types: null,
+            tier: null,
             level: level,
             nature: nature,
             natureModifier: modifiers[nature],
@@ -124,37 +128,38 @@ class Pokemon {
             hiddenpowertype: hiddenpowertype,
             teratype: teratype,
             item: item,
-            ability: ability || this.dex.abilities[0],
-            potentialAbilities: this.dex.abilities,
-            weight: this.dex.weight,
-            bst: this.dex.baseStats.hp +this.dex.baseStats.atk +this.dex.baseStats.def +this.dex.baseStats.spa +this.dex.baseStats.spd +this.dex.baseStats.spe
+            ability: ability || null,
+            potentialAbilities: null,
+            weight: null,
+            bst: null
         };
-        this.slug = this.findSlug(this.info.natdexnumber);
+
+        this.slug = null;
         this.baseStats = {
-            hp:this.dex.baseStats.hp,
-            attack:this.dex.baseStats.atk,
-            defense:this.dex.baseStats.def,
-            specialAttack:this.dex.baseStats.spa,
-            specialDefense:this.dex.baseStats.spd,
-            speed:this.dex.baseStats.spe,
+            hp:null,
+            attack:null,
+            defense:null,
+            specialAttack:null,
+            specialDefense:null,
+            speed:null,
           };
         this.ivs = ivs;
         this.evs = evs;
-        this.learnset =this.dex.learnset;
+        this.learnset = null;
         this.moveset = moveset;
         //TODO: ADD GENERATION SPECIFIC SPRITES
         this.displayinfo = {
-            spriteRelativePath: (this.dex.exists) ? "../../node_modules/pokesprite-images/pokemon-gen7x/"+(shiny ? "shiny" : "regular")+(this.info.facingRight ? "/right" : "")+"/"+(this.slug)+".png" : "node_modules/pokesprite-images/pokemon-gen7x/unknown-gen5.png",
-            type1spriteRelativePath: "../../node_modules/pokesprite-images/misc/type-logos/gen8/"+this.dex.types[0]+".png",
-            type2spriteRelativePath: "../../node_modules/pokesprite-images/misc/type-logos/gen8/"+this.dex.types[1]+".png",
+            spriteRelativePath: null,
+            type1spriteRelativePath: null,
+            type2spriteRelativePath: null
         };
         this.effectiveStats = {
-            hp:             calculateHP  (this.baseStats.hp,             this.ivs.hp,  this.evs.hp,  this.info.level),
-            attack:         calculateStat(this.baseStats.attack,         this.ivs.atk, this.evs.atk, this.info.level, this.info.natureModifier.atk || 1),
-            defense:        calculateStat(this.baseStats.defense,        this.ivs.def, this.evs.def, this.info.level, this.info.natureModifier.def || 1),
-            specialAttack:  calculateStat(this.baseStats.specialAttack,  this.ivs.spa, this.evs.spa, this.info.level, this.info.natureModifier.spa || 1),
-            specialDefense: calculateStat(this.baseStats.specialDefense, this.ivs.spd, this.evs.spd, this.info.level, this.info.natureModifier.spd || 1),
-            speed:          calculateStat(this.baseStats.speed,          this.ivs.spe, this.evs.spe, this.info.level, this.info.natureModifier.spe || 1),
+            hp:             null,
+            attack:         null,
+            defense:        null,
+            specialAttack:  null,
+            specialDefense: null,
+            speed:          null
         };
         /*  UsageEntry: {
                 usage: {
@@ -178,14 +183,61 @@ class Pokemon {
                 }
             }*/                               
         this.UsageEntry = {
+            usage: null,
+            movesetUsage: null
+        };
+    }
+    async init(format, species) {
+        this.dex = await getPokemonDex(format, species);
+        if(this.dex == null){
+            console.log("dex empty, failed to initialize");
+            return;
+        }
+        //console.log("DEX OUTPUT: ", this.dex);  // Should log the correct data
+        this.info = Object.assign({}, this.info,{
+            natdexnumber: this.dex.num,
+            gender: this.info.gender || this.dex.gender || "F",
+            types: this.dex.types,
+            tier: this.dex.tier,
+            ability: this.info.ability || this.dex.abilities.base,
+            potentialAbilities: this.dex.abilities,
+            weight: this.dex.weight,
+            bst: this.dex.baseStats.hp + this.dex.baseStats.atk + this.dex.baseStats.def + this.dex.baseStats.spa + this.dex.baseStats.spd + this.dex.baseStats.spe
+        });
+        this.slug = this.findSlug(this.info.natdexnumber);
+        this.baseStats = {
+            hp:this.dex.baseStats.hp,
+            attack:this.dex.baseStats.atk,
+            defense:this.dex.baseStats.def,
+            specialAttack:this.dex.baseStats.spa,
+            specialDefense:this.dex.baseStats.spd,
+            speed:this.dex.baseStats.spe,
+          };
+        this.learnset =this.dex.learnset;
+        //TODO: ADD GENERATION SPECIFIC SPRITES
+        this.displayinfo = {
+            spriteRelativePath: (this.dex.exists) ? "pokesprite-images/pokemon-gen7x/"+(this.shiny ? "shiny" : "regular")+(this.info.facingRight ? "/right" : "")+"/"+(this.slug)+".png" : "node_modules/pokesprite-images/pokemon-gen7x/unknown-gen5.png",
+            type1spriteRelativePath: "pokesprite-images/misc/type-logos/gen8/"+this.dex.types[0]+".png",
+            type2spriteRelativePath: "pokesprite-images/misc/type-logos/gen8/"+this.dex.types[1]+".png",
+        };
+        this.effectiveStats = {
+            hp:             calculateHP  (this.baseStats.hp,             this.ivs.hp,  this.evs.hp,  this.info.level),
+            attack:         calculateStat(this.baseStats.attack,         this.ivs.atk, this.evs.atk, this.info.level, this.info.natureModifier.atk || 1),
+            defense:        calculateStat(this.baseStats.defense,        this.ivs.def, this.evs.def, this.info.level, this.info.natureModifier.def || 1),
+            specialAttack:  calculateStat(this.baseStats.specialAttack,  this.ivs.spa, this.evs.spa, this.info.level, this.info.natureModifier.spa || 1),
+            specialDefense: calculateStat(this.baseStats.specialDefense, this.ivs.spd, this.evs.spd, this.info.level, this.info.natureModifier.spd || 1),
+            speed:          calculateStat(this.baseStats.speed,          this.ivs.spe, this.evs.spe, this.info.level, this.info.natureModifier.spe || 1),
+        };              
+        this.UsageEntry = {
             usage: this.findUsageEntry(this.species),
             movesetUsage: this.findMovesetUsageEntry(this.species)
         };
+        //console.log("Pokemon initialized:\n"+this.toString());
     }
     findUsageEntry(species) {
         try {
-            const data = fs.readFileSync(usageDataFile, 'utf8');
-            const entry =  JSON.parse(data).find(entry => entry.name === species);
+            const data = usageDataJSON;
+            const entry =  data.find(entry => entry.name === species);
             if (!entry) {
                 console.warn(`No usage data found for species: ${species}`);
             }
@@ -197,7 +249,7 @@ class Pokemon {
     }
     findSlug(natdexnumber) {
         try {
-            const data = JSON.parse(fs.readFileSync(pokespriteinfoFile, 'utf8'));
+            const data = pokespriteInfoJSON;
             
             // Ensure the natdexnumber is a string (since the keys are strings like "001", "002")
             const idxString = natdexnumber.toString().padStart(3, '0');
@@ -221,8 +273,8 @@ class Pokemon {
     
     findMovesetUsageEntry(species) {
         try {
-            const data = fs.readFileSync(movesetUsageDataFile, 'utf8');
-            const entry = JSON.parse(data).find(entry => entry.Pokemon === species);
+            const data = movesetUsageJSON;
+            const entry = data.find(entry => entry.Pokemon === species);
             if (!entry) {
                 console.warn(`No moveset usage data found for species: ${species}`);
             }
