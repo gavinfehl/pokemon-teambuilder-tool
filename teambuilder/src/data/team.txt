@@ -1,42 +1,58 @@
-Swampert-Mega (F) @ Swampertite  
-Ability: Damp  
-EVs: 252 Atk / 4 SpD / 252 Spe  
+ms. hole (Hoopa-Unbound) @ Choice Band  
+Ability: Magician  
+EVs: 32 HP / 224 Atk / 252 Spe  
 Jolly Nature  
-- Waterfall  
-- Earthquake  
-- Ice Punch  
-- Superpower  
+- Hyperspace Fury  
+- Gunk Shot  
+- Fire Punch  
+- Drain Punch  
 
-Pelipper (F) @ Damp Rock  
-Ability: Drizzle  
-EVs: 248 HP / 252 Def / 8 SpD  
-Relaxed Nature  
-IVs: 0 Spe  
-- Scald  
-- Knock Off  
-- Roost  
-- U-turn  
+pink world (Tapu Lele) @ Choice Scarf  
+Ability: Psychic Surge  
+Shiny: Yes  
+EVs: 252 SpA / 4 SpD / 252 Spe  
+Timid Nature  
+- Psychic  
+- Moonblast  
+- Hidden Power [Fire]  
+- Focus Blast  
 
-Manaphy @ Waterium Z  
-Ability: Hydration  
+vanessa vanjie (Victini) @ Normalium Z  
+Ability: Victory Star  
 EVs: 252 SpA / 4 SpD / 252 Spe  
 Timid Nature  
 IVs: 0 Atk  
-- Tail Glow  
-- Surf  
-- Psychic  
-- Rest  
+- Celebrate  
+- Searing Shot  
+- Stored Power  
+- Focus Blast  
 
-Tornadus-Therian (M) @ Rocky Helmet  
-Ability: Regenerator  
-EVs: 248 HP / 8 Def / 252 Spe  
+muva (Alakazam-Mega) (F) @ Alakazite  
+Ability: Magic Guard  
+EVs: 4 Def / 252 SpA / 252 Spe  
 Timid Nature  
-- Hurricane  
-- Knock Off  
-- Defog  
-- U-turn  
+IVs: 0 Atk  
+- Psychic  
+- Focus Blast  
+- Recover  
+- Calm Mind  
 
-Tapu Lele  
-Ability: Psychic Surge  
-Serious Nature  
+ew (Landorus-Therian) @ Rocky Helmet  
+Ability: Intimidate  
+EVs: 252 HP / 112 Def / 144 Spe  
+Impish Nature  
+- Stealth Rock  
+- Earthquake  
+- Hidden Power [Ice]  
+- Defog  
+
+obligatory wall (Toxapex) (F) @ Black Sludge  
+Ability: Regenerator  
+Shiny: Yes  
+EVs: 252 HP / 4 Def / 252 SpD  
+Calm Nature  
+- Knock Off  
+- Haze  
+- Recover  
+- Toxic  
 

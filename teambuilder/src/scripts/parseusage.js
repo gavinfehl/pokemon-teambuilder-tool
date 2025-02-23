@@ -76,8 +76,9 @@ function parseMovesetUsageStats(filename) {
             "Checks and Counters": []
         };
 
-        for (let line of lines) {
-            line = line.replace("+----------------------------------------+", "").replace(" | ", "").replace(" |", "").trim();
+        for (let i = 0; i < lines.length; i++) {
+            let line = lines[i];
+            line = line.replace("+----------------------------------------+", "").replace(" | ", "").replace(" |", "").replace(")|", ")").trim();
 
             if (line === "") continue;
 
@@ -96,33 +97,65 @@ function parseMovesetUsageStats(filename) {
             // Capture Raw count, Avg. weight, Viability Ceiling
             if (line.includes(":") && currentSection === "Basic Info") {
                 let [key, value] = line.split(": ");
-                jsonEntry[key.trim()] = value ? value.trim() : "";
+                jsonEntry[key.trim().replace(' ', '_')] = value ? value.trim() : "WTF";
                 continue;
             }
+            
+            // Handle "Checks and Counters" separately (includes KO % and Switch Out %)
 
+            if (currentSection === "Checks and Counters") {
+                console.log("Processing CAC line:", line);
+                if (line.charAt(0) === '('){
+                    console.log("Skipping line:", line);
+                    continue;
+                }
+                let match = line.match(/([\w%-]+)\s+([\d.]+)\s+\(([\d.]+)±([\d.]+)\)/);
+
+                if (match) {
+                    console.log("Pokemon:", match[1]);
+                    console.log("First Number:", match[2]);  // 79.817
+                    console.log("Second Number:", match[3]);  // 95.90
+                    console.log("Third Number:", match[4]);  // 4.02
+
+                    let nextIndex = i + 1;  
+                    if (nextIndex < lines.length) {
+                        let nextLine = lines[nextIndex].trim();
+                        console.log("Next Line for KO/Switch:", nextLine);  // Debug KO/Switch Line
+                    
+                        let koMatch = nextLine.match(/([\d.]+%) KOed \/ ([\d.]+%) switched out/);
+                        if (koMatch) {
+                            console.log("KO%:", koMatch[1]);
+                            console.log("Switch Out%:", koMatch[2]);
+                            sectionData[currentSection].push({
+                                pokemon: match[1].trim().replace(' ', '-'),
+                                // Number n of times the matchup occurred (don't count U-Turn KOs or force-outs
+                                matchup_occurred: match[2].trim(),
+                                // fraction p of times the counter got the KO or caused a switch
+                                counter_kos_or_forces_switch_percent: match[3].trim(),
+                                // sqrt(p*(1.0-p)/n)
+                                stdevofkoswitch: match[4].trim(),
+                                // percent of times the counter got the KO
+                                ko_percent: koMatch[1].trim(),
+                                // percent of times the counter caused a switch
+                                switch_out_percent: koMatch[2].trim()
+                            });
+                        } else {
+                            console.log("KO/Switch regex failed on:", nextLine);
+                        }
+                    }
+                }else{
+                    console.log("Check/Counter regex failed on:", nextLine);
+                }
+            }
             // Handle percentage-based sections and store as arrays
             if (line.includes("%")) {
                 let parts = line.split(/\s+(?=[\d.]+%$)/);
                 if (parts.length === 2) {
                     let [item, value] = parts;
-                    sectionData[currentSection].push({ item: item.trim(), value: value.trim() });
+                    sectionData[currentSection].push({ item: item.trim().replace(' ', '_'), value: value.trim() });
                 }
                 continue;
-            }
-
-            // Handle "Checks and Counters" separately (includes KO % and Switch Out %)
-            if (currentSection === "Checks and Counters" && line.includes("(")) {
-                let match = line.match(/([\w-]+) \(([\d.]+)\s+\(/);
-                let percentageMatch = line.match(/\(([\d.]+)±/);
-
-                if (match && percentageMatch) {
-                    sectionData["Checks and Counters"].push({
-                        pokemon: match[1],
-                        main_value: match[2],
-                        percentage: percentageMatch[1]
-                    });
-                }
-            }
+            }           
         }
 
         // Merge section data into the final JSON structure
