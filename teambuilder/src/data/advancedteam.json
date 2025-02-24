@@ -72,7 +72,7 @@
       "specialDefense": 296,
       "speed": 284
     },
-    "UsageEntry": {
+    "usageEntry": {
       "usage": {
         "rank": "62",
         "name": "Hoopa-Unbound",
@@ -378,7 +378,7 @@
       "specialDefense": 267,
       "speed": 317
     },
-    "UsageEntry": {
+    "usageEntry": {
       "usage": {
         "rank": "8",
         "name": "Tapu Lele",
@@ -732,7 +732,7 @@
       "specialDefense": 237,
       "speed": 328
     },
-    "UsageEntry": {
+    "usageEntry": {
       "usage": {
         "rank": "22",
         "name": "Victini",
@@ -1089,7 +1089,7 @@
       "specialDefense": 246,
       "speed": 438
     },
-    "UsageEntry": {
+    "usageEntry": {
       "usage": {
         "rank": "27",
         "name": "Alakazam-Mega",
@@ -1383,7 +1383,7 @@
       "specialDefense": 196,
       "speed": 254
     },
-    "UsageEntry": {
+    "usageEntry": {
       "usage": {
         "rank": "1",
         "name": "Landorus-Therian",
@@ -1751,7 +1751,7 @@
       "specialDefense": 421,
       "speed": 106
     },
-    "UsageEntry": {
+    "usageEntry": {
       "usage": {
         "rank": "13",
         "name": "Toxapex",

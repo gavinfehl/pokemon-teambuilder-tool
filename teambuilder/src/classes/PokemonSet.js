@@ -1,19 +1,15 @@
-const {Teams, TeamValidator} = require('pokemon-showdown');
 const Pokemon = require('./Pokemon');
-const fs = require('fs');
-const path = require('path');
 
 // Contains a set of Pokémon as well as the format and export data file paths.
 class PokemonSet {
     constructor(name) {
         this.name = name;
         this.pokemons = [];
-        this.format = 'gen7ou';
-        this.teamExportFile = path.join(__dirname, '../data/team.txt');
-        this.teamJSONFile = path.join(__dirname, '../data/team.json');
-        this.teamPackedFile = path.join(__dirname, '../data/packedteam.txt');
-        this.teamAdvancedJSONFile = path.join(__dirname, '../data/advancedteam.json');
-        
+        this.format = 'gen7';
+        this.teamExportString = '';
+        this.teamJSON = '';
+        this.teamPackedString = '';
+        this.teamAdvancedJSON = '';
     }
     // Get a Pokémon from the set by species name or index
     getMember(identifier) {
@@ -34,49 +30,76 @@ class PokemonSet {
         return;
     }
     // Add a Pokémon to the set with the given species name with no extra information.
-    addPokemonFromSpecies(species) {
-        let pokemon = new Pokemon(species);
-        pokemon.dex.exists ? this.pokemons.push(pokemon) : console.log("Invalid Pokémon species.");
+    async addPokemonFromSpecies(species) {
+        const pokemon = new Pokemon(species);
+        await pokemon.init(this.format, species);
+        if (pokemon) {
+            this.pokemons.push(pokemon);
+            console.log("pokemon added:\n"+pokemon.toString());
+            return pokemon;
+        } else {
+            console.error("Invalid Pokémon species.");
+            return null;
+        }
     }
     // Add a Pokémon object to the set
-    addPokemonObject(pokemon) {
+    async addPokemonObject(pokemon) {
+        await pokemon.init(this.format, pokemon.species);
         this.pokemons.push(pokemon);
     }
     // Remove a Pokémon from the set with the given species name.
-    removePokemon(species) {
-            this.pokemons = this.pokemons.filter(pokemon => pokemon.species !== species);
+    removePokemonBySpecies(species) {
+        const index = this.pokemons.findIndex(pokemon => pokemon.species === species);
+        if (index !== -1) {
+            return this.pokemons.splice(index, 1)[0]; // Remove and return the first matching Pokémon
+        }
+        return null; // Return null if no Pokémon of the species is found
+    }
+    // Remove a Pokémon from the set by index    
+    removePokemonByIndex(index) {
+        if (index >= 0 && index < this.pokemons.length) {
+            const removedPokemon = this.pokemons.splice(index, 1);
+            return removedPokemon[0];
+        } else {
+            console.log("Invalid index.");
+            return null;
+        }
     }
     removeAllPokemon() {
         this.pokemons = [];
     }
     // Initialize the team with the given JSON team data
-    initializeTeam(json){
+    async initializeTeam(json) {
         try {
-            json.forEach(teamMember => {
+            for (const teamMember of json) { 
+                console.log("JSON PRINT", json);
+                console.log("In INIT team - species of teamMember: ", teamMember.species);
+    
                 const pokemon = new Pokemon(
-                    teamMember.species,
-                    teamMember.name,
-                    teamMember.gender,
-                    teamMember.ability,
-                    teamMember.level,
-                    teamMember.nature,
-                    teamMember.happiness,
-                    teamMember.shiny,
-                    teamMember.hiddenpowertype,
-                    teamMember.teratype,
-                    teamMember.item,
-                    teamMember.ivs,
-                    teamMember.evs,
+                    teamMember.species ?? undefined,
+                    teamMember.name ?? undefined,
+                    teamMember.gender ?? undefined,
+                    teamMember.ability ?? undefined,
+                    teamMember.level ?? undefined,
+                    teamMember.nature ?? undefined,
+                    teamMember.happiness ?? undefined,
+                    teamMember.shiny ?? undefined,
+                    teamMember.hiddenpowertype ?? undefined,
+                    teamMember.teratype ?? undefined,
+                    teamMember.item ?? undefined,
+                    teamMember.ivs ?? undefined,
+                    teamMember.evs ?? undefined,
                     {
-                        move1: teamMember.moves[0] || null,
-                        move2: teamMember.moves[1] || null,
-                        move3: teamMember.moves[2] || null,
-                        move4: teamMember.moves[3] || null
+                        move1: teamMember.moves?.[0] ?? null,
+                        move2: teamMember.moves?.[1] ?? null,
+                        move3: teamMember.moves?.[2] ?? null,
+                        move4: teamMember.moves?.[3] ?? null
                     }
-                )
-                this.addPokemonObject(pokemon);
-            });
-            //console.log("Team initialized successfully:");
+                );
+    
+                console.log("In INIT team - species of pokemon: ", pokemon.species);
+                await this.addPokemonObject(pokemon);
+            }
             return;
         } catch (err) {
             console.error('Error initializing team:', err);
@@ -85,89 +108,57 @@ class PokemonSet {
     }
 
     // Import the team from the team.txt file
-    importTeam(file = this.teamExportFile) {
-        this.removeAllPokemon();
-        // Read the exported team string from team.txt
-        fs.readFile(file, 'utf8', (err, data) => {
-          if (err) {
-            console.error('Error reading file:', err);
-            return;
-          }
-        
-          // Convert the exported team string to a JSON team
-          const jsonTeam = Teams.import(data);
-          
-          // Add pokemon to this team object
-          this.initializeTeam(jsonTeam);
-
-          // Convert the JSON team to a string format
-          const jsonString = JSON.stringify(jsonTeam, null, 2);
-        
-          // Save the JSON team to a file
-          
-          fs.writeFile(this.teamJSONFile, jsonString, { flag: 'w' }, (err) => {
-            if (err) {
-              console.error('Error writing JSON team file:', err);
-            } else {
-              console.log('Team saved to', this.teamJSONFile);
-            }
-          });
-          
-        
-          // Convert the exported team string to a JSON team
-          const packedTeam = Teams.pack(jsonTeam);
-          // Save the packed team to a file
-          fs.writeFile(this.teamPackedFile, packedTeam, { flag: 'w' }, (err) => {
-            if (err) {
-              console.error('Error writing packed team file:', err);
-            } else {
-              console.log('Team saved to', this.teamPackedFile);
-            }
-          });
+    async importTeam(importString) {
+        console.log("Sending teamString:", importString);
+        const response = await fetch(`http://localhost:3000/importteam`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                json: importString
+            })
         });
+        if (response.ok) {
+            const importResponse = await response.json();
+            console.log("TEAMS IMPORT OUTPUT: ", importResponse);  // Should log the correct data
+            this.removeAllPokemon();
+
+            this.teamExportString = importString;
+            this.teamJSON = importResponse.teamJSON;
+            this.teamPackedString = importResponse.teamPackedString;
+            console.log("Team JSON from pokemonSet: ", this.teamJSON);
+            await this.initializeTeam(this.teamJSON);
+            return importResponse;
+        } else {
+            console.error('Failed to fetch Teams import data:', response.status);
+            return null;
+        }
     }
 
     // Export the team to all three file types
-    exportTeam(){
-        const teamJSON = this.pokemons.map(pokemon => pokemon.toJSON());
-        const teamString = Teams.export(teamJSON);
-        const packedTeam = Teams.pack(teamJSON);
-
-        fs.writeFile(this.teamExportFile, teamString, { flag: 'w' }, (err) => {
-            if (err) {
-                console.error('Error writing team export file:', err);
-            } else {
-                console.log('Team exported to', this.teamExportFile);
-            }
+    async exportTeam(){
+        const response = await fetch(`http://localhost:3000/exportteam`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                adv: this.pokemons.map(pokemon => pokemon.toFullJSON()),
+                normal: this.pokemons.map(pokemon => pokemon.toJSON())
+            })
         });
-
-        fs.writeFile(this.teamJSONFile, JSON.stringify(teamJSON, null, 2), { flag: 'w' }, (err) => {
-            if (err) {
-                console.error('Error writing JSON team file:', err);
-            } else {
-                console.log('Team saved to', this.teamJSONFile);
-            }
-        });
-
-        fs.writeFile(this.teamPackedFile, packedTeam, { flag: 'w' }, (err) => {
-            if (err) {
-                console.error('Error writing packed team file:', err);
-            } else {
-                console.log('Team saved to', this.teamPackedFile);
-            }
-        });
+    
+        if (response.ok) {
+            const exportResponse = await response.json();
+            //console.log("TEAMS EXPORT OUTPUT: ", exportResponse);
+            this.teamJSON = exportResponse.teamJSON;
+            this.teamExportString = exportResponse.teamExportString;
+            this.teamPackedString = exportResponse.teamPackedString;
+            this.teamAdvancedJSON = exportResponse.teamAdvancedJSON;
+            return exportResponse;
+        } else {
+            console.error('Failed to fetch Teams export data:', response.status);
+            return null;
+        }
     }
-    // Uses toFullJSON to export the team instead of toJSON
-    advancedExportTeam(){
-        const teamJSON = this.pokemons.map(pokemon => pokemon.toFullJSON());
-        fs.writeFile(this.teamAdvancedJSONFile, JSON.stringify(teamJSON, null, 2), { flag: 'w' }, (err) => {
-            if (err) {
-                console.error('Error writing JSON team file:', err);
-            } else {
-                console.log('Team saved to', this.teamAdvancedJSONFile);
-            }
-        });
-    } 
+    
 
     // Print the team
     toString(){
@@ -179,23 +170,22 @@ class PokemonSet {
     }
 }
 
-
 // Team class is a more specific version of PokemonSet that can only have up to 6 Pokémon.
 class PokemonTeam extends PokemonSet {
     constructor() {
         super('Team');
     }
   
-    addPokemonFromSpecies(species) {
+    async addPokemonFromSpecies(species) {
         if (this.pokemons.length < 6) {
-            super.addPokemonFromSpecies(species);
+            await super.addPokemonFromSpecies(species);
         } else {
             console.log("A team can only have up to 6 Pokémon.");
         }
     }
-    addPokemonObject(pokemon) {
+    async addPokemonObject(pokemon) {
         if (this.pokemons.length < 6) {
-            super.addPokemonObject(pokemon);
+            await super.addPokemonObject(pokemon);
         } else {
             console.log("A team can only have up to 6 Pokémon.");
         }
