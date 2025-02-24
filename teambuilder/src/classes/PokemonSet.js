@@ -147,7 +147,7 @@ class PokemonSet {
     
         if (response.ok) {
             const exportResponse = await response.json();
-            //console.log("TEAMS EXPORT OUTPUT: ", exportResponse);
+            console.log("TEAMS EXPORT OUTPUT: ", exportResponse);
             this.teamJSON = exportResponse.teamJSON;
             this.teamExportString = exportResponse.teamExportString;
             this.teamPackedString = exportResponse.teamPackedString;
@@ -167,6 +167,10 @@ class PokemonSet {
             result += pokemon.toString() + '\n';
         });
         return result.trim();
+    }
+
+    toImages(){
+        return this.pokemons.map(pokemon => pokemon.displayinfo.spriteRelativePath);
     }
 }
 
