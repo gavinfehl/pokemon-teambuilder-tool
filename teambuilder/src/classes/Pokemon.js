@@ -37,18 +37,6 @@ const usageDataJSON = require('@/data/parsedusagedata.json');
 const movesetUsageJSON = require('@/data/parsedmovesetusagedata.json');
 const pokespriteInfoJSON = require('@/data/pokespriteinfo.json'); 
 
-async function getPokemonDex(format, species) {
-    const response = await fetch(`http://localhost:3000/dex/${format}/${species}`);
-    if (response.ok) {
-        const pokemonDex = await response.json();
-        //console.log("DEX OUTPUT: ", pokemonDex);  // Should log the correct data
-        return pokemonDex;
-    } else {
-        console.error('Failed to fetch data:', response.status);
-        return null;
-    }
-    
-}
 // calculates the effective Atk, Def, SpA, SpD, or Spe stat as a result of a pokemon's attributes
 function calculateStat(base, iv, ev, level, natureModifier) {
     return Math.floor(((2 * base + iv + Math.floor(ev / 4)) * level / 100 + 5) * natureModifier);
@@ -57,7 +45,6 @@ function calculateStat(base, iv, ev, level, natureModifier) {
 function calculateHP(base, iv, ev, level) {
     return Math.floor(((2 * base + iv + Math.floor(ev / 4)) * level / 100) + level + 10);
 }  
-
 // Get nature description
 function getNatureDescription(nature) {
     const modifier = modifiers[nature];
@@ -80,17 +67,19 @@ function getNatureDescription(nature) {
 
     return `${nature} (+${descriptions[positive?.[0]] || "None"}, -${descriptions[negative?.[0]] || "None"})`;
 }
-async function getImageBase64(imagePath) {
-    try {
-      const response = await fetch(imagePath);
-      const buffer = await response.arrayBuffer();
-      const base64String = Buffer.from(buffer).toString('base64');
-      console.log(`data:image/png;base64,${base64String}`);
-      return `data:image/png;base64,${base64String}`;
-    } catch (error) {
-      console.error('Error converting image to Base64:', error);
-      return null;
+
+async function getPokemonDex(format, species) {
+    console.log("WELL YES GET DEX GOT CALLED with:!", format, species);
+    const response = await fetch(`http://localhost:3000/dex/${format}/${species}`);
+    if (response.ok) {
+        const pokemonDex = await response.json();
+        //console.log("DEX OUTPUT: ", pokemonDex);  // Should log the correct data
+        return pokemonDex;
+    } else {
+        console.error('Failed to fetch data:', response.status);
+        return null;
     }
+    
 }
 // Pokemon class  
   
@@ -111,7 +100,7 @@ class Pokemon {
                 moveset = {move1: null, move2: null, move3: null, move4: null,}
     ){
 
-        this.dex = getPokemonDex(format, species);
+        this.dex = null;
         this.species = species;
         this.info = {
             name: name,
@@ -186,8 +175,10 @@ class Pokemon {
             usage: null,
             movesetUsage: null
         };
+        this.isInitialized = false;
     }
     async init(format, species) {
+        console.log("Init passed in")
         this.dex = await getPokemonDex(format, species);
         if(this.dex == null){
             console.log("dex empty, failed to initialize");
@@ -204,7 +195,7 @@ class Pokemon {
             weight: this.dex.weight,
             bst: this.dex.baseStats.hp + this.dex.baseStats.atk + this.dex.baseStats.def + this.dex.baseStats.spa + this.dex.baseStats.spd + this.dex.baseStats.spe
         });
-        this.slug = this.findSlug(this.info.natdexnumber);
+        this.slug = this.#findSlug(this.info.natdexnumber);
         this.baseStats = {
             hp:this.dex.baseStats.hp,
             attack:this.dex.baseStats.atk,
@@ -229,15 +220,16 @@ class Pokemon {
             speed:          calculateStat(this.baseStats.speed,          this.ivs.spe, this.evs.spe, this.info.level, this.info.natureModifier.spe || 1),
         };              
         this.UsageEntry = {
-            usage: this.findUsageEntry(this.species),
-            movesetUsage: this.findMovesetUsageEntry(this.species)
+            usage: this.#findUsageEntry(this.species),
+            movesetUsage: this.#findMovesetUsageEntry(this.species)
         };
+        this.isInitialized = true;
         //console.log("Pokemon initialized:\n"+this.toString());
     }
-    findUsageEntry(species) {
+    #findUsageEntry(species) {
         try {
             const data = usageDataJSON;
-            const entry =  data.find(entry => entry.name === species);
+            const entry = data.find(entry => entry.name === species);
             if (!entry) {
                 console.warn(`No usage data found for species: ${species}`);
             }
@@ -247,7 +239,8 @@ class Pokemon {
             return null;
         }
     }
-    findSlug(natdexnumber) {
+
+    #findSlug(natdexnumber) {
         try {
             const data = pokespriteInfoJSON;
             
@@ -269,9 +262,8 @@ class Pokemon {
             return null;
         }
     }
-    
-    
-    findMovesetUsageEntry(species) {
+
+    #findMovesetUsageEntry(species) {
         try {
             const data = movesetUsageJSON;
             const entry = data.find(entry => entry.Pokemon === species);
@@ -284,14 +276,35 @@ class Pokemon {
             return null;
         }
     }
-    getUsageData() {
+    
+    async waitForInit() {
+        while (!this.initialized) {
+            await new Promise(resolve => setTimeout(resolve, 10));
+        }
+    }
+
+    async getUsageData() {
+        await this.waitForInit();
         return this.UsageEntry.usage;
     }
-    getMovesetUsageData() {
+
+    async getMovesetUsageData() {
+        await this.waitForInit();
         return this.UsageEntry.movesetUsage;
     }
-    getSpriteBase64() {
-        return getImageBase64(this.displayinfo.spriteRelativePath);
+
+    async getSpriteBase64() {
+        await this.waitForInit();
+        try {
+            const response = await fetch(spriteRelativePath);
+            const buffer = await response.arrayBuffer();
+            const base64String = Buffer.from(buffer).toString('base64');
+            console.log(`data:image/png;base64,${base64String}`);
+            return `data:image/png;base64,${base64String}`;
+        } catch (error) {
+            console.error('Error converting image to Base64:', error);
+            return null;
+        }
     }
     /*
     required item(s?)
@@ -320,7 +333,7 @@ class Pokemon {
         };
     }
     // Methods
-    toJSON() {
+    toJSON() { 
         return {
             name: this.species,
             species: this.species,
@@ -356,8 +369,8 @@ class Pokemon {
             }
         }
         return '========================================\n' +
-               `NAME: ${this.info.name} (${this.info.natdexnumber})\n` +
-               `SPECIES: ${this.species}\n` +
+               `NAME: ${this.info.name}\n` +
+               `SPECIES: ${this.species} (${this.info.natdexnumber})\n` +
                `ITEM: ${this.info.item}\n` +
                `ABILITY: ${this.info.ability}\n` +
                `GENDER: ${this.info.gender}\n` +
