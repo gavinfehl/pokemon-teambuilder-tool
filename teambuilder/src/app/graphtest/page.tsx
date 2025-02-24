@@ -97,7 +97,8 @@ export default function Sandbox() {
                     await team.addPokemonFromSpecies(species);
                     console.log('Pokémon added:', species); // Debugging point
                 }
-
+/*                 await team.exportTeam();
+                console.log("ADVJSON:", team.teamAdvancedJSON); */
                 //setTeamData(team.teamAdvancedJSON); // Set the fetched team data
                 console.log("IMAGE PATHS:", team.toImages());
                 setTeam(team); // keep react in the loop?

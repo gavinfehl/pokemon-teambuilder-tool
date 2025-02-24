@@ -31,6 +31,26 @@ const modifiers = {
         Careful:    { spd: 1.1, spa: 0.9 },
         Quirky:     {}, 
 };
+const typeColours = {
+	normal: '#A8A77A',
+	fire: '#EE8130',
+	water: '#6390F0',
+	electric: '#F7D02C',
+	grass: '#7AC74C',
+	ice: '#96D9D6',
+	fighting: '#C22E28',
+	poison: '#A33EA1',
+	ground: '#E2BF65',
+	flying: '#A98FF3',
+	psychic: '#F95587',
+	bug: '#A6B91A',
+	rock: '#B6A136',
+	ghost: '#735797',
+	dragon: '#6F35FC',
+	dark: '#705746',
+	steel: '#B7B7CE',
+	fairy: '#D685AD',
+};
 const generation = 7;
 const format = 'gen7';
 const usageDataJSON = require('@/data/parsedusagedata.json');
@@ -106,7 +126,7 @@ class Pokemon {
             name: name,
             natdexnumber: null,
             gender: gender || "F",
-            types: null,
+            types: {type1:"", type2:""},
             tier: null,
             level: level,
             nature: nature,
@@ -140,7 +160,9 @@ class Pokemon {
         this.displayinfo = {
             spriteRelativePath: null,
             type1spriteRelativePath: null,
-            type2spriteRelativePath: null
+            type2spriteRelativePath: null,
+            type1color: '#666666',
+            type2color: '#666666',
         };
         this.effectiveStats = {
             hp:             null,
@@ -227,7 +249,10 @@ class Pokemon {
             spriteRelativePath: (this.dex.exists) ? "pokesprite-images/pokemon-gen7x/"+(this.shiny ? "shiny" : "regular")+(this.info.facingRight ? "/right" : "")+"/"+(this.slug)+".png" : "node_modules/pokesprite-images/pokemon-gen7x/unknown-gen5.png",
             type1spriteRelativePath: "pokesprite-images/misc/type-logos/gen8/"+this.dex.types[0]+".png",
             type2spriteRelativePath: "pokesprite-images/misc/type-logos/gen8/"+this.dex.types[1]+".png",
+            type1color: this.info.types[0] ? this.#findTypeColor(this.info.types[0].toLowerCase()) : '#666666',
+            type2color: this.info.types[1] ? this.#findTypeColor(this.info.types[1].toLowerCase()) : '#666666',
         };
+        console.log()
         this.effectiveStats = {
             hp:             calculateHP  (this.baseStats.hp,             this.ivs.hp,  this.evs.hp,  this.info.level),
             attack:         calculateStat(this.baseStats.attack,         this.ivs.atk, this.evs.atk, this.info.level, this.info.natureModifier.atk || 1),
@@ -279,6 +304,21 @@ class Pokemon {
             return null;
         }
     }
+    #findTypeColor(type) {
+        try {
+            const color = typeColours[type];
+            
+            if (!color) {
+                console.warn(`No type color data found for type: ${type}`);
+                return '#666666'; // Default color if type not found
+            }
+            
+            return color;
+        } catch (err) {
+            console.error('Error reading type color data for:', type, "error:", err);
+            return '#666666'; // Default color in case of error
+        }
+    }
 
     #findMovesetUsageEntry(species) {
         try {
@@ -308,7 +348,7 @@ class Pokemon {
     async getMovesetUsageData() {
         await this.waitForInit();
         return this.UsageEntry.movesetUsage;
-    }
+    } 
 
     async getSpriteBase64() {
         await this.waitForInit();
@@ -393,7 +433,7 @@ class Pokemon {
                `GENDER: ${this.info.gender}\n` +
                `TIER: ${this.info.tier}\n` +
                `NATURE: ${getNatureDescription(this.info.nature)}\n` +
-               `TYPE${(this.info.types[1]==undefined ? "" : "S")}: ${this.info.types[0]||"None"}, ${this.info.types[1]||"None"}\n` +
+               `TYPE${(this.info.types.type1==undefined ? "" : "S")}: ${this.info.types[0]||"None"}, ${this.info.types.type2||"None"}\n` +
                '----------------------------------------\n' +
                `HP : ${this.effectiveStats.hp}\n` +
                `ATK: ${this.effectiveStats.attack}\n` +
