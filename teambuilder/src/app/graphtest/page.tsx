@@ -1,16 +1,16 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { PokemonTeam } from '@/classes/PokemonSet';
+import { PokemonSet, PokemonTeam } from '@/classes/PokemonSet';
+import TestGraph from '@/components/ui/testgraph'; // Adjust the import path as necessary
 import "../css/sandbox.scss";
 
 // Define team globally
-const team = new PokemonTeam();
 
 export default function Sandbox() {
-    let [teamData, setTeamData] = useState<any>(null); // State for the team data as JSON
     const [loading, setLoading] = useState(true); // Loading state for when the team is being fetched
     const [error, setError] = useState<string | null>(null); // Error state to capture any issues
-    const importString = `Alakazam-Mega @ Alakazite  
+    const [team, setTeam] = useState(new PokemonSet());
+    const importString = `Landorus-Therian @ Alakazite  
                             Ability: Trace  
                             EVs: 4 Def / 252 SpA / 252 Spe  
                             Timid Nature  
@@ -67,30 +67,40 @@ export default function Sandbox() {
                             - Swords Dance  
                             - High Jump Kick  
                             - Roost`; // Sample team data
+    const debugSpeciesList = [
+        "Magearna", "Landorus-Therian", "Toxapex", "Kartana", "Charizard-Mega-X", "Heatran",
+        "Gliscor", "Latias-Mega", "Kyurem-Black", "Chansey", "Tapu Koko", "Tornadus-Therian", 
+        "Serperior", "Greninja", "Ferrothorn", "Greninja-Ash", "Volcarona", "Cresselia", "Tapu Lele", 
+        "Diancie-Mega", "Medicham-Mega", "Weavile", "Kommo-o", "Excadrill", "Alakazam-Mega", "Mawile-Mega", 
+        "Clefable", "Rotom-Wash", "Hawlucha", "Manaphy", "Swampert-Mega", "Tyranitar-Mega", "Tapu Fini", 
+        "Victini", "Scizor-Mega", "Slowbro", "Lopunny-Mega", "Charizard-Mega-Y", "Garchomp", "Seismitoad", 
+        "Skarmory", "Latios-Mega", "Tapu Bulu", "Pelipper", "Dragonite", "Ditto", "Hydreigon", "Slowbro-Mega", 
+        "Kyurem", "Zapdos", "Gastrodon", "Garchomp-Mega", "Celesteela", "Hoopa-Unbound", "Gyarados-Mega", 
+        "Heracross-Mega", "Reuniclus", "Thundurus-Therian", "Pinsir-Mega", "Sableye-Mega", "Hippowdon", "Jirachi", 
+        "Magnezone", "Keldeo", "Volcanion", "Gyarados", "Tyranitar", "Blacephalon", "Crawdaunt", "Moltres", 
+        "Aggron-Mega", "Marowak-Alola", "Alomomola", "Necrozma", "Mew", "Venusaur-Mega", "Breloom", "Amoonguss", 
+        "Tangrowth", "Gengar", "Aerodactyl-Mega", "Krookodile", "Bisharp", "Kingdra", "Manectric-Mega", "Altaria-Mega", 
+        "Buzzwole", "Pyukumuku", "Mantine", "Salamence", "Bronzong", "Ninetales-Alola", "Azumarill", "Suicune", 
+        "Gallade-Mega", "Porygon-Z", "Camerupt-Mega"];
+      
 
     useEffect(() => {
         // Function to fetch and set team data
-        const fetchTeamData = async () => {
+        const initializePokemonSet = async () => {
             try {
+                setTeam(new PokemonSet("graphtestteam"));
                 console.log('PokemonTeam initialized'); // Debugging point
 
                 // Add Pokémon to the team
                 console.log('Fetching team data from:', importString);
-                //await team.addPokemonFromSpecies("Charizard");
-                await team.importTeam(importString); // Import the team data
-
-                console.log('Pokémon added:', team); // Debugging point
-                
-                // Export the team
-                let teamExports = await team.exportTeam();
-                console.log('Exported team:', teamExports); // Debugging point
+                for (const species of debugSpeciesList) {
+                    await team.addPokemonFromSpecies(species);
+                    console.log('Pokémon added:', species); // Debugging point
+                }
 
                 //setTeamData(team.teamAdvancedJSON); // Set the fetched team data
-                teamData = team.teamAdvancedJSON;
-                console.log("TEAM DATA OUTPUT: ", teamData);
-
                 console.log("IMAGE PATHS:", team.toImages());
-
+                setTeam(team); // keep react in the loop?
                 setLoading(false); // Change loading state after data is fetched
             } catch (err) {
                 console.error('Error fetching team data:', err);
@@ -99,43 +109,13 @@ export default function Sandbox() {
             }
         };
 
-        fetchTeamData(); // Run the fetch function when component mounts
+        initializePokemonSet(); // Run the fetch function when component mounts
     }, []);
 
-    // Function to manually set the team data
-    const updateTeamData = (data: string) => {
-        setTeamData(data);
-        setLoading(false);
-    };
-    
     return (
         <div className="sandbox-container">
-            <h1 className="sandbox-title">Sandbox Page</h1>
-            <div className="team-info">
-                <h2 className="team-heading">Your Pokémon Team</h2>
-                {loading ? (
-                    <p className="loading-text">Loading your team...</p>
-                ) : error ? (
-                    <p className="error-text">{error}</p> // Show error if any
-                ) : (
-                    <div>
-                        
-                        <div>{teamData}</div>
-                        <div className="flex flex-row space-x-4">
-                            {team.toImages().map((src, index) => (
-                                <img key={index} src={src} alt={`Pokemon ${index + 1}`} className="pokemon-sprite" />
-                            ))}
-                        </div>
-                        <div><h1>After images</h1></div>
-                        <button 
-                            className="set-team-button" 
-                            onClick={() => updateTeamData('{"customTeam": "data"}')}
-                        >
-                            Set Custom Team Data
-                        </button>
-                    </div>
-                )}
-            </div>
+            <h1 className="sandbox-title">GRAPHTESTPAGE</h1>
+            <TestGraph team={team} />
         </div>
     );
 }

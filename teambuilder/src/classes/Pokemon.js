@@ -172,8 +172,25 @@ class Pokemon {
                 }
             }*/                               
         this.UsageEntry = {
-            usage: null,
-            movesetUsage: null
+            usage:   {
+                "rank": null,
+                "name": species,
+                "usage_percent": null,
+                "viability_ceiling": null
+            },
+            movesetUsage: {
+                "Pokemon": species,
+                "Raw_count": 0,
+                "Avg._weight": 0,
+                "Viability_Ceiling": 0,
+                "Abilities": [],
+                "Items": [],
+                "Spreads": [],
+                "Moves": [],
+                "Tera Types": [],
+                "Teammates": [],
+                "Checks and Counters": []
+            }
         };
         this.isInitialized = false;
     }

@@ -7,9 +7,9 @@ class PokemonSet {
         this.pokemons = [];
         this.format = 'gen7';
         this.teamExportString = '';
-        this.teamJSON = '';
+        this.teamJSON = {};
         this.teamPackedString = '';
-        this.teamAdvancedJSON = '';
+        this.teamAdvancedJSON = {};
     }
     // Get a Pokémon from the set by species name or index
     getMember(identifier) {
@@ -176,8 +176,8 @@ class PokemonSet {
 
 // Team class is a more specific version of PokemonSet that can only have up to 6 Pokémon.
 class PokemonTeam extends PokemonSet {
-    constructor() {
-        super('Team');
+    constructor(name) {
+        super(name);
     }
   
     async addPokemonFromSpecies(species) {
