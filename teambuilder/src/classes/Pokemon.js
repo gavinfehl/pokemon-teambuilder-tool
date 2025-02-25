@@ -51,8 +51,6 @@ const typeColours = {
 	steel: '#B7B7CE',
 	fairy: '#D685AD',
 };
-const generation = 7;
-const format = 'gen7';
 const usageDataJSON = require('@/data/parsedusagedata.json');
 const movesetUsageJSON = require('@/data/parsedmovesetusagedata.json');
 const pokespriteInfoJSON = require('@/data/pokespriteinfo.json'); 
@@ -89,7 +87,7 @@ function getNatureDescription(nature) {
 }
 
 async function getPokemonDex(format, species) {
-    console.log("WELL YES GET DEX GOT CALLED with:!", format, species);
+    //console.log("dex called with:!", format, species);
     const response = await fetch(`http://localhost:3000/dex/${format}/${species}`);
     if (response.ok) {
         const pokemonDex = await response.json();
@@ -122,6 +120,8 @@ class Pokemon {
 
         this.dex = null;
         this.species = species;
+        this.baseSpecies = null;
+        this.forme = null;
         this.info = {
             name: name,
             natdexnumber: null,
@@ -217,8 +217,11 @@ class Pokemon {
         this.isInitialized = false;
     }
     async init(format, species) {
-        console.log("Init passed in")
+        //console.log("Init passed in")
         this.dex = await getPokemonDex(format, species);
+        this.baseSpecies = this.dex.baseSpecies;
+        this.forme = this.dex.forme;
+        //console.log(this.species, "'s form is:", this.forme);
         if(this.dex == null){
             console.log("dex empty, failed to initialize");
             return;
@@ -234,7 +237,7 @@ class Pokemon {
             weight: this.dex.weight,
             bst: this.dex.baseStats.hp + this.dex.baseStats.atk + this.dex.baseStats.def + this.dex.baseStats.spa + this.dex.baseStats.spd + this.dex.baseStats.spe
         });
-        this.slug = this.#findSlug(this.info.natdexnumber);
+        this.slug = this.#findSlug(this.info.natdexnumber, this.forme);
         this.baseStats = {
             hp:this.dex.baseStats.hp,
             attack:this.dex.baseStats.atk,
@@ -246,13 +249,12 @@ class Pokemon {
         this.learnset =this.dex.learnset;
         //TODO: ADD GENERATION SPECIFIC SPRITES
         this.displayinfo = {
-            spriteRelativePath: (this.dex.exists) ? "pokesprite-images/pokemon-gen7x/"+(this.shiny ? "shiny" : "regular")+(this.info.facingRight ? "/right" : "")+"/"+(this.slug)+".png" : "node_modules/pokesprite-images/pokemon-gen7x/unknown-gen5.png",
+            spriteRelativePath: (this.dex.exists) ? "pokesprite-images/pokemon-"+(format==='gen8'?'gen8':'gen7x')+"/"+(this.shiny ? "shiny" : "regular")+(this.info.facingRight ? "/right" : "")+"/"+(this.slug)+".png" : "node_modules/pokesprite-images/pokemon-gen7x/unknown-gen5.png",
             type1spriteRelativePath: "pokesprite-images/misc/type-logos/gen8/"+this.dex.types[0]+".png",
             type2spriteRelativePath: "pokesprite-images/misc/type-logos/gen8/"+this.dex.types[1]+".png",
             type1color: this.info.types[0] ? this.#findTypeColor(this.info.types[0].toLowerCase()) : '#666666',
-            type2color: this.info.types[1] ? this.#findTypeColor(this.info.types[1].toLowerCase()) : '#666666',
+            type2color: this.info.types[1] ? this.#findTypeColor(this.info.types[1].toLowerCase()) : (this.info.types[0] ? this.#findTypeColor(this.info.types[0].toLowerCase()) : '#666666'),
         };
-        console.log()
         this.effectiveStats = {
             hp:             calculateHP  (this.baseStats.hp,             this.ivs.hp,  this.evs.hp,  this.info.level),
             attack:         calculateStat(this.baseStats.attack,         this.ivs.atk, this.evs.atk, this.info.level, this.info.natureModifier.atk || 1),
@@ -282,26 +284,32 @@ class Pokemon {
         }
     }
 
-    #findSlug(natdexnumber) {
+    #findSlug(natdexnumber, forme) {
         try {
-            const data = pokespriteInfoJSON;
-            
-            // Ensure the natdexnumber is a string (since the keys are strings like "001", "002")
-            const idxString = natdexnumber.toString().padStart(3, '0');
-            
-            // Check if the idx exists in the data
-            const entry = data[idxString];
-            
-            if (!entry) {
-                console.warn(`No slug data found for idx: ${natdexnumber}`);
-                return null;
-            }
-            
-            // Return the slug in English (can be changed to any language like 'jpn' for Japanese)
-            return entry.slug.eng;
-        } catch (err) {
-            console.error('Error reading slug data file for:', natdexnumber, "error:", err);
+          // Ensure the natdexnumber is a string (padded with leading zeros)
+          const idxString = natdexnumber.toString().padStart(3, '0');
+          
+          // Check if the idx exists in the data
+          const entry = pokespriteInfoJSON[idxString];
+          if (!entry) {
+            console.warn(`No slug data found for idx: ${natdexnumber}`);
             return null;
+          }
+          
+          // Get the base slug
+          const baseSlug = entry.slug.eng;
+          
+          // If no forme is specified, return the base slug
+          if (!forme || forme === '$') {
+            return baseSlug;
+          }
+
+          // if forme exists
+          return `${baseSlug}-${forme}`;
+
+        } catch (err) {
+          console.error('Error reading slug data file for:', natdexnumber, "error:", err);
+          return null;
         }
     }
     #findTypeColor(type) {
@@ -356,7 +364,7 @@ class Pokemon {
             const response = await fetch(spriteRelativePath);
             const buffer = await response.arrayBuffer();
             const base64String = Buffer.from(buffer).toString('base64');
-            console.log(`data:image/png;base64,${base64String}`);
+            //console.log(`data:image/png;base64,${base64String}`);
             return `data:image/png;base64,${base64String}`;
         } catch (error) {
             console.error('Error converting image to Base64:', error);

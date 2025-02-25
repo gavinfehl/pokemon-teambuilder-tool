@@ -15,6 +15,8 @@ app.get('/dex/:format/:species', (req, res) => {
     const pokemonData = {
         exists: genDex.exists,
         isNonStandard: genDex.isNonstandard,
+        baseSpecies: genDex.baseSpecies,
+        forme: genDex.forme,
         num: genDex.num,
         gender: genDex.gender,
         types: genDex.types,
@@ -35,7 +37,6 @@ app.get('/dex/:format/:species', (req, res) => {
         weight: genDex.weight,
         learnset: genDex.learnset,
     }
-    //console.log(pokemonData);
     res.json(pokemonData);
 });
 
@@ -52,7 +53,7 @@ app.post('/importteam', (req, res) => {
         teamPackedString: showdown.Teams.pack(importJSON),
     };
 
-    console.log("TEAM IMPORT FROM SERVER: ", teamImport.teamJSON);
+    //console.log("TEAM IMPORT FROM SERVER: ", teamImport.teamJSON);
 
     res.json(teamImport);
 
@@ -73,7 +74,6 @@ app.post('/exportteam', (req, res) => {
         teamAdvancedJSON: adv
     };
 
-    //console.log("teamExport:", teamExport);
     res.json(teamExport);
 });
 

@@ -35,7 +35,7 @@ class PokemonSet {
         await pokemon.init(this.format, species);
         if (pokemon) {
             this.pokemons.push(pokemon);
-            console.log("pokemon added:\n"+pokemon.toString());
+            console.log("pokemon added from species:\n"+pokemon.species);
             return pokemon;
         } else {
             console.error("Invalid Pokémon species.");
@@ -46,6 +46,7 @@ class PokemonSet {
     async addPokemonObject(pokemon) {
         await pokemon.init(this.format, pokemon.species);
         this.pokemons.push(pokemon);
+        console.log("pokemon added from object:\n"+pokemon.species);
     }
     // Remove a Pokémon from the set with the given species name.
     removePokemonBySpecies(species) {
