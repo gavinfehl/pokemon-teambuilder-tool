@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@pkmn/data": "^0.9.30",
+    "@pkmn/dex": "^0.9.30",
+    "@pkmn/smogon": "^0.5.18",
     "@radix-ui/react-slot": "^1.1.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

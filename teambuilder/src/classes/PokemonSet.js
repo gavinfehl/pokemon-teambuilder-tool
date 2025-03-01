@@ -1,11 +1,25 @@
-const Pokemon = require('./Pokemon');
+import Pokemon from '@/classes/Pokemon';
+
+async function getUsage(format) {
+    //console.log("Usage called with:", format);
+    const response = await fetch(`https://pkmn.github.io/smogon/data/stats/${format}.json`);
+    if (response.ok) {
+        const data = await response.json();
+        //console.log("USAGE DATA POKEMONSET OUTPUT:", data);  // Logs the entire data
+        return data.pokemon;
+    } else {
+        console.error('Failed to fetch usage data:', response.status);
+        return null;
+    }
+}
 
 // Contains a set of Pokémon as well as the format and export data file paths.
 class PokemonSet {
-    constructor(name) {
+    constructor(name, generation, format) {
         this.name = name;
+        this.generation = generation;
+        this.format = format;
         this.pokemons = [];
-        this.format = 'gen7';
         this.teamExportString = '';
         this.teamJSON = {};
         this.teamPackedString = '';
@@ -31,11 +45,24 @@ class PokemonSet {
     }
     // Add a Pokémon to the set with the given species name with no extra information.
     async addPokemonFromSpecies(species) {
-        const pokemon = new Pokemon(species);
+        if(!this.generation || !this.format){
+            console.log("Failed to add pokemon, null gen/format on this team: ", this.generation, this.format);
+            return null;
+        }
+        species=species
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join('-');
+
+        const pokemon = new Pokemon(species, this.generation, this.format);
         await pokemon.init(this.format, species);
         if (pokemon) {
             this.pokemons.push(pokemon);
-            console.log("pokemon added from species:\n"+pokemon.species);
+            //console.log("pokemon added from species:\n"+pokemon.species);
             return pokemon;
         } else {
             console.error("Invalid Pokémon species.");
@@ -46,7 +73,7 @@ class PokemonSet {
     async addPokemonObject(pokemon) {
         await pokemon.init(this.format, pokemon.species);
         this.pokemons.push(pokemon);
-        console.log("pokemon added from object:\n"+pokemon.species);
+        //console.log("pokemon added from object:\n"+pokemon.species);
     }
     // Remove a Pokémon from the set with the given species name.
     removePokemonBySpecies(species) {
@@ -73,11 +100,13 @@ class PokemonSet {
     async initializeTeam(json) {
         try {
             for (const teamMember of json) { 
-                console.log("JSON PRINT", json);
-                console.log("In INIT team - species of teamMember: ", teamMember.species);
+                //console.log("JSON PRINT", json);
+                //console.log("In INIT team - species of teamMember: ", teamMember.species);
     
                 const pokemon = new Pokemon(
                     teamMember.species ?? undefined,
+                    teamMember.generation ?? undefined,
+                    teamMember.format ?? undefined,
                     teamMember.name ?? undefined,
                     teamMember.gender ?? undefined,
                     teamMember.ability ?? undefined,
@@ -98,7 +127,7 @@ class PokemonSet {
                     }
                 );
     
-                console.log("In INIT team - species of pokemon: ", pokemon.species);
+                //console.log("In INIT team - species of pokemon: ", pokemon.species);
                 await this.addPokemonObject(pokemon);
             }
             return;
@@ -196,8 +225,35 @@ class PokemonTeam extends PokemonSet {
         }
     }
 }
-
-module.exports = {
+class PokemonTier extends PokemonSet {
+    constructor(name, generation, format) {
+        super(name, generation, format);
+    }
+    async #addAllPokemonInFormat() {
+        const usageData = await getUsage(this.format);
+        console.log(usageData);
+        if (usageData && typeof usageData === 'object') {
+            for (const key of Object.keys(usageData)) {
+                const usage = usageData[key].usage; // Access the 'usage' property of the current Pokemon
+                // more than %4 usage in ou
+                if (usage.raw && usage.raw * 100 > 2) {
+                    await this.addPokemonFromSpecies(key, this.generation, this.format); // Assuming addPokemonFromSpecies is a method
+                }
+            }     
+        } else {
+            console.error('No usage data available');
+        }
+    }
+    async initializeTier() {
+        await this.#addAllPokemonInFormat();
+        //await this.exportTeam();
+        console.log("Tier Created: "+this.format);
+        console.log(this.toString());
+    }
+}
+export default PokemonSet
+export {
     PokemonSet,
-    PokemonTeam
+    PokemonTeam,
+    PokemonTier,
 };

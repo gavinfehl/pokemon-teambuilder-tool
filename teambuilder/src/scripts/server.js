@@ -6,9 +6,9 @@ const port = 3000;
 const cors = require('cors');
 app.use(cors()); // Enable CORS for all routes
 
-app.get('/dex/:format/:species', (req, res) => {
-    const { format, species } = req.params;
-    const genDex = showdown.Dex.mod(format).species.get(species); // e.g., 'gen7'
+app.get('/dex/:generation/:species', (req, res) => {
+    const { generation, species } = req.params;
+    const genDex = showdown.Dex.mod(('gen'+generation)).species.get(species); // e.g., 'gen7'
     if (!genDex) {
         return res.status(404).json({ error: 'Pokemon not found' }); // Handle cases where the pokemon doesn't exist
     }

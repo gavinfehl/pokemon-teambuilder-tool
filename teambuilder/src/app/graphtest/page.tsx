@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { PokemonSet, PokemonTeam } from '@/classes/PokemonSet';
+import {PokemonSet, PokemonTeam, PokemonTier} from '@/classes/PokemonSet'
 import TestGraph from '@/components/ui/testgraph'; // Adjust the import path as necessary
 import "../css/sandbox.scss";
 
@@ -8,8 +8,8 @@ import "../css/sandbox.scss";
 
 export default function Sandbox() {
     const [loading, setLoading] = useState(true); // Loading state for when the team is being fetched
-    const [error, setError] = useState<string | null>(null); // Error state to capture any issues
-    const [team, setTeam] = useState(new PokemonSet());
+    const [team, setTeam] = useState(new PokemonTier());
+    const [tier, setTier] = useState(new PokemonTier());
     const importString = `Landorus-Therian @ Alakazite  
                             Ability: Trace  
                             EVs: 4 Def / 252 SpA / 252 Spe  
@@ -192,24 +192,14 @@ export default function Sandbox() {
         // Function to fetch and set team data
         const initializePokemonSet = async () => {
             try {
-                setTeam(new PokemonSet("graphtestteam"));
-                console.log('PokemonTeam initialized'); // Debugging point
-
-                // Add Pokémon to the team
-                console.log('Fetching team data from:', importString);
-                for (const species of debuggen7ouviabilityrankingmons) {
-                    await team.addPokemonFromSpecies(species);
-                    //console.log('Pokémon added:', species); // Debugging point
-                }
-/*                 await team.exportTeam();
-                console.log("ADVJSON:", team.teamAdvancedJSON); */
-                //setTeamData(team.teamAdvancedJSON); // Set the fetched team data
-                console.log("IMAGE PATHS:", team.toImages());
-                setTeam(team); // keep react in the loop?
-                setLoading(false); // Change loading state after data is fetched
-            } catch (err) {
-                console.error('Error fetching team data:', err);
-                setError('Failed to load team data.');
+                const teamInstance = new PokemonTier("graphtestteam", 5, "gen9ou");
+                await teamInstance.initializeTier();
+                setTeam(teamInstance);
+                console.log(teamInstance.generation, teamInstance.format); // Debugging point
+                console.log('PokemonTeam initialized');
+            } catch (error) {
+                console.error('Error initializing Pokemon data:', error);
+            } finally {
                 setLoading(false);
             }
         };
@@ -220,7 +210,8 @@ export default function Sandbox() {
     return (
         <div className="sandbox-container">
             <h1 className="sandbox-title">GRAPHTESTPAGE</h1>
-            <TestGraph team={team} />
+            <TestGraph team={team}/>
+            <h1>YUPPP CREATED BY BOKAYTREBUCHET BITTTTCH</h1>
         </div>
     );
 }

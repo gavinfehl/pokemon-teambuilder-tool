@@ -1,122 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Cytoscape, { ElementsDefinition, ElementDefinition, LayoutOptions } from 'cytoscape';
 import fcose from 'cytoscape-fcose';
-import Pokemon from '../../classes/Pokemon';
-import { PokemonSet } from '../../classes/PokemonSet';
-
+import Pokemon from '@/classes/Pokemon'
+import {PokemonSet, PokemonTeam, PokemonTier} from '@/classes/PokemonSet'
+import styleOptions from './testgraphstyles'
+import flayoutOptions, { glayoutOptions, clayoutOptions, cclayoutOptions } from './testgraphlayouts';
 Cytoscape.use(fcose);
 
 interface TestGraphProps {
-    team: PokemonSet;
-}
-
-// Define the fcose layout options interface
-interface FcoseLayoutOptions {
-    name: 'fcose';
-    nodeRepulsion?: number;
-    fit: boolean;
-    idealEdgeLength?: number | ((edge: Cytoscape.EdgeSingular) => number)
-    edgeElasticity?: number;
-    nestingFactor?: number;
-    gravity?: number;
-    numIter?: number;
-    tile?: boolean;
-    random?: boolean;
-    animate?: 'during' | 'end' | false;
-    animationDuration?: number;
-    tilingPaddingVertical?: number;
-    tilingPaddingHorizontal?: number;
-    gravityRangeCompound?: number;
-    gravityCompound?: number;
-    gravityRange?: number;
-    initialEnergyOnIncremental?: number;
-    boundingBox: { x1: number, y1: number, w: number, h: number };
-}
-const flayoutOptions: FcoseLayoutOptions = {
-    name: 'fcose',
-    nodeRepulsion: 40000,
-    idealEdgeLength: (edge) => {
-        let idealLength = Math.max(20, 300 - (edge.data('weight')) * 4);
-        //console.log(idealLength);
-        return idealLength;
-    },
-    fit: true,
-    edgeElasticity: 0.45,
-    nestingFactor: 0.1,
-    gravity: 0.05,
-    numIter: 25000,
-    tile: false,
-    random: true,
-    animate: 'end',
-    animationDuration: 3000,
-    tilingPaddingVertical: 10,
-    tilingPaddingHorizontal: 10,
-    gravityRangeCompound: 1.5,
-    gravityCompound: 1.0,
-    gravityRange: 3.8,
-    initialEnergyOnIncremental: 0.5,
-    boundingBox: { x1: 0, y1: 0, w: 2500, h: 2500 },
-};
-
-
-interface gridLayoutOptions {
-    name: "grid",
-    fit: boolean, // Whether to fit the viewport to the graph
-    animate: boolean,
-    animationDuration: number,
-    padding: number, // Padding around the layout
-    avoidOverlap: boolean, // Prevent nodes from overlapping
-    avoidOverlapPadding: number, // Extra spacing between overlapping nodes
-    condense: boolean, // Whether to condense the layout
-    rows: undefined, // Number of rows (automatically determined if undefined)
-    //boundingBox: { x1: number, y1: number, w: number, h: number },
-};
-
-const glayoutOptions: gridLayoutOptions = {
-    name: "grid",
-    fit: true, // Whether to fit the viewport to the graph
-    animate: true,
-    animationDuration: 500,
-    padding: 10, // Padding around the layout
-    avoidOverlap: true, // Prevent nodes from overlapping
-    avoidOverlapPadding: 10, // Extra spacing between overlapping nodes
-    condense: false, // Whether to condense the layout
-    rows: undefined, // Number of rows (automatically determined if undefined)
-    //boundingBox: { x1: 0, y1: 0, w: 2500, h: 2500 },
-};
-
-
-interface circleLayoutOptions {
-    name: 'circle',
-    fit: boolean,
-    animate: boolean,
-    animationDuration: number,
-    avoidOverlap: boolean,
-    nodeSpacing: number,
-    boundingBox: { x1: number, y1: number, w: number, h: number },
-    startAngle: number,
-    clockwise: boolean,
-    sort: (a: Cytoscape.NodeSingular, b: Cytoscape.NodeSingular) => number,
-}
-const clayoutOptions: circleLayoutOptions = {
-    name: 'circle',
-    fit: true,
-    animate: true,
-    animationDuration: 1000,
-    avoidOverlap: false,
-    nodeSpacing: 1000,
-    boundingBox: { x1: 0, y1: 0, w: 2500, h: 2500 },
-    startAngle: Math.PI / 2,
-    clockwise: true,
-    sort: function(a, b){ return a.data('size') - b.data('size') }, 
-};
-
-function circSort(){
-    return 0;
-}
-
-interface TestGraphProps {
-    team: PokemonSet;
+    team: PokemonTier;
+    //tier: PokemonTier;
 }
 const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
     const cyRef = useRef<HTMLDivElement>(null);
@@ -126,19 +19,44 @@ const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
 
     useEffect(() => {
         if (cyRef.current && team.pokemons.length > 0) {
-            const nodes: ElementDefinition[] = team.pokemons.map((item: Pokemon, index) => ({
+            const nodes: ElementDefinition[] = team.pokemons.map((item: Pokemon, index) => {
+              const realUsage = item.usage.usage.real ? item.usage.usage.real : 0;
+              const baseSize = 50;
+              const sizeVariance = 500;
+              const gridScale = 350.0;
+              const size = (realUsage * sizeVariance) + baseSize; // Scale from 0-100 to 100-350 pixels
+              const scaleX = size / 40; // 40 is the original sprite width
+              const scaleY = size / 30; // 40 is the original sprite width
+        
+              return {
                 group: 'nodes',
                 selected: false,
-                data: { 
-                    id: item.info.natdexnumber ? `pokemon-${item.species}-${item.info.natdexnumber}` : `pokeIND-${index}`,
-                    label: item.species, 
-                    teammates: item.UsageEntry.movesetUsage ? item.UsageEntry.movesetUsage.Teammates : [],
-                    size:  item.UsageEntry.movesetUsage ? item.UsageEntry.movesetUsage.Raw_count/1 : 0,
-                    sprite: item.displayinfo.spriteRelativePath,
-                    colors: [item.displayinfo.type1color, item.displayinfo.type2color],
+                data: {
+                  id: item.info.natdexnumber
+                    ? `pokemon-${item.species}-${item.info.natdexnumber}`
+                    : `pokeIND-${index}`,
+                  label: item.species,
+                  teammates: item.usage.teammates ? item.usage.teammates : {},
+                  size: size,
+                  sprite: 'sprites/pokemonicons-sheet.png',
+                  spriteWidth: 480 * scaleX + 'px',
+                  spriteHeight: 3990 * scaleY + 'px',
+                  spritePositionX: item.displayinfo.spritesheetCoords
+                    ? item.displayinfo.spritesheetCoords[0] * scaleX + 'px'
+                    : '0px',
+                  spritePositionY: item.displayinfo.spritesheetCoords
+                    ? item.displayinfo.spritesheetCoords[1] * scaleY + 'px'
+                    : '0px',
+                  gridSpritePositionX: item.displayinfo.spritesheetCoords
+                    ? item.displayinfo.spritesheetCoords[0] * (gridScale/40) + 'px'
+                    : '0px',
+                  gridSpritePositionY: item.displayinfo.spritesheetCoords
+                    ? item.displayinfo.spritesheetCoords[1] * (gridScale/30) + 'px'
+                    : '0px',
+                  colors: [item.displayinfo.type1color, item.displayinfo.type2color],
                 },
-                
-            }));
+              };
+            });
             const edges: Cytoscape.EdgeDefinition[] = [];
             
             interface Teammate {
@@ -151,112 +69,59 @@ const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
                 source: string;
                 target: string;
                 weight: number;
+                label: string
             }
+
 
             for (let i = 0; i < nodes.length; i++) {
                 const teammates = nodes[i].data.teammates;
-                teammates.forEach((teammate: Teammate) => {
-                    const targetNode = nodes.find(node => node.data.label === teammate.item);
+                Object.entries(teammates).map(([teammate, value]) => {
+                    const targetNode = nodes.find(node => node.data.label === teammate);
                     if (targetNode) {
-                        const edgeData: EdgeData = {
+                        let edgeData: EdgeData = {
                             id: `edge-${nodes[i].data.id}-${targetNode.data.id}`,
                             source: nodes[i].data.id as string,
                             target: targetNode.data.id as string,
-                            weight: parseFloat(teammate.value)
+                            weight: Number(value)*100,
+                            label: String((Number(value)*100).toFixed(1)+"%"),
                         };
-                        edges.push({
-                            group: 'edges',
-                            data: edgeData
-                        });
+                        const threshold = 30; // you must have a weight of at least this % to become a real edge.
+                        if (edgeData.weight > threshold) {
+                            edges.push({
+                                group: 'edges',
+                                data: edgeData
+                            });
+                        }
+                        // ... your edge data processing logic
                     }
                 });
             }
+            
+
             console.log('successfully made:', nodes.length, " of ", team.pokemons.length);
             console.log('nodes:', nodes);
             console.log('successfully made:', edges.length);
             console.log('edges:', edges);
 
             const elements: ElementsDefinition = { nodes, edges };
-            const fStyleOptions = [
-                {
-                    selector: 'node',
-                    style: {
-                        'color': 'black',
-                        'background-fill': 'radial-gradient',
-                        'background-gradient-stop-colors': 'data(colors)',
-                        //'shape': 'star',
-                        //'label': 'data(label)',
-                        'width': 'mapData(size, 0, 50000, 50, 200)',
-                        'height': 'mapData(size, 0, 50000, 50, 200)',
-                        'background-image': 'data(sprite)',
-                        'background-fit': 'contain',
-                        'background-offset-x': '50%',
-                        'background-offset-y': '-100%'
-                    }
-                },
-                {
-                    selector: 'node.centered',
-                    style: {
-                        'color': 'black',
-                        'background-fill': 'radial-gradient',
-                        'background-gradient-stop-colors': 'data(colors)',
-                        'shape': 'star',
-                        'label': 'data(label)',
-                        'font-size': '50',
-                        'width': '300',
-                        'height': '300',
-                        'background-image': 'data(sprite)',
-                        'background-fit': 'contain',
-                        'background-offset-x': '50%',
-                        'background-offset-y': '-100%'
-                    }
-                },
-                {
-                    selector: 'node.tile',
-                    style: {
-                        'color': 'black',
-                        'background-fill': 'linear-gradient',
-                        'background-gradient-stop-colors': 'data(colors)',
-                        'shape': 'rectangle',
-                        //'label': 'data(label)',
-                        //'font-size': '20',
-                        'width': '300',
-                        'height': '300',
-                        'background-image': 'data(sprite)',
-                        'background-fit': 'contain',
-                        'background-offset-x': '50%',
-                        'background-offset-y': '-100%'
-                    }
-                },
-                {
-                    selector: 'edge',
-                    style: {
-                        'width': 'mapData(weight, 0, 100, 0, 10)',
-                        'line-color': '#ccc',
-                        'target-arrow-color': '#ccc',
-                        'target-arrow-shape': 'triangle'
-                    }
-                },
-                {
-                    selector: 'edge.hidden',
-                    style: {
-                        'width': 0
-                    }
-                }
-            ]
+            
 
 
             // Create the Cytoscape instance
             const cyInstance = Cytoscape({
                 container: cyRef.current,
                 elements: elements,
-                style: fStyleOptions
+                style: styleOptions
             });
 
             setCy(cyInstance);
+
+            // fcose first
+            currentLayout = "fcose";
+            cyInstance.edges().addClass('hidden');
             cyInstance.layout(flayoutOptions).run();
 
-            cyInstance.style(fStyleOptions);
+            cyInstance.style(styleOptions);
 
             // Cleanup function
             return () => {
@@ -270,58 +135,74 @@ const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
         const handleNodeClick = (event: Cytoscape.EventObject) => {
             const clickedNode = event.target;
             console.log("curr layout on click:", currentLayout);
-            if (currentLayout == "circle") {
-                // Switch back to fcose layout
-                cy.$(':selected').deselect();
-                currentLayout = "fcose";
-                cy.pan({
-                    x: 0,
-                    y: 0 
-                });
-                cy.layout(glayoutOptions).run();
-                cy.nodes().removeClass('centered');
-                cy.edges().removeClass('hidden');
-                //grid test stuff
-                cy.edges().addClass('hidden');
-                cy.nodes().addClass('tile');
+            switch(currentLayout){
+                case "circle":
+                    // Switch to grid layout
+                    if (clickedNode.hasClass('centered')){
+                        cy.$(':selected').deselect();
+                        currentLayout = "grid";
+                        cy.layout(glayoutOptions).run();
+                        cy.fit(cy.nodes(),50);
+                        cy.nodes().removeClass('hidden centered tile');
+                        cy.edges().addClass('hidden');
+                        cy.nodes().addClass('tile');
+                    }else{
+                        //grid test stuff   
+                        currentLayout = "circle";
+                        layoutWithExclusions(clayoutOptions, clickedNode);
+                        cy.fit(cy.nodes(),0);
+                        clickedNode.position({
+                            x: 1250,
+                            y: 1250
+                        });
+                        updateEdgeVisibility(clickedNode);
+                    }
+                    
+                    break;
+
+                case "grid":
+                default:
+                    // Switch to circle layout with clicked node centered
+                    //grid test stuff   
+                    cy.nodes().removeClass('tile');
+                    currentLayout = "circle";
+                    layoutWithExclusions(clayoutOptions, clickedNode);
+                    cy.fit(cy.nodes(),0);
+                    clickedNode.position({
+                        x: 1250,
+                        y: 1250
+                    });
+                    updateEdgeVisibility(clickedNode);
+                    break;
             }
-            else {
-                // Switch to circle layout with clicked node centered
-                //grid test stuff   
-                cy.nodes().removeClass('tile');
-                clickedNode.addClass('centered');
-                currentLayout = "circle";
-                layoutWithExclusions(clayoutOptions);
-                clickedNode.position({
-                    x: 1250,
-                    y: 1250
-                });
-                updateEdgeVisibility(clickedNode);
-            }
-        };
+        }
         const updateEdgeVisibility = (clickedNode: Cytoscape.NodeSingular) => {
             cy.edges().removeClass('hidden');
             cy.edges().forEach(edge => {
                 const source = edge.source();
                 const target = edge.target();
                 if (!source.same(clickedNode) && !target.same(clickedNode)) {
-                    console.log("hiding edge:", edge);
+                    //console.log("hiding edge:", edge);
                     edge.addClass('hidden');
                 }
             });
         }
-        const layoutWithExclusions = (layoutOptions: LayoutOptions) => {
+        const layoutWithExclusions = (layoutOptions: LayoutOptions, centeredNode: Cytoscape.NodeSingular) => {
             if (!cy) return;
         
-            // Filter out nodes with the 'centered' class
-            const noncenteredNodes = cy.elements().difference(cy.elements('.centered'));
-            cy.pan({
-                x: 0,
-                y: 0 
-            });
-            // Apply the layout to the filtered elements
-            noncenteredNodes.layout(layoutOptions).run();
+            // Get neighbors (nodes directly connected to the centered node)
+            const connectedNodes = centeredNode.neighborhood().nodes();
+        
+            // Hide all other nodes
+            cy.nodes().removeClass('hidden centered tile');
+            cy.nodes().not(connectedNodes).addClass('hidden');
+            centeredNode.removeClass('hidden');
+            centeredNode.addClass('centered');
+        
+            // Apply the layout only to the centered node and its direct neighbors
+            connectedNodes.layout(layoutOptions).run();
         };
+        
 
 
         cy.on('tap', 'node', handleNodeClick);
@@ -330,7 +211,7 @@ const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
         };
     }, [cy]);
 
-    return <div ref={cyRef} style={{ width: '100%', height: '95vh' }} />;
+    return <div ref={cyRef} style={{backgroundImage: "sprites/pokemonicons-sheet.png", width: '100%', height: '85vh'}} />;
 };
 
 export default TestGraph;
