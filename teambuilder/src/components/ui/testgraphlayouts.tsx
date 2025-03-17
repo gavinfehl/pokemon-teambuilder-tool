@@ -22,7 +22,7 @@ interface FcoseLayoutOptions {
     initialEnergyOnIncremental?: number;
     boundingBox: { x1: number, y1: number, w: number, h: number };
 }
-const flayoutOptions: FcoseLayoutOptions = {
+const teammatesFcose: FcoseLayoutOptions = {
     name: 'fcose',
     nodeRepulsion: 70000,
     idealEdgeLength: (edge) => {
@@ -62,7 +62,7 @@ interface gridLayoutOptions {
     //boundingBox: { x1: number, y1: number, w: number, h: number },
 };
 
-const glayoutOptions: gridLayoutOptions = {
+const tierGrid: gridLayoutOptions = {
     name: "grid",
     fit: true, // Whether to fit the viewport to the graph
     animate: false,
@@ -88,7 +88,7 @@ interface circleLayoutOptions {
     clockwise: boolean,
     sort: (a: Cytoscape.NodeSingular, b: Cytoscape.NodeSingular) => number,
 }
-const clayoutOptions: circleLayoutOptions = {
+const commonTeammates: circleLayoutOptions = {
     name: 'circle',
     fit: true,
     animate: true,
@@ -133,5 +133,5 @@ const cclayoutOptions: concentricCircleLayoutOptions = {
     }, 
 };
 //WIPS
-export default flayoutOptions;
-export { glayoutOptions, clayoutOptions, cclayoutOptions };
+export default teammatesFcose;
+export { tierGrid, commonTeammates, cclayoutOptions };

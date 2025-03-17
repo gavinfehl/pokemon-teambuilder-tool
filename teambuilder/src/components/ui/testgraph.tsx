@@ -4,7 +4,7 @@ import fcose from 'cytoscape-fcose';
 import Pokemon from '@/classes/Pokemon'
 import {PokemonSet, PokemonTeam, PokemonTier} from '@/classes/PokemonSet'
 import styleOptions from './testgraphstyles'
-import flayoutOptions, { glayoutOptions, clayoutOptions, cclayoutOptions } from './testgraphlayouts';
+import teammatesFcose, { tierGrid, commonTeammates, cclayoutOptions } from './testgraphlayouts';
 Cytoscape.use(fcose);
 
 interface TestGraphProps {
@@ -123,7 +123,7 @@ const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
             // fcose first
             currentLayout = "fcose";
             cyInstance.edges().addClass('hidden');
-            cyInstance.layout(flayoutOptions).run();
+            cyInstance.layout(teammatesFcose).run();
 
             cyInstance.style(styleOptions);
 
@@ -145,7 +145,7 @@ const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
                     if (clickedNode.hasClass('centered')){
                         cy.$(':selected').deselect();
                         currentLayout = "grid";
-                        cy.layout(glayoutOptions).run();
+                        cy.layout(tierGrid).run();
                         cy.fit(cy.nodes(),50);
                         cy.nodes().removeClass('hidden centered tile');
                         cy.edges().addClass('hidden');
@@ -153,7 +153,7 @@ const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
                     }else{
                         //grid test stuff   
                         currentLayout = "circle";
-                        layoutWithExclusions(clayoutOptions, clickedNode);
+                        layoutWithExclusions(commonTeammates, clickedNode);
                         cy.fit(cy.nodes(),0);
                         clickedNode.position({
                             x: 1250,
@@ -170,7 +170,7 @@ const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
                     //grid test stuff   
                     cy.nodes().removeClass('tile');
                     currentLayout = "circle";
-                    layoutWithExclusions(clayoutOptions, clickedNode);
+                    layoutWithExclusions(commonTeammates, clickedNode);
                     cy.fit(cy.nodes(),0);
                     clickedNode.position({
                         x: 1250,
