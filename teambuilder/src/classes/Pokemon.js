@@ -1,4 +1,9 @@
 // Pokemon Class
+import UsageFetchAndParser from "./UsageFetchAndParser";
+import {
+	BattlePokemonSprites, BattlePokemonIconIndexes, BattlePokemonIconIndexesLeft
+} from '@/data/battle-dex-data'
+
 const modifiers = {     
     //SPICY
         Hardy:      {},
@@ -31,10 +36,28 @@ const modifiers = {
         Careful:    { spd: 1.1, spa: 0.9 },
         Quirky:     {}, 
 };
-const generation = 7;
-const format = 'gen7';
-const usageDataJSON = require('@/data/parsedusagedata.json');
-const movesetUsageJSON = require('@/data/parsedmovesetusagedata.json');
+const typeColours = {
+	normal: '#A8A77A',
+	fire: '#EE8130',
+	water: '#6390F0',
+	electric: '#F7D02C',
+	grass: '#7AC74C',
+	ice: '#96D9D6',
+	fighting: '#C22E28',
+	poison: '#A33EA1',
+	ground: '#E2BF65',
+	flying: '#A98FF3',
+	psychic: '#F95587',
+	bug: '#A6B91A',
+	rock: '#B6A136',
+	ghost: '#735797',
+	dragon: '#6F35FC',
+	dark: '#705746',
+	steel: '#B7B7CE',
+	fairy: '#D685AD',
+};
+//const usageDataJSON = require('@/data/parsedusagedata.json');
+//const movesetUsageJSON = require('@/data/parsedmovesetusagedata.json');
 const pokespriteInfoJSON = require('@/data/pokespriteinfo.json'); 
 
 // calculates the effective Atk, Def, SpA, SpD, or Spe stat as a result of a pokemon's attributes
@@ -68,23 +91,44 @@ function getNatureDescription(nature) {
     return `${nature} (+${descriptions[positive?.[0]] || "None"}, -${descriptions[negative?.[0]] || "None"})`;
 }
 
-async function getPokemonDex(format, species) {
-    console.log("WELL YES GET DEX GOT CALLED with:!", format, species);
-    const response = await fetch(`http://localhost:3000/dex/${format}/${species}`);
+async function getPokemonDex(generation, species) {
+    console.log("dex called with:!", generation, species);                                                      //zygarde 10% v
+    const response = await fetch(`http://localhost:3000/dex/${generation}/${species.replace("Kommo-O", "Kommo-o").replace("%", "")}`);
     if (response.ok) {
         const pokemonDex = await response.json();
         //console.log("DEX OUTPUT: ", pokemonDex);  // Should log the correct data
         return pokemonDex;
     } else {
-        console.error('Failed to fetch data:', response.status);
+        console.error('Failed to fetch dex data:', response.status);
         return null;
     }
-    
 }
+async function getUsage(format, species) {
+    //console.log("Usage called with:", format, species);
+    const response = await fetch(`https://pkmn.github.io/smogon/data/stats/${format}.json`);
+    if (response.ok) {
+        const data = await response.json();
+        const usage = data.pokemon[species.replace("Kommo-O", "Kommo-o").replace("%", "")];  // Access the usage data using the species name as a key
+        if (usage) {
+            console.log("DATA OUTPUT:", data);  // Logs the entire data
+            console.log("USAGE OUTPUT:", usage);  // Logs the usage data for the specified species
+            return usage;
+        } else {
+            console.error(`Species (${species}) not found in usage data.`);
+            return null;
+        }
+    } else {
+        console.error('Failed to fetch usage data:', response.status);
+        return null
+    }
+}
+
 // Pokemon class  
   
 class Pokemon {
-    constructor(species, 
+    constructor(species,
+                generation,
+                format, 
                 name = null,
                 gender = null,
                 ability = null,
@@ -99,14 +143,34 @@ class Pokemon {
                 evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 },
                 moveset = {move1: null, move2: null, move3: null, move4: null,}
     ){
-
+        this.generation = generation;
+        this.format = format;
         this.dex = null;
+        this.usage = {
+            //usageDataJSON: require('@/data/parsedusagedata.json'),
+            //movesetUsageJSON: require('@/data/parsedmovesetusagedata.json'),
+            "rank": null,
+            "usage": {
+                "raw": 0,
+                "real": 0,
+                "weighted": 0,
+            },
+            "abilities": {},
+            "items": {},
+            "spreads": {},
+            "moves": {},
+            "teraTypes": {},
+            "teammates": {},
+            "checks": {}
+        };
         this.species = species;
+        this.baseSpecies = null;
+        this.forme = null;
         this.info = {
             name: name,
             natdexnumber: null,
             gender: gender || "F",
-            types: null,
+            types: {type1:"", type2:""},
             tier: null,
             level: level,
             nature: nature,
@@ -139,8 +203,11 @@ class Pokemon {
         //TODO: ADD GENERATION SPECIFIC SPRITES
         this.displayinfo = {
             spriteRelativePath: null,
+            spritesheetCoords: null,
             type1spriteRelativePath: null,
-            type2spriteRelativePath: null
+            type2spriteRelativePath: null,
+            type1color: '#666666',
+            type2color: '#666666',
         };
         this.effectiveStats = {
             hp:             null,
@@ -149,37 +216,17 @@ class Pokemon {
             specialAttack:  null,
             specialDefense: null,
             speed:          null
-        };
-        /*  UsageEntry: {
-                usage: {
-                rank: '33',
-                name: 'Swampert-Mega',
-                usage_percent: 5.9198,
-                viability_ceiling: 'Common'
-                },
-                movesetUsage: {
-                Pokemon: 'Swampert-Mega',
-                Raw_count: '13219',
-                'Avg._weight': '0.6525389859705429',
-                Viability_Ceiling: '95',
-                Abilities: [Array],
-                Items: [Array],
-                Spreads: [Array],
-                Moves: [Array],
-                'Tera Types': [Array],
-                Teammates: [Array],
-                'Checks and Counters': [Array]
-                }
-            }*/                               
-        this.UsageEntry = {
-            usage: null,
-            movesetUsage: null
-        };
+        };                        
         this.isInitialized = false;
     }
-    async init(format, species) {
-        console.log("Init passed in")
-        this.dex = await getPokemonDex(format, species);
+    async init() {
+        //console.log("Init passed in")
+        this.dex = await getPokemonDex(this.generation, this.species);
+        this.usage = await getUsage(this.format, this.species);
+        //console.log("THISDOTUSAGE:", this.usage);
+        this.baseSpecies = this.dex.baseSpecies;
+        this.forme = this.dex.forme;
+        //console.log(this.species, "'s form is:", this.forme);
         if(this.dex == null){
             console.log("dex empty, failed to initialize");
             return;
@@ -195,7 +242,10 @@ class Pokemon {
             weight: this.dex.weight,
             bst: this.dex.baseStats.hp + this.dex.baseStats.atk + this.dex.baseStats.def + this.dex.baseStats.spa + this.dex.baseStats.spd + this.dex.baseStats.spe
         });
-        this.slug = this.#findSlug(this.info.natdexnumber);
+        this.slug = this.#findSlug(this.info.natdexnumber, this.forme);
+        if(!this.slug){
+            this.slug = (this.species.replace(" ", "-").toLowerCase())
+        }
         this.baseStats = {
             hp:this.dex.baseStats.hp,
             attack:this.dex.baseStats.atk,
@@ -207,10 +257,14 @@ class Pokemon {
         this.learnset =this.dex.learnset;
         //TODO: ADD GENERATION SPECIFIC SPRITES
         this.displayinfo = {
-            spriteRelativePath: (this.dex.exists) ? "pokesprite-images/pokemon-gen7x/"+(this.shiny ? "shiny" : "regular")+(this.info.facingRight ? "/right" : "")+"/"+(this.slug)+".png" : "node_modules/pokesprite-images/pokemon-gen7x/unknown-gen5.png",
+            spriteRelativePath: (this.dex.exists) ? "pokesprite-images/pokemon-"+(this.format==='gen8'?'gen8':'gen7x')+"/"+(this.shiny ? "shiny" : "regular")+(this.info.facingRight ? "/right" : "")+"/"+(this.slug)+".png" : "node_modules/pokesprite-images/pokemon-gen7x/unknown-gen5.png",
+            spritesheetCoords: this.getSpriteCoords(),
             type1spriteRelativePath: "pokesprite-images/misc/type-logos/gen8/"+this.dex.types[0]+".png",
             type2spriteRelativePath: "pokesprite-images/misc/type-logos/gen8/"+this.dex.types[1]+".png",
+            type1color: this.info.types[0] ? this.#findTypeColor(this.info.types[0].toLowerCase()) : '#666666',
+            type2color: this.info.types[1] ? this.#findTypeColor(this.info.types[1].toLowerCase()) : (this.info.types[0] ? this.#findTypeColor(this.info.types[0].toLowerCase()) : '#666666'),
         };
+        console.log(this.displayinfo.spriteRelativePath);
         this.effectiveStats = {
             hp:             calculateHP  (this.baseStats.hp,             this.ivs.hp,  this.evs.hp,  this.info.level),
             attack:         calculateStat(this.baseStats.attack,         this.ivs.atk, this.evs.atk, this.info.level, this.info.natureModifier.atk || 1),
@@ -218,67 +272,57 @@ class Pokemon {
             specialAttack:  calculateStat(this.baseStats.specialAttack,  this.ivs.spa, this.evs.spa, this.info.level, this.info.natureModifier.spa || 1),
             specialDefense: calculateStat(this.baseStats.specialDefense, this.ivs.spd, this.evs.spd, this.info.level, this.info.natureModifier.spd || 1),
             speed:          calculateStat(this.baseStats.speed,          this.ivs.spe, this.evs.spe, this.info.level, this.info.natureModifier.spe || 1),
-        };              
-        this.UsageEntry = {
-            usage: this.#findUsageEntry(this.species),
-            movesetUsage: this.#findMovesetUsageEntry(this.species)
-        };
+        };           
         this.isInitialized = true;
         //console.log("Pokemon initialized:\n"+this.toString());
     }
-    #findUsageEntry(species) {
+
+    #findSlug(natdexnumber, forme) {
         try {
-            const data = usageDataJSON;
-            const entry = data.find(entry => entry.name === species);
-            if (!entry) {
-                console.warn(`No usage data found for species: ${species}`);
-            }
-            return entry;
-        } catch (err) {
-            console.error('Error reading moveset usage data file for:', species, "error:", err);
+          // Ensure the natdexnumber is a string (padded with leading zeros)
+          const idxString = natdexnumber.toString().padStart(3, '0');
+          
+          // Check if the idx exists in the data
+          const entry = pokespriteInfoJSON[idxString];
+          if (!entry) {
+            console.warn(`No slug data found for idx: ${natdexnumber}`);
             return null;
+          }
+          
+          // Get the base slug
+          const baseSlug = entry.slug.eng;
+          
+          // If no forme is specified, return the base slug
+          if (!forme || forme === '$') {
+            return baseSlug;
+          }
+
+          // if forme exists
+          return `${baseSlug}-${forme}`;
+
+        } catch (err) {
+          console.error('Error reading slug data file for:', natdexnumber, "error:", err);
+          return null;
         }
     }
-
-    #findSlug(natdexnumber) {
+    #findTypeColor(type) {
         try {
-            const data = pokespriteInfoJSON;
+            const color = typeColours[type];
             
-            // Ensure the natdexnumber is a string (since the keys are strings like "001", "002")
-            const idxString = natdexnumber.toString().padStart(3, '0');
-            
-            // Check if the idx exists in the data
-            const entry = data[idxString];
-            
-            if (!entry) {
-                console.warn(`No slug data found for idx: ${natdexnumber}`);
-                return null;
+            if (!color) {
+                console.warn(`No type color data found for type: ${type}`);
+                return '#666666'; // Default color if type not found
             }
             
-            // Return the slug in English (can be changed to any language like 'jpn' for Japanese)
-            return entry.slug.eng;
+            return color;
         } catch (err) {
-            console.error('Error reading slug data file for:', natdexnumber, "error:", err);
-            return null;
-        }
-    }
-
-    #findMovesetUsageEntry(species) {
-        try {
-            const data = movesetUsageJSON;
-            const entry = data.find(entry => entry.Pokemon === species);
-            if (!entry) {
-                console.warn(`No moveset usage data found for species: ${species}`);
-            }
-            return entry;
-        } catch (err) {
-            console.error('Error reading moveset usage data file for:', species, "error:", err);
-            return null;
+            console.error('Error reading type color data for:', type, "error:", err);
+            return '#666666'; // Default color in case of error
         }
     }
     
     async waitForInit() {
-        while (!this.initialized) {
+        while (!this.isInitialized) {
             await new Promise(resolve => setTimeout(resolve, 10));
         }
     }
@@ -291,7 +335,7 @@ class Pokemon {
     async getMovesetUsageData() {
         await this.waitForInit();
         return this.UsageEntry.movesetUsage;
-    }
+    } 
 
     async getSpriteBase64() {
         await this.waitForInit();
@@ -299,24 +343,61 @@ class Pokemon {
             const response = await fetch(spriteRelativePath);
             const buffer = await response.arrayBuffer();
             const base64String = Buffer.from(buffer).toString('base64');
-            console.log(`data:image/png;base64,${base64String}`);
+            //console.log(`data:image/png;base64,${base64String}`);
             return `data:image/png;base64,${base64String}`;
         } catch (error) {
             console.error('Error converting image to Base64:', error);
             return null;
         }
     }
-    /*
-    required item(s?)
-    effective stats
-    forme(?)
-    gmax?
-    mega?
-    */
-    
-    
+    // snatched up from pokemon showdown
+    getSpriteCoords() {
+		let id = this.slug.replace("-", "").replace("-", "").toLowerCase();
+		//if (this.forme!=="$" && this.forme) id = this.toID(this.species+this.forme);
+		//if (this.species) id = toID(this.species);
+/* 		if (pokemon?.volatiles?.formechange && !pokemon.volatiles.transform) {
+			id = toID(pokemon.volatiles.formechange[1]);
+		} */
+        console.log(`ID of ${this.species}: ${id}`)
+		let num = this.getPokemonIconNum(id, this.info.gender === 'F', !this.info.facingRight);
+        console.log(`NUM of ${this.species}: ${num}`)
+		let top = Math.floor(num / 12) * 30;
+		let left = (num % 12) * 40;
+		let fainted = ``;
+        console.log(`SS POS of ${this.species}: -${left}px -${top}px${fainted}`)
+		return [-left, -top];
+	}
+    getPokemonIconNum(id, isFemale, facingLeft) {
+		let num = 0;
+		if (BattlePokemonSprites?.[id]?.num) {
+			num = BattlePokemonSprites[id].num;
+		} /* else if (BattlePokedex?.[id]?.num) {
+			num = BattlePokedex[id].num;
+		} */
+		if (num < 0) num = 0;
+		if (num > 1025) num = 0;
+
+        if (BattlePokemonIconIndexes?.[id]) {
+			num = BattlePokemonIconIndexes[id];
+		}
+		if (isFemale) {
+			if (['unfezant', 'frillish', 'jellicent', 'meowstic', 'pyroar'].includes(id)) {
+				num = BattlePokemonIconIndexes[id + 'f'];
+			}
+		}
+		if (facingLeft) {
+			if (BattlePokemonIconIndexesLeft[id]) {
+				num = BattlePokemonIconIndexesLeft[id];
+			}
+		}
+
+		return num;
+	}
+    /*required item (s?) gmax?*/
 
 
+    //========================EXPORT METHODS================================================================================================//
+    // JSON which is used for advanced export (with dex fetched information)
     toFullJSON() {
         return {
             species: this.species,
@@ -332,7 +413,7 @@ class Pokemon {
             UsageEntry: this.UsageEntry
         };
     }
-    // Methods
+    // To the basic JSON that showdown Teams parses
     toJSON() { 
         return {
             name: this.species,
@@ -347,8 +428,7 @@ class Pokemon {
             level: this.info.level,
         };
     }
-
-
+    // Prints info about this pokemon
     toString() {
         let evstring = "";
         for (const stat in this.evs) {
@@ -376,7 +456,7 @@ class Pokemon {
                `GENDER: ${this.info.gender}\n` +
                `TIER: ${this.info.tier}\n` +
                `NATURE: ${getNatureDescription(this.info.nature)}\n` +
-               `TYPE${(this.info.types[1]==undefined ? "" : "S")}: ${this.info.types[0]||"None"}, ${this.info.types[1]||"None"}\n` +
+               `TYPE${(this.info.types.type1==undefined ? "" : "S")}: ${this.info.types[0]||"None"}, ${this.info.types.type2||"None"}\n` +
                '----------------------------------------\n' +
                `HP : ${this.effectiveStats.hp}\n` +
                `ATK: ${this.effectiveStats.attack}\n` +
@@ -394,6 +474,7 @@ class Pokemon {
                `SPRITERELPATH: ${this.displayinfo.spriteRelativePath}\n` +
                '========================================\n';
     }
+    
 }
 
-module.exports = Pokemon
+export default Pokemon;

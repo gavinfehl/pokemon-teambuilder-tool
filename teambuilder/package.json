@@ -9,10 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@pkmn/data": "^0.9.30",
+    "@pkmn/dex": "^0.9.30",
+    "@pkmn/smogon": "^0.5.18",
     "@radix-ui/react-slot": "^1.1.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cors": "^2.8.5",
+    "cytoscape": "^3.31.0",
+    "cytoscape-fcose": "^2.2.0",
     "express": "^4.21.2",
     "lucide-react": "^0.475.0",
     "next": "^15.1.7",
@@ -26,6 +31,8 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/cytoscape": "^3.21.9",
+    "@types/cytoscape-fcose": "^2.2.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { PokemonTeam } from '@/classes/PokemonSet';
-import './sandbox.css'; // Assuming you will add this CSS for styles
+import "../css/sandbox.scss";
 
 // Define team globally
 const team = new PokemonTeam();
@@ -123,7 +123,7 @@ export default function Sandbox() {
                         <div>{teamData}</div>
                         <div className="flex flex-row space-x-4">
                             {team.toImages().map((src, index) => (
-                                <img key={index} src={src} alt={`Pokemon ${index + 1}`} className="w-48 h-48" />
+                                <img key={index} src={src} alt={`Pokemon ${index + 1}`} className="pokemon-sprite" />
                             ))}
                         </div>
                         <div><h1>After images</h1></div>
