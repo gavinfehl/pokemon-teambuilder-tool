@@ -91,19 +91,15 @@ interface circleLayoutOptions {
 const clayoutOptions: circleLayoutOptions = {
     name: 'circle',
     fit: true,
-    animate: false,
+    animate: true,
     animationDuration: 1000,
     avoidOverlap: false,
     nodeSpacing: 1000,
     boundingBox: { x1: 0, y1: 0, w: 2500, h: 2500 },
-    startAngle: Math.PI / 2,
+    startAngle: 3*Math.PI / 2,
     clockwise: true,
     sort: function(a, b){ 
-        const sizeA = parseFloat(a.data('size')) || 0; // Ensure it's a number
-        const sizeB = parseFloat(b.data('size')) || 0;
-        const cmpResult = (sizeA - sizeB);
-        console.log(`Comparing ${a.data('label')}(${sizeA}) vs ${b.data('label')}(${sizeB}) = ${cmpResult}`);
-        return cmpResult; // Ascending order
+        return a.data('size') - b.data('size');
     }, 
 };
 interface concentricCircleLayoutOptions {

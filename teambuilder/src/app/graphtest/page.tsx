@@ -192,7 +192,7 @@ export default function Sandbox() {
         // Function to fetch and set team data
         const initializePokemonSet = async () => {
             try {
-                const teamInstance = new PokemonTier("graphtestteam", 5, "gen9ou");
+                const teamInstance = new PokemonTier("graphtestteam", 5, "gen7ou");
                 await teamInstance.initializeTier();
                 setTeam(teamInstance);
                 console.log(teamInstance.generation, teamInstance.format); // Debugging point

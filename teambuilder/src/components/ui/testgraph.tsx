@@ -19,9 +19,9 @@ const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
 
     useEffect(() => {
         if (cyRef.current && team.pokemons.length > 0) {
-            const nodes: ElementDefinition[] = team.pokemons.map((item: Pokemon, index) => {
+            let nodes: ElementDefinition[] = team.pokemons.map((item: Pokemon, index) => {
               const realUsage = item.usage.usage.real ? item.usage.usage.real : 0;
-              const baseSize = 50;
+              const baseSize = 100;
               const sizeVariance = 500;
               const gridScale = 350.0;
               const size = (realUsage * sizeVariance) + baseSize; // Scale from 0-100 to 100-350 pixels
@@ -35,7 +35,8 @@ const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
                   id: item.info.natdexnumber
                     ? `pokemon-${item.species}-${item.info.natdexnumber}`
                     : `pokeIND-${index}`,
-                  label: item.species,
+                  species: item.species,
+                  label: `${item.species} (${(realUsage*100).toFixed(2)}%)`,
                   teammates: item.usage.teammates ? item.usage.teammates : {},
                   size: size,
                   sprite: 'sprites/pokemonicons-sheet.png',
@@ -76,7 +77,7 @@ const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
             for (let i = 0; i < nodes.length; i++) {
                 const teammates = nodes[i].data.teammates;
                 Object.entries(teammates).map(([teammate, value]) => {
-                    const targetNode = nodes.find(node => node.data.label === teammate);
+                    let targetNode = nodes.find(node => node.data.species === teammate);
                     if (targetNode) {
                         let edgeData: EdgeData = {
                             id: `edge-${nodes[i].data.id}-${targetNode.data.id}`,
@@ -85,7 +86,7 @@ const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
                             weight: Number(value)*100,
                             label: String((Number(value)*100).toFixed(1)+"%"),
                         };
-                        const threshold = 30; // you must have a weight of at least this % to become a real edge.
+                        const threshold = 10; // you must have a weight of at least this % to become a real edge.
                         if (edgeData.weight > threshold) {
                             edges.push({
                                 group: 'edges',
@@ -97,7 +98,6 @@ const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
                 });
             }
             
-
             console.log('successfully made:', nodes.length, " of ", team.pokemons.length);
             console.log('nodes:', nodes);
             console.log('successfully made:', edges.length);
@@ -115,6 +115,10 @@ const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
             });
 
             setCy(cyInstance);
+            nodes = elements.nodes.sort(function( a, b ){
+                console.log(a.data.species, a.data.size, "-", b.data.species, b.data.size, "=", a.data.size - b.data.size);
+                return a.data.size - b.data.size;
+            });
 
             // fcose first
             currentLayout = "fcose";
@@ -181,7 +185,9 @@ const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
             cy.edges().forEach(edge => {
                 const source = edge.source();
                 const target = edge.target();
-                if (!source.same(clickedNode) && !target.same(clickedNode)) {
+                if (!source.same(clickedNode) 
+                    //&& !target.same(clickedNode)
+                ) {
                     //console.log("hiding edge:", edge);
                     edge.addClass('hidden');
                 }
@@ -191,7 +197,8 @@ const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
             if (!cy) return;
         
             // Get neighbors (nodes directly connected to the centered node)
-            const connectedNodes = centeredNode.neighborhood().nodes();
+            const outgoingEdges = centeredNode.outgoers('edge');
+            const connectedNodes = outgoingEdges.targets();
         
             // Hide all other nodes
             cy.nodes().removeClass('hidden centered tile');
@@ -199,7 +206,7 @@ const TestGraph: React.FC<TestGraphProps> = ({ team }) => {
             centeredNode.removeClass('hidden');
             centeredNode.addClass('centered');
         
-            // Apply the layout only to the centered node and its direct neighbors
+            // Apply the layout only to the centered node and its direct neighbors  
             connectedNodes.layout(layoutOptions).run();
         };
         

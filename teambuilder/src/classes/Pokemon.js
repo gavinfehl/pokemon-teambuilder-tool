@@ -92,8 +92,8 @@ function getNatureDescription(nature) {
 }
 
 async function getPokemonDex(generation, species) {
-    console.log("dex called with:!", generation, species);                        //zygarde 10% v
-    const response = await fetch(`http://localhost:3000/dex/${generation}/${species.replace("%", "")}`);
+    console.log("dex called with:!", generation, species);                                                      //zygarde 10% v
+    const response = await fetch(`http://localhost:3000/dex/${generation}/${species.replace("Kommo-O", "Kommo-o").replace("%", "")}`);
     if (response.ok) {
         const pokemonDex = await response.json();
         //console.log("DEX OUTPUT: ", pokemonDex);  // Should log the correct data
@@ -108,7 +108,7 @@ async function getUsage(format, species) {
     const response = await fetch(`https://pkmn.github.io/smogon/data/stats/${format}.json`);
     if (response.ok) {
         const data = await response.json();
-        const usage = data.pokemon[species];  // Access the usage data using the species name as a key
+        const usage = data.pokemon[species.replace("Kommo-O", "Kommo-o").replace("%", "")];  // Access the usage data using the species name as a key
         if (usage) {
             console.log("DATA OUTPUT:", data);  // Logs the entire data
             console.log("USAGE OUTPUT:", usage);  // Logs the usage data for the specified species
@@ -352,7 +352,7 @@ class Pokemon {
     }
     // snatched up from pokemon showdown
     getSpriteCoords() {
-		let id = String(this.slug).replace("-", "").toLowerCase();
+		let id = this.slug.replace("-", "").replace("-", "").toLowerCase();
 		//if (this.forme!=="$" && this.forme) id = this.toID(this.species+this.forme);
 		//if (this.species) id = toID(this.species);
 /* 		if (pokemon?.volatiles?.formechange && !pokemon.volatiles.transform) {

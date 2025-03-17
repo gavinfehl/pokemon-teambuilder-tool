@@ -6,7 +6,7 @@ const styleOptions: cytoscape.Stylesheet[] = [
             'color': 'data(colors[0])',
             'background-fill': 'radial-gradient',
             'background-gradient-stop-colors': 'data(colors)',
-            //'label': 'data(label)',
+            'label': 'data(label)',
             'font-size': '20',
             'width': 'data(size)',
             'height': 'data(size)',
@@ -71,7 +71,7 @@ const styleOptions: cytoscape.Stylesheet[] = [
         css: {
             'width': 'mapData(weight, 0, 100, 0, 20)',
             'label': 'data(label)',
-            'color': 'white',
+            'color': 'lime',
             'font-size': '20',
             'line-color': 'black',
             'target-arrow-color': '#ccc',
