@@ -1,9 +1,10 @@
 // Pokemon Class
-import UsageFetchAndParser from "./UsageFetchAndParser";
+//alignment data from showdown-client for coordinates on spritesheet
 import {
 	BattlePokemonSprites, BattlePokemonIconIndexes, BattlePokemonIconIndexesLeft
 } from '@/data/battle-dex-data'
 
+// nature modifiers
 const modifiers = {     
     //SPICY
         Hardy:      {},
@@ -36,6 +37,8 @@ const modifiers = {
         Careful:    { spd: 1.1, spa: 0.9 },
         Quirky:     {}, 
 };
+
+// colors associated with each type
 const typeColours = {
 	normal: '#A8A77A',
 	fire: '#EE8130',

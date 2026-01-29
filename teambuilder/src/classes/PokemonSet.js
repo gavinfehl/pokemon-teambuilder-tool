@@ -206,8 +206,8 @@ class PokemonSet {
 
 // Team class is a more specific version of PokemonSet that can only have up to 6 Pokémon.
 class PokemonTeam extends PokemonSet {
-    constructor(name) {
-        super(name);
+    constructor(name, generation, format) {
+        super(name, generation, format);
     }
   
     async addPokemonFromSpecies(species) {

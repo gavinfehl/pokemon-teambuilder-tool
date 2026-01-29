@@ -97,10 +97,23 @@ export const concentricLayout: any = {
         return cmpResult;
     },
 };
+export const focusLayout: any = {
+  name: 'circle',
+  fit: true,
+  animate: true,
+  animationDuration: 1000,
+  padding: 50,
+  startAngle: 3*Math.PI / 2,
+  clockwise: true,
+  sort: function(a: NodeSingular, b: NodeSingular){ 
+      return a.data('size') - b.data('size');
+  },
+};
 
 export default {
     fcose: fcoseLayout,
     grid: gridLayout,
     circle: circleLayout,
-    concentric: concentricLayout
+    concentric: concentricLayout,
+    focus: focusLayout
 };
