@@ -1,4 +1,4 @@
-// Optimized LayoutControls.tsx
+// Optimized LayoutControls.tsx with Focus button
 import React, { useState, useEffect, memo } from 'react';
 import LayoutManager from './LayoutManager';
 import { Button } from "@/components/ui/button";
@@ -7,7 +7,8 @@ import {
   Grid, 
   Circle, 
   Target, 
-  Undo
+  Undo,
+  Focus
 } from "lucide-react";
 
 interface LayoutControlsProps {
@@ -17,17 +18,18 @@ interface LayoutControlsProps {
 // Using memo to prevent unnecessary re-renders
 const LayoutControls: React.FC<LayoutControlsProps> = memo(({ layoutManager }) => {
   const [currentLayout, setCurrentLayout] = useState<string | null>(null);
+  const [hasSelectedNode, setHasSelectedNode] = useState<boolean>(false);
   
   useEffect(() => {
     if (layoutManager) {
       setCurrentLayout(layoutManager.currentLayout);
+      setHasSelectedNode(!!layoutManager.selectedNode);
     }
-  }, [layoutManager?.currentLayout]);
+  }, [layoutManager?.currentLayout, layoutManager?.selectedNode]);
   
   if (!layoutManager) return null;
   
-  // Get layouts and filter out the focus layout which should only be
-  // accessed by clicking on a node
+  // Get layouts and filter out the focus layout - it will be a separate button
   const layouts = layoutManager.getLayouts()
     .filter(layout => layout.name !== 'focus');
   
@@ -42,6 +44,8 @@ const LayoutControls: React.FC<LayoutControlsProps> = memo(({ layoutManager }) =
         return <Circle className="h-4 w-4 mr-2" />;
       case 'concentric':
         return <Target className="h-4 w-4 mr-2" />;
+      case 'focus':
+        return <Focus className="h-4 w-4 mr-2" />;
       default:
         return null;
     }
@@ -51,6 +55,13 @@ const LayoutControls: React.FC<LayoutControlsProps> = memo(({ layoutManager }) =
     if (layoutManager) {
       layoutManager.applyLayout(layoutName);
       setCurrentLayout(layoutName);
+    }
+  };
+  
+  const handleFocusLayout = () => {
+    if (layoutManager && layoutManager.selectedNode) {
+      layoutManager.applyLayout('focus', layoutManager.selectedNode);
+      setCurrentLayout('focus');
     }
   };
   
@@ -78,6 +89,21 @@ const LayoutControls: React.FC<LayoutControlsProps> = memo(({ layoutManager }) =
               {layout.name}
             </Button>
           ))}
+          
+          {/* Focus button - only enabled when a node is selected */}
+          <Button
+            variant={currentLayout === 'focus' ? "default" : "outline"}
+            size="sm"
+            onClick={handleFocusLayout}
+            title={hasSelectedNode 
+              ? "Focus view showing selected Pokémon and its common teammates" 
+              : "Click a Pokémon to enable focus view"}
+            disabled={!hasSelectedNode}
+            className="min-w-[120px]"
+          >
+            <Focus className="h-4 w-4 mr-2" />
+            focus
+          </Button>
           
           <Button 
             variant="outline" 

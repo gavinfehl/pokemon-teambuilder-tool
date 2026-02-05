@@ -33,6 +33,7 @@ const ImprovedTestGraph: React.FC<TestGraphProps> = ({ team }) => {
   });
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [showNodeDetails, setShowNodeDetails] = useState<boolean>(false);
+  const [showFcoseDebugEdges, setShowFcoseDebugEdges] = useState<boolean>(false);
 
   // Debug logging function
   const debug = (message: string, data?: any) => {
@@ -62,6 +63,100 @@ const ImprovedTestGraph: React.FC<TestGraphProps> = ({ team }) => {
     }
   }, [initAttempted]);
 
+
+  // 
+  const COMMON_TEAMMATE_THRESHOLD = 0; 
+
+  // Function to setup hover behavior for fcose layout WITH THRESHOLD
+  const setupFcoseHoverBehavior = (cyInstance: Cytoscape.Core) => {
+    debug("Setting up fcose hover behavior with threshold: " + COMMON_TEAMMATE_THRESHOLD);
+    
+    // Hide all regular edges initially (synergy edges already hidden)
+    cyInstance.edges('[!type]').style('opacity', '0');
+    
+    // Hide all node labels initially
+    cyInstance.nodes().style({
+      'opacity': '1',
+      'label': '',
+      'text-opacity': '0'
+    });
+    
+    // Remove any existing hover listeners first
+    cyInstance.nodes().off('mouseover mouseout');
+    
+    // Add hover listeners to nodes
+    cyInstance.nodes().on('mouseover', function(event) {
+      const node = event.target;
+      
+      // Show label for hovered node
+      node.style({
+        'label': node.data('label'),
+        'text-opacity': '1'
+      });
+      
+      // Dim all other nodes
+      cyInstance.nodes().not(node).style('opacity', '0.1');
+      
+      // Show outgoing directional edges from this node IF they meet threshold
+      node.connectedEdges('[!type]').forEach((edge: any) => {
+        if (edge.source().id() === node.id()) {
+          const weight = edge.data('weight');
+          
+          // Only show edge if it meets the threshold
+          if (weight >= COMMON_TEAMMATE_THRESHOLD) {
+            edge.style({
+              'opacity': '1',
+              'label': edge.data('label')
+            });
+            // Full opacity and show label for target nodes
+            edge.target().style({
+              'opacity': edge.data('weight') >= COMMON_TEAMMATE_THRESHOLD ? Math.min(Math.max((edge.data('weight')/100)+0.25, 0.25), 1) : '0.1',
+              'label': edge.target().data('label'),
+              'text-opacity': '1'
+            });
+          }
+        }
+      });
+    });
+    
+    cyInstance.nodes().on('mouseout', function(event) {
+      const node = event.target;
+      
+      // Hide all labels
+      cyInstance.nodes().style({
+        'label': '',
+        'text-opacity': '0'
+      });
+      cyInstance.edges('[!type]').style('label', '');
+      
+      // Reset all nodes to full opacity
+      cyInstance.nodes().style('opacity', '1');
+      
+      // Hide all directional edges
+      cyInstance.edges('[!type]').style('opacity', '0');
+    });
+  };
+
+  // Function to cleanup hover behavior
+  const cleanupFcoseHoverBehavior = (cyInstance: Cytoscape.Core) => {
+    debug("Cleaning up fcose hover behavior");
+    
+    // Remove hover listeners
+    cyInstance.nodes().off('mouseover mouseout');
+    
+    // Reset edge opacity and labels to default (visible)
+    cyInstance.edges().style({
+      'opacity': '1',
+      'label': (ele: any) => ele.data('label')
+    });
+    
+    // Reset node opacity and labels to default
+    cyInstance.nodes().style({
+      'opacity': '1',
+      'label': (ele: any) => ele.data('label'),
+      'text-opacity': '1'
+    });
+  };
   // Improved layout change monitoring with direct currentLayout tracking
   useEffect(() => {
     if (!layoutManager) return;
@@ -192,8 +287,53 @@ const ImprovedTestGraph: React.FC<TestGraphProps> = ({ team }) => {
       debug(`Successfully created ${nodes.length} nodes`);
       
       // Create edges based on teammate relationships
-      const edges: Cytoscape.EdgeDefinition[] = [];
+      // EDGE CREATION FIX - Replace the edge creation section in ImprovedTestGraph.tsx (around line 290-326)
+
+// EDGE CREATION FIX - Replace the edge creation section in ImprovedTestGraph.tsx (around line 290-326)
+
+// Create edges based on teammate relationships - NO THRESHOLD (create all edges)
+const edges: Cytoscape.EdgeDefinition[] = [];
+
+try {
+  for (let i = 0; i < nodes.length; i++) {
+    const teammates = nodes[i].data.teammates;
+    if (!teammates) continue;
+    
+    Object.entries(teammates).forEach(([teammate, value]) => {
+      let targetNode = nodes.find(node => node.data.species === teammate);
+      if (targetNode) {
+        const weight = Number(value) * 100; // Convert to percentage
+        
+        // NO THRESHOLD - create all edges regardless of weight
+        edges.push({
+          group: 'edges',
+          data: {
+            id: `edge-${nodes[i].data.id}-${targetNode.data.id}`,
+            source: nodes[i].data.id as string,
+            target: targetNode.data.id as string,
+            weight: weight,
+            label: `${weight.toFixed(1)}%`,
+          }
+        });
+        console.log(`Created edge from ${nodes[i].data.species} to ${teammate} with weight ${weight.toFixed(1)}%`);
+      }
+    });
+  }
+} catch (edgesErr) {
+  debug("Error creating edges:", edgesErr);
+  // Don't throw here, we can proceed with nodes only
+}
       
+      debug(`Created ${edges.length} edges`);
+      setGraphStats({
+        nodeCount: nodes.length,
+        edgeCount: edges.length,
+      });
+
+      // Create synergy edges for fcose layout
+      const synergyEdges: Cytoscape.EdgeDefinition[] = [];
+      const processedPairs = new Set<string>();
+
       try {
         for (let i = 0; i < nodes.length; i++) {
           const teammates = nodes[i].data.teammates;
@@ -201,35 +341,42 @@ const ImprovedTestGraph: React.FC<TestGraphProps> = ({ team }) => {
           
           Object.entries(teammates).forEach(([teammate, value]) => {
             let targetNode = nodes.find(node => node.data.species === teammate);
-            if (targetNode) {
-              const weight = Number(value) * 100; // Convert to percentage
-              const threshold = 10; // Minimum weight to create an edge
-              
-              if (weight > threshold) {
-                edges.push({
-                  group: 'edges',
-                  data: {
-                    id: `edge-${nodes[i].data.id}-${targetNode.data.id}`,
-                    source: nodes[i].data.id as string,
-                    target: targetNode.data.id as string,
-                    weight: weight,
-                    label: `${weight.toFixed(1)}%`,
-                  }
-                });
-              }
+            if (!targetNode) return;
+            
+            // Create a unique pair identifier (sorted to avoid duplicates)
+            const pairId = [nodes[i].data.species, teammate].sort().join('-');
+            
+            if (processedPairs.has(pairId)) return;
+            processedPairs.add(pairId);
+            
+            const weight1 = Number(value) * 100;
+            const targetTeammates = targetNode.data.teammates;
+            const weight2 = targetTeammates?.[nodes[i].data.species] 
+              ? Number(targetTeammates[nodes[i].data.species]) * 100 
+              : 0;
+            
+            // Use minimum - represents mutual dependency
+            const mutualWeight = (weight1 + weight2) / 2;
+            const threshold = 10;
+            
+            if (mutualWeight > threshold) {
+              synergyEdges.push({
+                group: 'edges',
+                data: {
+                  id: `synergy-${pairId}`,
+                  source: nodes[i].data.id as string,
+                  target: targetNode.data.id as string,
+                  weight: mutualWeight,
+                  label: `${mutualWeight.toFixed(1)}%`,
+                  type: 'synergy'
+                }
+              });
             }
           });
         }
-      } catch (edgesErr) {
-        debug("Error creating edges:", edgesErr);
-        // Don't throw here, we can proceed with nodes only
+      } catch (synergyErr) {
+        debug("Error creating synergy edges:", synergyErr);
       }
-      
-      debug(`Created ${edges.length} edges`);
-      setGraphStats({
-        nodeCount: nodes.length,
-        edgeCount: edges.length,
-      });
       
       // If there's an existing instance, destroy it
       if (cy) {
@@ -247,8 +394,9 @@ const ImprovedTestGraph: React.FC<TestGraphProps> = ({ team }) => {
       
       // Create the Cytoscape instance
       debug("Creating new Cytoscape instance");
+      // Start with all nodes and regular edges
       const elements: ElementsDefinition = { nodes, edges };
-      
+
       try {
         const cyInstance = Cytoscape({
           container: cyRef.current,
@@ -257,6 +405,9 @@ const ImprovedTestGraph: React.FC<TestGraphProps> = ({ team }) => {
           wheelSensitivity: 0.3,
         });
         
+        // Store synergy edges on the cy instance for later use
+        (cyInstance as any)._synergyEdges = synergyEdges;
+        (cyInstance as any)._regularEdges = edges;
         setCy(cyInstance);
         
         // Create and configure the layout manager
@@ -264,16 +415,32 @@ const ImprovedTestGraph: React.FC<TestGraphProps> = ({ team }) => {
         
         // Register all layouts with their transformations
         debug("Registering layouts");
-        manager.registerLayout(
-          'fcose', 
-          layouts.fcose,
-          (cy) => {
-            cy.elements().removeClass('hidden centered tile');
-            cy.nodes().removeClass('hidden centered tile');
-            cy.edges().addClass('hidden');
-          },
-          'Force-directed layout showing all Pokémon',
-        );
+// FCOSE LAYOUT REGISTRATION - Uses hover with threshold
+// Replace the fcose layout registration in ImprovedTestGraph.tsx
+
+manager.registerLayout(
+  'fcose', 
+  layouts.fcose,
+  (cy) => {
+    cy.elements().removeClass('hidden centered tile');
+    cy.nodes().removeClass('hidden centered tile');
+    
+    // Remove all existing edges
+    cy.edges().remove();
+    
+    // Add synergy edges for fcose layout (for physics only)
+    const synergyEdges = (cy as any)._synergyEdges || [];
+    cy.add(synergyEdges);
+    
+    // Add ALL regular directional edges (they'll be filtered by hover threshold)
+    const regularEdges = (cy as any)._regularEdges || [];
+    cy.add(regularEdges);
+    
+    // Setup hover behavior for fcose (with threshold)
+    setupFcoseHoverBehavior(cy);
+  },
+  'Force-directed layout showing all Pokémon',
+);
         
         manager.registerLayout(
           'grid', 
@@ -281,7 +448,10 @@ const ImprovedTestGraph: React.FC<TestGraphProps> = ({ team }) => {
           (cy) => {
             cy.elements().removeClass('hidden centered');
             cy.nodes().addClass('tile');
-            cy.edges().addClass('hidden');
+            cy.edges().remove();
+            
+            // Cleanup hover behavior when leaving fcose
+            cleanupFcoseHoverBehavior(cy);
           },
           'Grid view showing all Pokémon as tiles',
         );
@@ -291,7 +461,15 @@ const ImprovedTestGraph: React.FC<TestGraphProps> = ({ team }) => {
           layouts.circle,
           (cy) => {
             cy.nodes().removeClass('hidden centered tile');
+            // Remove synergy edges, restore regular edges
+            cy.edges().remove();
+            const regularEdges = (cy as any)._regularEdges || [];
+            cy.add(regularEdges);
+            
             cy.edges().removeClass('hidden');
+            
+            // Cleanup hover behavior when leaving fcose
+            cleanupFcoseHoverBehavior(cy);
           },
           'Circle layout showing relationships between all Pokémon',
         );
@@ -301,19 +479,201 @@ const ImprovedTestGraph: React.FC<TestGraphProps> = ({ team }) => {
           layouts.concentric,
           (cy) => {
             cy.nodes().removeClass('hidden centered tile');
+            // Remove synergy edges, restore regular edges
+            cy.edges().remove();
+            const regularEdges = (cy as any)._regularEdges || [];
+            cy.add(regularEdges);
+            
             cy.edges().removeClass('hidden');
+            
+            // Cleanup hover behavior when leaving fcose
+            cleanupFcoseHoverBehavior(cy);
           },
           'Concentric layout with most used Pokémon in the center',
         );
         
-        manager.registerLayout(
-          'focus',
-          layouts.focus || layouts.circle, // Fallback to circle if focus not available
-          (cy) => {
-            // Focus layout is handled by focusOnNode method
-          },
-          'Focus view showing a Pokémon and its connections',
-        );
+// LAYOUT REGISTRATION FIXES - Replace each layout registration in ImprovedTestGraph.tsx
+
+// FCOSE LAYOUT - Show only edges above 10% threshold
+manager.registerLayout(
+  'fcose', 
+  layouts.fcose,
+  (cy) => {
+    cy.elements().removeClass('hidden centered tile');
+    cy.nodes().removeClass('hidden centered tile');
+    
+    // Remove all existing edges
+    cy.edges().remove();
+    
+    // Add synergy edges for fcose layout
+    const synergyEdges = (cy as any)._synergyEdges || [];
+    cy.add(synergyEdges);
+    
+    // Add regular edges but filter by threshold (10%)
+    const regularEdges = (cy as any)._regularEdges || [];
+    const filteredEdges = regularEdges.filter((edge: any) => edge.data.weight >= 10);
+    cy.add(filteredEdges);
+    
+    // Setup hover behavior for fcose
+    setupFcoseHoverBehavior(cy);
+  },
+  'Force-directed layout showing all Pokémon',
+);
+
+// GRID LAYOUT - No edges
+manager.registerLayout(
+  'grid', 
+  layouts.grid,
+  (cy) => {
+    cy.elements().removeClass('hidden centered');
+    cy.nodes().addClass('tile');
+    cy.edges().remove();
+    
+    // Hide labels in grid view
+    cy.nodes().style('label', '');
+    
+    // Cleanup hover behavior when leaving fcose
+    cleanupFcoseHoverBehavior(cy);
+  },
+  'Grid view showing all Pokémon as tiles',
+);
+
+// CIRCLE LAYOUT - Show only edges above 10% threshold
+manager.registerLayout(
+  'circle', 
+  layouts.circle,
+  (cy) => {
+    cy.nodes().removeClass('hidden centered tile');
+    
+    // Remove synergy edges, restore regular edges with threshold
+    cy.edges().remove();
+    const regularEdges = (cy as any)._regularEdges || [];
+    const filteredEdges = regularEdges.filter((edge: any) => edge.data.weight >= 10);
+    cy.add(filteredEdges);
+    
+    cy.edges().removeClass('hidden');
+    
+    // Cleanup hover behavior when leaving fcose
+    cleanupFcoseHoverBehavior(cy);
+  },
+  'Circle layout showing relationships between all Pokémon',
+);
+
+// CONCENTRIC LAYOUT - Show only edges above 10% threshold
+manager.registerLayout(
+  'concentric',
+  layouts.concentric,
+  (cy) => {
+    cy.nodes().removeClass('hidden centered tile');
+    
+    // Remove synergy edges, restore regular edges with threshold
+    cy.edges().remove();
+    const regularEdges = (cy as any)._regularEdges || [];
+    const filteredEdges = regularEdges.filter((edge: any) => edge.data.weight >= 10);
+    cy.add(filteredEdges);
+    
+    cy.edges().removeClass('hidden');
+    
+    // Cleanup hover behavior when leaving fcose
+    cleanupFcoseHoverBehavior(cy);
+  },
+  'Concentric layout with most used Pokémon in the center',
+);
+
+// FOCUS LAYOUT - Show ALL edges (no threshold) from focused node
+// COMPLETE FOCUS LAYOUT FIX
+// Replace the entire focus layout registration in ImprovedTestGraph.tsx
+
+manager.registerLayout(
+  'focus',
+  layouts.focus || layouts.circle,
+  (cy) => {
+    debug("Focus layout transformation starting");
+    
+    // Remove all classes first
+    cy.nodes().removeClass('hidden centered tile');
+    
+    // Remove ALL edges first
+    cy.edges().remove();
+    
+    // Add ALL regular edges back (no filtering)
+    const regularEdges = (cy as any)._regularEdges || [];
+    cy.add(regularEdges);
+    
+    // IMPORTANT: Make sure all edges are visible and have labels in focus mode
+    cy.edges().style({
+      'opacity': '1',
+      'label': (ele: any) => ele.data('label')
+    });
+    
+    // Make sure all nodes have visible labels
+    cy.nodes().style({
+      'opacity': '1',
+      'label': (ele: any) => ele.data('label'),
+      'text-opacity': '1'
+    });
+    
+    // If there's a selected node, show it and its teammates
+    if (manager.selectedNode) {
+      const focusedNode = manager.selectedNode;
+      const focusedSpecies = focusedNode.data('species');
+      
+      debug(`Focus mode: Processing ${focusedSpecies}`);
+      
+      // Get teammates data directly from the node
+      const teammatesData = focusedNode.data('teammates');
+      debug(`Teammates data:`, teammatesData);
+      
+      if (!teammatesData) {
+        debug("WARNING: No teammates data found on node!");
+      }
+      
+      // Find all nodes that are in the teammates list (NO THRESHOLD)
+      const teammateNodes = cy.nodes().filter((node: any) => {
+        const species = node.data('species');
+        // Check if this species is in the teammates data
+        const isTeammate = species !== focusedSpecies && teammatesData && teammatesData[species];
+        if (isTeammate) {
+          debug(`Found teammate: ${species} with value ${teammatesData[species]}`);
+        }
+        return isTeammate;
+      });
+      
+      debug(`Found ${teammateNodes.length} teammate nodes out of ${cy.nodes().length} total nodes`);
+      
+      // Hide all nodes EXCEPT focused node and its teammates
+      cy.nodes().not(focusedNode).not(teammateNodes).addClass('hidden');
+      
+      // For edges: show ALL edges FROM focused node TO teammates (no threshold, no hover)
+      let visibleEdgeCount = 0;
+      cy.edges().forEach((edge: any) => {
+        const sourceId = edge.source().id();
+        
+        // Show edge if it goes from focused node to a teammate
+        if (sourceId === focusedNode.id() && teammateNodes.contains(edge.target())) {
+          edge.removeClass('hidden');
+          edge.style('opacity', '1');  // Force visible
+          visibleEdgeCount++;
+        } else {
+          edge.addClass('hidden');
+        }
+      });
+      
+      debug(`Showing ${visibleEdgeCount} edges in focus mode`);
+      
+      // Add centered class to focused node (makes it a star)
+      focusedNode.addClass('centered');
+      
+      debug(`Focus mode: showing ${focusedSpecies} with ${teammateNodes.length} teammates and ${visibleEdgeCount} edges`);
+    } else {
+      debug("No selected node in focus mode");
+    }
+    
+    // DO NOT cleanup hover behavior - focus mode doesn't use it
+    // cleanupFcoseHoverBehavior(cy);  // ← REMOVE THIS LINE
+  },
+  'Focus view showing a Pokémon and its connections',
+);
         
         // Apply the initial layout
         debug("Applying initial layout");
@@ -347,56 +707,45 @@ const ImprovedTestGraph: React.FC<TestGraphProps> = ({ team }) => {
     
     debug("Setting up improved node click handlers");
     
-    const handleNodeClick = (event: Cytoscape.EventObject) => {
-      // Prevent click event propagation
-      event.preventDefault();
-      
-      const clickedNode = event.target;
-      debug("Node clicked:", clickedNode.data('species'));
-      
-      // Determine if we're going back to grid from focus mode
-      const willReturnToGrid = layoutManager.currentLayout === 'focus' && 
-                               clickedNode.hasClass('centered');
-      
-      // Important: Update UI state BEFORE calling focusOnNode
-      if (willReturnToGrid) {
-        debug("Will return to grid - hiding panel");
-        // Hide panel immediately when returning to grid
-        setShowNodeDetails(false);
-        setSelectedNode(null);
-      } else {
-        debug("Will focus on node - showing panel");
-        // Update selected node immediately
-        setSelectedNode(clickedNode.data('species'));
-        setShowNodeDetails(true);
-      }
-      
-      // After UI state changes, apply the layout change
-      setTimeout(() => {
-        debug("Applying focusOnNode after UI state change");
-        layoutManager.focusOnNode(clickedNode);
-      }, 0);
-    };
+  const handleNodeClick = (event: Cytoscape.EventObject) => {
+    // Prevent click event propagation
+    event.preventDefault();
     
-    // Handle background click to exit focus mode
-    const handleBackgroundClick = (event: Cytoscape.EventObject) => {
-      // Only handle clicks directly on the background (canvas)
-      if (event.target === cy) {
-        // Only exit focus mode if we're in it
-        if (layoutManager.currentLayout === 'focus') {
-          debug("Background clicked, returning to grid view");
-          
-          // First update UI state to hide panel
-          setShowNodeDetails(false);
-          setSelectedNode(null);
-          
-          // Then change layout (after a small delay)
-          setTimeout(() => {
-            layoutManager.applyLayout('grid');
-          }, 0);
-        }
-      }
-    };
+    const clickedNode = event.target;
+    debug("Node clicked:", clickedNode.data('species'));
+    
+    // Always switch to focus mode when clicking a node (from any layout)
+    debug("Switching to focus mode for clicked node");
+    
+    // Update selected node immediately
+    setSelectedNode(clickedNode.data('species'));
+    setShowNodeDetails(true);
+    
+    // Apply focus layout
+    setTimeout(() => {
+      debug("Applying focusOnNode after UI state change");
+      layoutManager.focusOnNode(clickedNode);
+    }, 0);
+  };
+      // Handle background click to exit focus mode
+const handleBackgroundClick = (event: Cytoscape.EventObject) => {
+  // Only handle clicks directly on the background (canvas)
+  if (event.target === cy) {
+    // Exit focus mode if we're in it - return to the last non-focus layout
+    if (layoutManager.currentLayout === 'focus') {
+      debug("Background clicked, returning to grid view");
+      
+      // First update UI state to hide panel
+      setShowNodeDetails(false);
+      setSelectedNode(null);
+      
+      // Then change layout (after a small delay)
+      setTimeout(() => {
+        layoutManager.applyLayout('grid');
+      }, 0);
+    }
+  }
+};
     
     // Force panel to close when layout changes away from focus
     const handleLayoutChange = () => {

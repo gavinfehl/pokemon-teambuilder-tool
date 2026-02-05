@@ -236,7 +236,7 @@ class PokemonTier extends PokemonSet {
             for (const key of Object.keys(usageData)) {
                 const usage = usageData[key].usage; // Access the 'usage' property of the current Pokemon
                 // more than %4 usage in ou
-                if (usage.raw && usage.raw * 100 > 2) {
+                if (usage.raw && (usage.raw * 100 > 0.75)) {
                     await this.addPokemonFromSpecies(key, this.generation, this.format); // Assuming addPokemonFromSpecies is a method
                 }
             }     
