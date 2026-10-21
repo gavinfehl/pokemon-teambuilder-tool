@@ -10,6 +10,12 @@ export default function Home() {
         <Link href="/graphtest">
           <Button size="wide">sandbox</Button>
         </Link>
+        <Link href="/breakpoints">
+          <Button size="wide">Breakpoints</Button>
+        </Link>
+        <Link href="/bulk">
+          <Button size="wide">Bulk Check</Button>
+        </Link>
         <a href="">
           <Button size="wide">
             Get Started &rarr;
