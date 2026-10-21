@@ -4,8 +4,12 @@ import {
 	BattlePokemonSprites, BattlePokemonIconIndexes, BattlePokemonIconIndexesLeft
 } from '@/data/battle-dex-data'
 
+type StatBlock = { hp: number; atk: number; def: number; spa: number; spd: number; spe: number };
+type Moveset = { move1: string | null; move2: string | null; move3: string | null; move4: string | null };
+type NatureModifier = Partial<Record<'atk' | 'def' | 'spa' | 'spd' | 'spe', number>>;
+
 // nature modifiers
-const modifiers = {     
+const modifiers: Record<string, NatureModifier> = {
     //SPICY
         Hardy:      {},
         Lonely:     { atk: 1.1, def: 0.9 },
@@ -35,11 +39,11 @@ const modifiers = {
         Gentle:     { spd: 1.1, def: 0.9 },
         Sassy:      { spd: 1.1, spe: 0.9 },
         Careful:    { spd: 1.1, spa: 0.9 },
-        Quirky:     {}, 
+        Quirky:     {},
 };
 
 // colors associated with each type
-const typeColours = {
+const typeColours: Record<string, string> = {
 	normal: '#A8A77A',
 	fire: '#EE8130',
 	water: '#6390F0',
@@ -61,22 +65,22 @@ const typeColours = {
 };
 //const usageDataJSON = require('@/data/parsedusagedata.json');
 //const movesetUsageJSON = require('@/data/parsedmovesetusagedata.json');
-const pokespriteInfoJSON = require('@/data/pokespriteinfo.json'); 
+const pokespriteInfoJSON = require('@/data/pokespriteinfo.json');
 
 // calculates the effective Atk, Def, SpA, SpD, or Spe stat as a result of a pokemon's attributes
-function calculateStat(base, iv, ev, level, natureModifier) {
+function calculateStat(base: number, iv: number, ev: number, level: number, natureModifier: number): number {
     return Math.floor(((2 * base + iv + Math.floor(ev / 4)) * level / 100 + 5) * natureModifier);
 }
 // calculates the effective HP stat as a result of a pokemon's attributes
-function calculateHP(base, iv, ev, level) {
+function calculateHP(base: number, iv: number, ev: number, level: number): number {
     return Math.floor(((2 * base + iv + Math.floor(ev / 4)) * level / 100) + level + 10);
-}  
+}
 // Get nature description
-function getNatureDescription(nature) {
+function getNatureDescription(nature: string): string {
     const modifier = modifiers[nature];
     if (!modifier) return `${nature} (Unknown Nature)`;
 
-    const descriptions = {
+    const descriptions: Record<string, string> = {
         atk: "Atk",
         def: "Def",
         spa: "SpA",
@@ -91,12 +95,12 @@ function getNatureDescription(nature) {
         return `${nature} (Neutral Nature)`;
     }
 
-    return `${nature} (+${descriptions[positive?.[0]] || "None"}, -${descriptions[negative?.[0]] || "None"})`;
+    return `${nature} (+${descriptions[positive?.[0] ?? ''] || "None"}, -${descriptions[negative?.[0] ?? ''] || "None"})`;
 }
 
-async function getPokemonDex(generation, species) {
+async function getPokemonDex(generation: number | string, species: string): Promise<any> {
     console.log("dex called with:!", generation, species);                                                      //zygarde 10% v
-    const response = await fetch(`http://localhost:3000/dex/${generation}/${species.replace("Kommo-O", "Kommo-o").replace("%", "")}`);
+    const response = await fetch(`http://localhost:3001/dex/${generation}/${species.replace("Kommo-O", "Kommo-o").replace("%", "")}`);
     if (response.ok) {
         const pokemonDex = await response.json();
         //console.log("DEX OUTPUT: ", pokemonDex);  // Should log the correct data
@@ -106,7 +110,7 @@ async function getPokemonDex(generation, species) {
         return null;
     }
 }
-async function getUsage(format, species) {
+async function getUsage(format: string, species: string): Promise<any> {
     //console.log("Usage called with:", format, species);
     const response = await fetch(`https://pkmn.github.io/smogon/data/stats/${format}.json`);
     if (response.ok) {
@@ -126,25 +130,84 @@ async function getUsage(format, species) {
     }
 }
 
-// Pokemon class  
-  
+// Pokemon class
+
 class Pokemon {
-    constructor(species,
-                generation,
-                format, 
-                name = null,
-                gender = null,
-                ability = null,
-                level = 100, 
-                nature = "Serious",
-                happiness = 255,
-                shiny = false, 
-                hiddenpowertype = 'Dark',
-                teratype = 'Normal',
-                item = null,
-                ivs = { hp: 31, atk: 31, def: 31, spa: 31, spd: 31, spe: 31 },
-                evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 },
-                moveset = {move1: null, move2: null, move3: null, move4: null,}
+    generation: number | string;
+    format: string;
+    dex: any;
+    usage: any;
+    species: string;
+    baseSpecies: string | null;
+    forme: string | null;
+    info: {
+        name: string | null;
+        natdexnumber: number | null;
+        gender: string;
+        types: any;
+        tier: string | null;
+        level: number;
+        nature: string;
+        natureModifier: NatureModifier;
+        happiness: number;
+        shiny: boolean;
+        facingRight: boolean;
+        hiddenpowertype: string;
+        teratype: string;
+        item: string | null;
+        ability: string | null;
+        potentialAbilities: any;
+        weight: number | null;
+        bst: number | null;
+    };
+    slug: string | null;
+    baseStats: {
+        hp: number | null;
+        attack: number | null;
+        defense: number | null;
+        specialAttack: number | null;
+        specialDefense: number | null;
+        speed: number | null;
+    };
+    ivs: StatBlock;
+    evs: StatBlock;
+    learnset: any;
+    moveset: Moveset;
+    displayinfo: {
+        spriteRelativePath: string | null;
+        spritesheetCoords: [number, number] | null;
+        type1spriteRelativePath: string | null;
+        type2spriteRelativePath: string | null;
+        type1color: string;
+        type2color: string;
+    };
+    effectiveStats: {
+        hp: number | null;
+        attack: number | null;
+        defense: number | null;
+        specialAttack: number | null;
+        specialDefense: number | null;
+        speed: number | null;
+    };
+    isInitialized: boolean;
+
+    constructor(
+                species: string,
+                generation: number | string,
+                format: string,
+                name: string | null = null,
+                gender: string | null = null,
+                ability: string | null = null,
+                level: number = 100,
+                nature: string = "Serious",
+                happiness: number = 255,
+                shiny: boolean = false,
+                hiddenpowertype: string = 'Dark',
+                teratype: string = 'Normal',
+                item: string | null = null,
+                ivs: StatBlock = { hp: 31, atk: 31, def: 31, spa: 31, spd: 31, spe: 31 },
+                evs: StatBlock = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 },
+                moveset: Moveset = {move1: null, move2: null, move3: null, move4: null,}
     ){
         this.generation = generation;
         this.format = format;
@@ -179,7 +242,7 @@ class Pokemon {
             nature: nature,
             natureModifier: modifiers[nature],
             happiness: happiness,
-            shiny: shiny, 
+            shiny: shiny,
             facingRight: false,
             hiddenpowertype: hiddenpowertype,
             teratype: teratype,
@@ -219,21 +282,21 @@ class Pokemon {
             specialAttack:  null,
             specialDefense: null,
             speed:          null
-        };                        
+        };
         this.isInitialized = false;
     }
-    async init() {
+    async init(): Promise<void> {
         //console.log("Init passed in")
         this.dex = await getPokemonDex(this.generation, this.species);
         this.usage = await getUsage(this.format, this.species);
         //console.log("THISDOTUSAGE:", this.usage);
-        this.baseSpecies = this.dex.baseSpecies;
-        this.forme = this.dex.forme;
-        //console.log(this.species, "'s form is:", this.forme);
         if(this.dex == null){
             console.log("dex empty, failed to initialize");
             return;
         }
+        this.baseSpecies = this.dex.baseSpecies;
+        this.forme = this.dex.forme;
+        //console.log(this.species, "'s form is:", this.forme);
         //console.log("DEX OUTPUT: ", this.dex);  // Should log the correct data
         this.info = Object.assign({}, this.info,{
             natdexnumber: this.dex.num,
@@ -245,7 +308,7 @@ class Pokemon {
             weight: this.dex.weight,
             bst: this.dex.baseStats.hp + this.dex.baseStats.atk + this.dex.baseStats.def + this.dex.baseStats.spa + this.dex.baseStats.spd + this.dex.baseStats.spe
         });
-        this.slug = this.#findSlug(this.info.natdexnumber, this.forme);
+        this.slug = this.#findSlug(this.info.natdexnumber!, this.forme);
         if(!this.slug){
             this.slug = (this.species.replace(" ", "-").toLowerCase())
         }
@@ -260,7 +323,7 @@ class Pokemon {
         this.learnset =this.dex.learnset;
         //TODO: ADD GENERATION SPECIFIC SPRITES
         this.displayinfo = {
-            spriteRelativePath: (this.dex.exists) ? "pokesprite-images/pokemon-"+(this.format==='gen8'?'gen8':'gen7x')+"/"+(this.shiny ? "shiny" : "regular")+(this.info.facingRight ? "/right" : "")+"/"+(this.slug)+".png" : "node_modules/pokesprite-images/pokemon-gen7x/unknown-gen5.png",
+            spriteRelativePath: (this.dex.exists) ? "pokesprite-images/pokemon-"+(this.format==='gen8'?'gen8':'gen7x')+"/"+(this.info.shiny ? "shiny" : "regular")+(this.info.facingRight ? "/right" : "")+"/"+(this.slug)+".png" : "node_modules/pokesprite-images/pokemon-gen7x/unknown-gen5.png",
             spritesheetCoords: this.getSpriteCoords(),
             type1spriteRelativePath: "pokesprite-images/misc/type-logos/gen8/"+this.dex.types[0]+".png",
             type2spriteRelativePath: "pokesprite-images/misc/type-logos/gen8/"+this.dex.types[1]+".png",
@@ -269,32 +332,32 @@ class Pokemon {
         };
         console.log(this.displayinfo.spriteRelativePath);
         this.effectiveStats = {
-            hp:             calculateHP  (this.baseStats.hp,             this.ivs.hp,  this.evs.hp,  this.info.level),
-            attack:         calculateStat(this.baseStats.attack,         this.ivs.atk, this.evs.atk, this.info.level, this.info.natureModifier.atk || 1),
-            defense:        calculateStat(this.baseStats.defense,        this.ivs.def, this.evs.def, this.info.level, this.info.natureModifier.def || 1),
-            specialAttack:  calculateStat(this.baseStats.specialAttack,  this.ivs.spa, this.evs.spa, this.info.level, this.info.natureModifier.spa || 1),
-            specialDefense: calculateStat(this.baseStats.specialDefense, this.ivs.spd, this.evs.spd, this.info.level, this.info.natureModifier.spd || 1),
-            speed:          calculateStat(this.baseStats.speed,          this.ivs.spe, this.evs.spe, this.info.level, this.info.natureModifier.spe || 1),
-        };           
+            hp:             calculateHP  (this.baseStats.hp!,             this.ivs.hp,  this.evs.hp,  this.info.level),
+            attack:         calculateStat(this.baseStats.attack!,         this.ivs.atk, this.evs.atk, this.info.level, this.info.natureModifier.atk || 1),
+            defense:        calculateStat(this.baseStats.defense!,        this.ivs.def, this.evs.def, this.info.level, this.info.natureModifier.def || 1),
+            specialAttack:  calculateStat(this.baseStats.specialAttack!,  this.ivs.spa, this.evs.spa, this.info.level, this.info.natureModifier.spa || 1),
+            specialDefense: calculateStat(this.baseStats.specialDefense!, this.ivs.spd, this.evs.spd, this.info.level, this.info.natureModifier.spd || 1),
+            speed:          calculateStat(this.baseStats.speed!,          this.ivs.spe, this.evs.spe, this.info.level, this.info.natureModifier.spe || 1),
+        };
         this.isInitialized = true;
         //console.log("Pokemon initialized:\n"+this.toString());
     }
 
-    #findSlug(natdexnumber, forme) {
+    #findSlug(natdexnumber: number, forme: string | null): string | null {
         try {
           // Ensure the natdexnumber is a string (padded with leading zeros)
           const idxString = natdexnumber.toString().padStart(3, '0');
-          
+
           // Check if the idx exists in the data
           const entry = pokespriteInfoJSON[idxString];
           if (!entry) {
             console.warn(`No slug data found for idx: ${natdexnumber}`);
             return null;
           }
-          
+
           // Get the base slug
           const baseSlug = entry.slug.eng;
-          
+
           // If no forme is specified, return the base slug
           if (!forme || forme === '$') {
             return baseSlug;
@@ -308,42 +371,42 @@ class Pokemon {
           return null;
         }
     }
-    #findTypeColor(type) {
+    #findTypeColor(type: string): string {
         try {
             const color = typeColours[type];
-            
+
             if (!color) {
                 console.warn(`No type color data found for type: ${type}`);
                 return '#666666'; // Default color if type not found
             }
-            
+
             return color;
         } catch (err) {
             console.error('Error reading type color data for:', type, "error:", err);
             return '#666666'; // Default color in case of error
         }
     }
-    
-    async waitForInit() {
+
+    async waitForInit(): Promise<void> {
         while (!this.isInitialized) {
             await new Promise(resolve => setTimeout(resolve, 10));
         }
     }
 
-    async getUsageData() {
+    async getUsageData(): Promise<any> {
         await this.waitForInit();
-        return this.UsageEntry.usage;
+        return this.usage;
     }
 
-    async getMovesetUsageData() {
+    async getMovesetUsageData(): Promise<any> {
         await this.waitForInit();
-        return this.UsageEntry.movesetUsage;
-    } 
+        return this.usage;
+    }
 
-    async getSpriteBase64() {
+    async getSpriteBase64(): Promise<string | null> {
         await this.waitForInit();
         try {
-            const response = await fetch(spriteRelativePath);
+            const response = await fetch(this.displayinfo.spriteRelativePath!);
             const buffer = await response.arrayBuffer();
             const base64String = Buffer.from(buffer).toString('base64');
             //console.log(`data:image/png;base64,${base64String}`);
@@ -354,8 +417,8 @@ class Pokemon {
         }
     }
     // snatched up from pokemon showdown
-    getSpriteCoords() {
-		let id = this.slug.replace("-", "").replace("-", "").toLowerCase();
+    getSpriteCoords(): [number, number] {
+		let id = this.slug!.replace("-", "").replace("-", "").toLowerCase();
 		//if (this.forme!=="$" && this.forme) id = this.toID(this.species+this.forme);
 		//if (this.species) id = toID(this.species);
 /* 		if (pokemon?.volatiles?.formechange && !pokemon.volatiles.transform) {
@@ -370,27 +433,30 @@ class Pokemon {
         console.log(`SS POS of ${this.species}: -${left}px -${top}px${fainted}`)
 		return [-left, -top];
 	}
-    getPokemonIconNum(id, isFemale, facingLeft) {
+    getPokemonIconNum(id: string, isFemale: boolean, facingLeft: boolean): number {
+        const sprites = BattlePokemonSprites as Record<string, any>;
+        const icons = BattlePokemonIconIndexes as Record<string, number>;
+        const iconsLeft = BattlePokemonIconIndexesLeft as Record<string, number>;
 		let num = 0;
-		if (BattlePokemonSprites?.[id]?.num) {
-			num = BattlePokemonSprites[id].num;
+		if (sprites?.[id]?.num) {
+			num = sprites[id].num;
 		} /* else if (BattlePokedex?.[id]?.num) {
 			num = BattlePokedex[id].num;
 		} */
 		if (num < 0) num = 0;
 		if (num > 1025) num = 0;
 
-        if (BattlePokemonIconIndexes?.[id]) {
-			num = BattlePokemonIconIndexes[id];
+        if (icons?.[id]) {
+			num = icons[id];
 		}
 		if (isFemale) {
 			if (['unfezant', 'frillish', 'jellicent', 'meowstic', 'pyroar'].includes(id)) {
-				num = BattlePokemonIconIndexes[id + 'f'];
+				num = icons[id + 'f'];
 			}
 		}
 		if (facingLeft) {
-			if (BattlePokemonIconIndexesLeft[id]) {
-				num = BattlePokemonIconIndexesLeft[id];
+			if (iconsLeft[id]) {
+				num = iconsLeft[id];
 			}
 		}
 
@@ -401,7 +467,7 @@ class Pokemon {
 
     //========================EXPORT METHODS================================================================================================//
     // JSON which is used for advanced export (with dex fetched information)
-    toFullJSON() {
+    toFullJSON(): object {
         return {
             species: this.species,
             slug: this.slug,
@@ -413,11 +479,11 @@ class Pokemon {
             moveset: this.moveset,
             displayinfo: this.displayinfo,
             effectiveStats: this.effectiveStats,
-            UsageEntry: this.UsageEntry
+            usage: this.usage
         };
     }
     // To the basic JSON that showdown Teams parses
-    toJSON() { 
+    toJSON(): object {
         return {
             name: this.species,
             species: this.species,
@@ -432,23 +498,23 @@ class Pokemon {
         };
     }
     // Prints info about this pokemon
-    toString() {
+    toString(): string {
         let evstring = "";
         for (const stat in this.evs) {
-            if (this.evs[stat] != 0){
-                evstring += `${stat.toUpperCase()}: ${this.evs[stat]}, `;
+            if (this.evs[stat as keyof StatBlock] != 0){
+                evstring += `${stat.toUpperCase()}: ${this.evs[stat as keyof StatBlock]}, `;
             }
         }
         let ivstring = "";
         for (const stat in this.ivs) {
-            if (this.ivs[stat] != 0 || true){
-                ivstring += `${stat.toUpperCase()}: ${this.ivs[stat]}, `;
+            if (this.ivs[stat as keyof StatBlock] != 0 || true){
+                ivstring += `${stat.toUpperCase()}: ${this.ivs[stat as keyof StatBlock]}, `;
             }
         }
         let movesetstring = "";
         for (const move in this.moveset) {
-            if (this.moveset[move] != null){
-                movesetstring += (this.moveset[move]+", ");
+            if (this.moveset[move as keyof Moveset] != null){
+                movesetstring += (this.moveset[move as keyof Moveset]+", ");
             }
         }
         return '========================================\n' +
@@ -477,7 +543,7 @@ class Pokemon {
                `SPRITERELPATH: ${this.displayinfo.spriteRelativePath}\n` +
                '========================================\n';
     }
-    
+
 }
 
 export default Pokemon;

@@ -1,3 +1,5 @@
+// DEFUNCT: pokemon-showdown was removed in favour of @pkmn/dex + @pkmn/data + @pkmn/sets.
+// This script no longer runs. Update to use @pkmn/dex if you need to regenerate dex data.
 const { Dex } = require('pokemon-showdown');
 const fs = require('fs');
 

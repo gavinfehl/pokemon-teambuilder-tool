@@ -1,12 +1,15 @@
 import { Dex } from '@pkmn/dex';
-import { Generations } from '@pkmn/data';
+import { Generations, Generation } from '@pkmn/data';
 import { Smogon } from '@pkmn/smogon';
 
 const gens = new Generations(Dex);
 const smogon = new Smogon(fetch);
 
 class UsageFetchAndParser {
-  constructor(genNumber = 7, format = "gen7ou") {
+  format: string;
+  gen: Generation;
+
+  constructor(genNumber: number = 7, format: string = "gen7ou") {
     this.format = format;
     this.gen = gens.get(genNumber);
   }
@@ -14,9 +17,9 @@ class UsageFetchAndParser {
   /**
    * Fetches usage statistics for the specified generation and format
    */
-  async #fetchUsageStats(species) {
+  async #fetchUsageStats(species: string): Promise<any> {
     try {
-      const stats = await smogon.stats(this.gen, species, this.format);
+      const stats = await smogon.stats(this.gen as any, species as any, this.format as any);
       return stats;
     } catch (error) {
       console.error(`Error fetching usage stats for ${species}:`, error);
@@ -27,9 +30,9 @@ class UsageFetchAndParser {
   /**
    * Fetches moveset statistics for the specified generation, format, and Pokémon
    */
-  async #fetchMovesetUsageStats(species) {
+  async #fetchMovesetUsageStats(species: string): Promise<any> {
     try {
-      const movesets = await smogon.sets(this.gen, species, this.format);
+      const movesets = await smogon.sets(this.gen as any, species as any, this.format as any);
       return movesets;
     } catch (error) {
       console.error(`Error fetching moveset usage stats for ${species}:`, error);
@@ -40,26 +43,26 @@ class UsageFetchAndParser {
   /**
    * Parses usage stats data from the API
    */
-  processUsageStats(stats) {
+  processUsageStats(stats: any): any[] {
     if (!stats || !stats.data) {
       throw new Error("No stats data available");
     }
 
-    const usageEntry = [];
-    
+    const usageEntry: any[] = [];
+
     // Sort by usage percentage descending to assign proper ranks
-    const sortedPokemon = Object.entries(stats.data).sort((a, b) => {
+    const sortedPokemon = Object.entries(stats.data).sort((a: any, b: any) => {
       return b[1].usage - a[1].usage;
     });
 
     // Process each Pokémon's data
     for (let i = 0; i < sortedPokemon.length; i++) {
-      const [pokemon, data] = sortedPokemon[i];
+      const [pokemon, data] = sortedPokemon[i] as [string, any];
       const usagePercent = data.usage * 100; // Convert to percentage
-      
+
       // Calculate viability ceiling
       const viabilityCeiling = this.#getViabilityCeiling(usagePercent)
-      
+
       usageEntry.push({
         rank: (i + 1).toString(),
         name: pokemon,
@@ -67,31 +70,31 @@ class UsageFetchAndParser {
         viability_ceiling: viabilityCeiling
       });
     }
-    
+
     return usageEntry;
   }
 
   /**
    * Processes moveset usage data for a specific Pokémon
    */
-  processMovesetUsageStats(pokemon, movesetData) {
+  processMovesetUsageStats(pokemon: string, movesetData: any): any {
     if (!movesetData) {
       console.warn(`No moveset data available for ${pokemon}`);
       return null;
     }
 
-    const result = {
+    const result: Record<string, any> = {
       Pokemon: pokemon,
       Raw_count: movesetData.usage?.raw || 0,
       Avg_weight: movesetData.usage?.weighted || 0,
-      Viability_Ceiling: this.getViabilityCeiling(movesetData.usage?.weighted * 100 || 0)
+      Viability_Ceiling: this.#getViabilityCeiling(movesetData.usage?.weighted * 100 || 0)
     };
 
     // Process abilities
     if (movesetData.abilities) {
       result.Abilities = Object.entries(movesetData.abilities).map(([ability, usage]) => ({
         item: ability,
-        value: `${(usage * 100).toFixed(2)}%`
+        value: `${((usage as number) * 100).toFixed(2)}%`
       }));
     } else {
       result.Abilities = [];
@@ -101,7 +104,7 @@ class UsageFetchAndParser {
     if (movesetData.items) {
       result.Items = Object.entries(movesetData.items).map(([item, usage]) => ({
         item: item,
-        value: `${(usage * 100).toFixed(2)}%`
+        value: `${((usage as number) * 100).toFixed(2)}%`
       }));
     } else {
       result.Items = [];
@@ -113,7 +116,7 @@ class UsageFetchAndParser {
       for (const [spread, usage] of Object.entries(movesetData.spreads)) {
         result.Spreads.push({
           item: spread,
-          value: `${(usage * 100).toFixed(2)}%`
+          value: `${((usage as number) * 100).toFixed(2)}%`
         });
       }
     }
@@ -122,7 +125,7 @@ class UsageFetchAndParser {
     if (movesetData.moves) {
       result.Moves = Object.entries(movesetData.moves).map(([move, usage]) => ({
         item: move,
-        value: `${(usage * 100).toFixed(2)}%`
+        value: `${((usage as number) * 100).toFixed(2)}%`
       }));
     } else {
       result.Moves = [];
@@ -134,7 +137,7 @@ class UsageFetchAndParser {
       for (const [type, usage] of Object.entries(movesetData.teraTypes)) {
         result["Tera Types"].push({
           item: type,
-          value: `${(usage * 100).toFixed(2)}%`
+          value: `${((usage as number) * 100).toFixed(2)}%`
         });
       }
     }
@@ -145,7 +148,7 @@ class UsageFetchAndParser {
       for (const [teammate, usage] of Object.entries(movesetData.teammates)) {
         result.Teammates.push({
           item: teammate,
-          value: `${(usage * 100).toFixed(2)}%`
+          value: `${((usage as number) * 100).toFixed(2)}%`
         });
       }
     }
@@ -154,13 +157,14 @@ class UsageFetchAndParser {
     result["Checks and Counters"] = [];
     if (movesetData.counters) {
       for (const [counter, data] of Object.entries(movesetData.counters)) {
+        const d = data as any;
         result["Checks and Counters"].push({
           pokemon: counter.replace(' ', '-'),
-          matchup_occurred: data.count || 0,
-          counter_kos_or_forces_switch_percent: ((data.ko || 0) * 100).toFixed(2),
-          stdevofkoswitch: data.stddev ? data.stddev.toFixed(2) : "0.00",
-          ko_percent: `${((data.koed || 0) * 100).toFixed(2)}%`,
-          switch_out_percent: `${((data.switched || 0) * 100).toFixed(2)}%`
+          matchup_occurred: d.count || 0,
+          counter_kos_or_forces_switch_percent: ((d.ko || 0) * 100).toFixed(2),
+          stdevofkoswitch: d.stddev ? d.stddev.toFixed(2) : "0.00",
+          ko_percent: `${((d.koed || 0) * 100).toFixed(2)}%`,
+          switch_out_percent: `${((d.switched || 0) * 100).toFixed(2)}%`
         });
       }
     }
@@ -171,7 +175,7 @@ class UsageFetchAndParser {
   /**
    * Calculate viability ceiling based on usage percentage
    */
-  #getViabilityCeiling(usagePercent) {
+  #getViabilityCeiling(usagePercent: number): string {
     return usagePercent >= 25 ? 'Centralizing' :
            usagePercent >= 15 ? 'Very Popular' :
            usagePercent >= 8 ? 'Popular' :
@@ -184,8 +188,8 @@ class UsageFetchAndParser {
   /**
    * Fetch and process usage stats
    */
-  async getUsageEntry(species) {
-    const stats = await this.#fetchUsageStats();
+  async getUsageEntry(species: string): Promise<any> {
+    const stats = await this.#fetchUsageStats(species);
     if (!stats) {
       throw new Error(`Failed to get usage stats for ${this.format}`);
     }
@@ -195,12 +199,12 @@ class UsageFetchAndParser {
   /**
    * Fetch and process moveset stats for all Pokémon in the usage stats
    */
-  async getMovesetUsageEntry(species) {
-    const stats = await this.#fetchMovesetUsageStats();
+  async getMovesetUsageEntry(species: string): Promise<any> {
+    const stats = await this.#fetchMovesetUsageStats(species);
     if (!stats) {
       throw new Error("No usage stats available to fetch movesets");
-    }    
-    return this.processMovesetUsageStats(stats);
+    }
+    return this.processMovesetUsageStats(species, stats);
   }
 
    /* Save data to JSON file (if needed for backward compatibility)
@@ -209,7 +213,7 @@ class UsageFetchAndParser {
     if (!data.length) {
       throw new Error("No data to save");
     }
-    
+
     const fs = require('fs');
     fs.writeFileSync(outputFile, JSON.stringify(data, null, 2), 'utf8');
     console.log(`Data saved to ${outputFile}`);

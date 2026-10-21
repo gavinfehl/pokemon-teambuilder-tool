@@ -1,6 +1,6 @@
 import Pokemon from '@/classes/Pokemon';
 
-async function getUsage(format) {
+async function getUsage(format: string): Promise<any> {
     //console.log("Usage called with:", format);
     const response = await fetch(`https://pkmn.github.io/smogon/data/stats/${format}.json`);
     if (response.ok) {
@@ -15,7 +15,16 @@ async function getUsage(format) {
 
 // Contains a set of Pokémon as well as the format and export data file paths.
 class PokemonSet {
-    constructor(name, generation, format) {
+    name: string | undefined;
+    generation: number | undefined;
+    format: string | undefined;
+    pokemons: Pokemon[];
+    teamExportString: string;
+    teamJSON: any;
+    teamPackedString: string;
+    teamAdvancedJSON: any;
+
+    constructor(name?: string, generation?: number, format?: string) {
         this.name = name;
         this.generation = generation;
         this.format = format;
@@ -26,7 +35,7 @@ class PokemonSet {
         this.teamAdvancedJSON = {};
     }
     // Get a Pokémon from the set by species name or index
-    getMember(identifier) {
+    getMember(identifier: number | string): Pokemon | null {
         if (typeof identifier === 'number') {
             return this.pokemons[identifier] || null;
         } else if (typeof identifier === 'string') {
@@ -36,7 +45,7 @@ class PokemonSet {
         }
     }
     // Get usage data for each Pokémon in the set
-    printUsageData() {
+    printUsageData(): void {
         this.pokemons.forEach(pokemon => {
             console.log(pokemon.getUsageData());
             console.log(pokemon.getMovesetUsageData());
@@ -44,7 +53,7 @@ class PokemonSet {
         return;
     }
     // Add a Pokémon to the set with the given species name with no extra information.
-    async addPokemonFromSpecies(species) {
+    async addPokemonFromSpecies(species: string): Promise<Pokemon | null> {
         if(!this.generation || !this.format){
             console.log("Failed to add pokemon, null gen/format on this team: ", this.generation, this.format);
             return null;
@@ -59,7 +68,7 @@ class PokemonSet {
         .join('-');
 
         const pokemon = new Pokemon(species, this.generation, this.format);
-        await pokemon.init(this.format, species);
+        await pokemon.init();
         if (pokemon) {
             this.pokemons.push(pokemon);
             //console.log("pokemon added from species:\n"+pokemon.species);
@@ -70,21 +79,21 @@ class PokemonSet {
         }
     }
     // Add a Pokémon object to the set
-    async addPokemonObject(pokemon) {
-        await pokemon.init(this.format, pokemon.species);
+    async addPokemonObject(pokemon: Pokemon): Promise<void> {
+        await pokemon.init();
         this.pokemons.push(pokemon);
         //console.log("pokemon added from object:\n"+pokemon.species);
     }
     // Remove a Pokémon from the set with the given species name.
-    removePokemonBySpecies(species) {
+    removePokemonBySpecies(species: string): Pokemon | null {
         const index = this.pokemons.findIndex(pokemon => pokemon.species === species);
         if (index !== -1) {
             return this.pokemons.splice(index, 1)[0]; // Remove and return the first matching Pokémon
         }
         return null; // Return null if no Pokémon of the species is found
     }
-    // Remove a Pokémon from the set by index    
-    removePokemonByIndex(index) {
+    // Remove a Pokémon from the set by index
+    removePokemonByIndex(index: number): Pokemon | null {
         if (index >= 0 && index < this.pokemons.length) {
             const removedPokemon = this.pokemons.splice(index, 1);
             return removedPokemon[0];
@@ -93,16 +102,16 @@ class PokemonSet {
             return null;
         }
     }
-    removeAllPokemon() {
+    removeAllPokemon(): void {
         this.pokemons = [];
     }
     // Initialize the team with the given JSON team data
-    async initializeTeam(json) {
+    async initializeTeam(json: any[]): Promise<void> {
         try {
-            for (const teamMember of json) { 
+            for (const teamMember of json) {
                 //console.log("JSON PRINT", json);
                 //console.log("In INIT team - species of teamMember: ", teamMember.species);
-    
+
                 const pokemon = new Pokemon(
                     teamMember.species ?? undefined,
                     teamMember.generation ?? undefined,
@@ -126,7 +135,7 @@ class PokemonSet {
                         move4: teamMember.moves?.[3] ?? null
                     }
                 );
-    
+
                 //console.log("In INIT team - species of pokemon: ", pokemon.species);
                 await this.addPokemonObject(pokemon);
             }
@@ -138,9 +147,9 @@ class PokemonSet {
     }
 
     // Import the team from the team.txt file
-    async importTeam(importString) {
+    async importTeam(importString: string): Promise<any> {
         console.log("Sending teamString:", importString);
-        const response = await fetch(`http://localhost:3000/importteam`, {
+        const response = await fetch(`http://localhost:3001/importteam`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -165,8 +174,8 @@ class PokemonSet {
     }
 
     // Export the team to all three file types
-    async exportTeam(){
-        const response = await fetch(`http://localhost:3000/exportteam`, {
+    async exportTeam(): Promise<any> {
+        const response = await fetch(`http://localhost:3001/exportteam`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -174,7 +183,7 @@ class PokemonSet {
                 normal: this.pokemons.map(pokemon => pokemon.toJSON())
             })
         });
-    
+
         if (response.ok) {
             const exportResponse = await response.json();
             console.log("TEAMS EXPORT OUTPUT: ", exportResponse);
@@ -188,10 +197,10 @@ class PokemonSet {
             return null;
         }
     }
-    
+
 
     // Print the team
-    toString(){
+    toString(): string {
         let result = '';
         this.pokemons.forEach(pokemon => {
             result += pokemon.toString() + '\n';
@@ -199,25 +208,26 @@ class PokemonSet {
         return result.trim();
     }
 
-    toImages(){
-        return this.pokemons.map(pokemon => pokemon.displayinfo.spriteRelativePath);
+    toImages(): string[] {
+        return this.pokemons.map(pokemon => pokemon.displayinfo.spriteRelativePath!);
     }
 }
 
 // Team class is a more specific version of PokemonSet that can only have up to 6 Pokémon.
 class PokemonTeam extends PokemonSet {
-    constructor(name, generation, format) {
+    constructor(name?: string, generation?: number, format?: string) {
         super(name, generation, format);
     }
-  
-    async addPokemonFromSpecies(species) {
+
+    async addPokemonFromSpecies(species: string): Promise<Pokemon | null> {
         if (this.pokemons.length < 6) {
-            await super.addPokemonFromSpecies(species);
+            return await super.addPokemonFromSpecies(species);
         } else {
             console.log("A team can only have up to 6 Pokémon.");
+            return null;
         }
     }
-    async addPokemonObject(pokemon) {
+    async addPokemonObject(pokemon: Pokemon): Promise<void> {
         if (this.pokemons.length < 6) {
             await super.addPokemonObject(pokemon);
         } else {
@@ -226,25 +236,25 @@ class PokemonTeam extends PokemonSet {
     }
 }
 class PokemonTier extends PokemonSet {
-    constructor(name, generation, format) {
+    constructor(name?: string, generation?: number, format?: string) {
         super(name, generation, format);
     }
-    async #addAllPokemonInFormat() {
-        const usageData = await getUsage(this.format);
+    async #addAllPokemonInFormat(): Promise<void> {
+        const usageData = await getUsage(this.format!);
         console.log(usageData);
         if (usageData && typeof usageData === 'object') {
             for (const key of Object.keys(usageData)) {
-                const usage = usageData[key].usage; // Access the 'usage' property of the current Pokemon
+                const usage = (usageData as Record<string, any>)[key].usage; // Access the 'usage' property of the current Pokemon
                 // more than %4 usage in ou
                 if (usage.raw && (usage.raw * 100 > 0.75)) {
-                    await this.addPokemonFromSpecies(key, this.generation, this.format); // Assuming addPokemonFromSpecies is a method
+                    await this.addPokemonFromSpecies(key); // Assuming addPokemonFromSpecies is a method
                 }
-            }     
+            }
         } else {
             console.error('No usage data available');
         }
     }
-    async initializeTier() {
+    async initializeTier(): Promise<void> {
         await this.#addAllPokemonInFormat();
         //await this.exportTeam();
         console.log("Tier Created: "+this.format);

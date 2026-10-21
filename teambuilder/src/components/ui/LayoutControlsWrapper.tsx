@@ -14,7 +14,7 @@ const LayoutControlsWrapper: React.FC<LayoutControlsWrapperProps> = ({ layoutMan
   
   // Use useMemo when the component is definitely rendered
   const memoizedControls = useMemo(() => {
-    return <LayoutControls layoutManager={layoutManager} />;
+    return <LayoutControls layoutManager={layoutManager} currentLayout={layoutManager.currentLayout ?? ''} />;
   }, [layoutManager, layoutManager.currentLayout]);
   
   return memoizedControls;
