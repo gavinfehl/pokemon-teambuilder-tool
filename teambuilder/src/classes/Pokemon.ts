@@ -351,7 +351,6 @@ class Pokemon {
           // Check if the idx exists in the data
           const entry = pokespriteInfoJSON[idxString];
           if (!entry) {
-            console.warn(`No slug data found for idx: ${natdexnumber}`);
             return null;
           }
 

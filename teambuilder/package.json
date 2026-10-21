@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "server": "node --experimental-strip-types scripts/server.ts"
   },
   "dependencies": {
     "@pkmn/data": "^0.9.30",

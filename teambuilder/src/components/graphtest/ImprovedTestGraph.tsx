@@ -307,6 +307,7 @@ const ImprovedTestGraph: React.FC<Props> = ({ team }) => {
             gridSpritePositionX: coords ? `${coords[0] * gX}px` : '0px',
             gridSpritePositionY: coords ? `${coords[1] * gY}px` : '0px',
             colors: [mon.displayinfo?.type1color ?? '#666666', mon.displayinfo?.type2color ?? '#666666'],
+            color1: mon.displayinfo?.type1color ?? '#666666',
           },
         };
       });
